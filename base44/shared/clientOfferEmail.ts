@@ -154,7 +154,7 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
     ['Počet ks', data.quantity > 1 ? `${data.quantity} ks` : '1 ks'],
     ['Lokalita', data.location],
     ['Číslo nabídky', data.quoteNumber],
-    ['Cena bez DPH', data.totalPrice ? money(data.totalPrice) : 'dle nabídky'],
+    ['Cenová rekapitulace', 'v přiložené položkové nabídce'],
     ['Platnost do', data.validUntil ? formatDate(data.validUntil) : 'k potvrzení v nabídce'],
   ].filter(([, v]) => v) as Array<[string, string]>;
 
@@ -277,11 +277,12 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
     { project_order_id: projectId, asset_type: 'generated_visualization', selected_for_offer: true },
     { sort: 'sort_order', limit: 10 }
   ).catch(() => ({ items: [] }));
-  const visualizations = (assetPage?.items || []).map((a: any) => a.file_url).filter(Boolean);
+  const visualizations = (Array.isArray(assetPage) ? assetPage : (assetPage?.items || [])).map((a: any) => a.file_url).filter(Boolean);
 
   // Load inquiry for location and summary
   let location = '';
   let inquirySummary = '';
+  let quantity = 1;
   if (project.inquiry_id) {
     const inquiry = project.inquiry_type === 'contact'
       ? await base44.asServiceRole.entities.ContactInquiry.get(project.inquiry_id).catch(() => null)
@@ -289,6 +290,8 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
     if (inquiry) {
       location = (inquiry as any).installation_location || (inquiry as any).location || '';
       inquirySummary = (inquiry as any).zprava || (inquiry as any).message || (inquiry as any).description || '';
+      const requested = Number((inquiry as any).quantity);
+      if (Number.isInteger(requested) && requested > 0 && requested <= 1000) quantity = requested;
     }
   }
 
@@ -301,14 +304,12 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
   const attachments: Array<{ name: string; url?: string }> = [];
   if (project.quote_pdf_url) attachments.push({ name: `Cenová nabídka ${project.quote_number || ''}.pdf`, url: project.quote_pdf_url });
   if (project.presentation_pdf_url) attachments.push({ name: `Prezentace ${project.quote_number || ''}.pdf`, url: project.presentation_pdf_url });
-  visualizations.forEach((url: string, i: number) => {
-    if (url.startsWith('http')) attachments.push({ name: `Vizualizace ${i + 1}.webp`, url });
-  });
+  // Vizualizace jsou již vložené přímo v HTML e-mailu; neuvádíme je falešně jako fyzické přílohy.
 
   const data: OfferEmailData = {
     clientName: project.client_name || '',
     productName: project.product_name || 'mlžící systém',
-    quantity: 1,
+    quantity,
     location,
     visualizations,
     portalUrl,

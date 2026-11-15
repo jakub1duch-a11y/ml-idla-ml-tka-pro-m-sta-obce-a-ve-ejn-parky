@@ -1,185 +1,120 @@
 import React, { useState } from 'react';
-import { Mail, Eye, Send, Loader2, AlertTriangle, CheckCircle2, Shield } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, ClipboardCheck, ExternalLink, Eye, FileText, Loader2, Mail, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
-// Admin náhled klientského e-mailu nabídky + testovací odeslání + odeslání klientovi
-export default function OfferEmailPreview({ projectId, quoteNumber, clientEmail, clientName, offerStatus }) {
-  const [preview, setPreview] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [sendingTest, setSendingTest] = useState(false);
-  const [sendingClient, setSendingClient] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const [showPreview, setShowPreview] = useState(false);
+const CHECKS = [
+  { key:'recipient_and_pdf', label:'Zkontroloval jsem příjemce, číslo nabídky a skutečné PDF přílohy.' },
+  { key:'product_and_geometry', label:'Varianta produktu, rozměry, materiál a trysky odpovídají výrobním podkladům.' },
+  { key:'pricing_vat', label:'Položkové ceny, součet, DPH a platnost nabídky jsou ověřené.' },
+  { key:'brand_and_attachments', label:'Fotografie, vizualizace, text a logo odpovídají identitě MLŽIDLA.cz.' },
+];
+const CANVA_TEMPLATE='https://www.canva.com/d/_-XHlZkPRAv5TED';
 
-  const loadPreview = async () => {
-    setLoading(true);
-    setError('');
-    setSuccess('');
+export default function OfferEmailPreview({ projectId, quoteNumber, clientEmail }) {
+  const [preview,setPreview]=useState(null);
+  const [checks,setChecks]=useState([]);
+  const [loading,setLoading]=useState('');
+  const [error,setError]=useState('');
+  const [draft,setDraft]=useState(null);
+  const [crm,setCrm]=useState(null);
+  const [crmResult,setCrmResult]=useState(null);
+  const fetchPreview=async()=>{
+    if(!projectId)return;
+    setLoading('preview');setError('');setDraft(null);
     try {
-      const response = await base44.functions.invoke('previewClientOfferEmail', { project_id: projectId });
-      const data = response.data;
-      if (data?.ok) {
-        setPreview(data);
-        setShowPreview(true);
-      } else {
-        setError(data?.error || 'Nepodařilo se načíst náhled.');
-      }
-    } catch (err) {
-      setError(err?.response?.data?.error || err?.message || 'Chyba při načítání náhledu.');
-    } finally {
-      setLoading(false);
-    }
+      const response=await base44.functions.invoke('offerDeliveryApproval',{project_id:projectId,action:'preview'});
+      if(!response?.data?.ok)throw new Error(response?.data?.error||'Náhled nelze načíst.');
+      setPreview(response.data);setChecks([]);
+    }catch(e){setError(e?.response?.data?.error||e?.message||'Náhled nelze načíst.');}
+    finally{setLoading('');}
   };
-
-  const sendTestEmail = async () => {
-    setSendingTest(true);
-    setError('');
-    setSuccess('');
+  const checkCRM=async()=>{
+    setLoading('crm');setError('');
+    try{
+      const r=await base44.functions.invoke('syncHubspotOfferCase',{project_id:projectId,action:'preview'});
+      if(!r?.data?.ok)throw new Error(r?.data?.error||'Kontrola CRM selhala.');
+      setCrm(r.data);setCrmResult(null);
+    }catch(e){setError(e?.response?.data?.error||e.message||'Nelze ověřit HubSpot.');}
+    finally{setLoading('');}
+  };
+  const syncCRM=async()=>{
+    if(!crm||loading)return;
+    if(!window.confirm('Propojit potvrzenou poptávku '+crm.email+' s HubSpotem '+crm.portal_id+'? Nové kontakty a obchodní případ se vytvoří jen pokud zatím neexistují.'))return;
+    setLoading('crm_sync');setError('');
+    try{
+      const r=await base44.functions.invoke('syncHubspotOfferCase',{project_id:projectId,action:'sync',
+        confirm_sync:true,expected_email:crm.email,expected_project_id:projectId,expected_portal_id:149778217});
+      if(!r?.data?.ok)throw new Error(r?.data?.error||'Synchronizace CRM se nezdařila.');
+      setCrmResult(r.data);setCrm(null);
+    }catch(e){setError(e?.response?.data?.error||e.message||'Synchronizace nebyla potvrzena.');}
+    finally{setLoading('');}
+  };
+  const createDraft=async()=>{
+    if(!preview?.can_create_draft || checks.length!==CHECKS.length || loading)return;
+    if(!window.confirm('Vytvořit pouze Gmail KONCEPT pro '+preview.recipient+' s ověřenými PDF přílohami? Zpráva nebude odeslána.'))return;
+    setLoading('draft');setError('');
     try {
-      const response = await base44.functions.invoke('previewClientOfferEmail', {
-        project_id: projectId,
-        test_email: true,
+      const response=await base44.functions.invoke('offerDeliveryApproval',{
+        project_id:projectId,action:'create_draft',confirm_create:true,
+        expected_recipient:preview.recipient,expected_pdf_url:preview.quote_pdf_url,
+        confirmed_checks:checks
       });
-      const data = response.data;
-      if (data?.ok) {
-        setSuccess(`Testovací e-mail odeslán na ${data.recipient}`);
-      } else {
-        setError(data?.error || 'Nepodařilo se odeslat testovací e-mail.');
-      }
-    } catch (err) {
-      setError(err?.response?.data?.error || err?.message || 'Chyba při odesílání testu.');
-    } finally {
-      setSendingTest(false);
-    }
+      if(!response?.data?.ok)throw new Error(response?.data?.error||'Koncept se nepodařilo vytvořit.');
+      setDraft(response.data);setPreview(null);
+    }catch(e){setError(e?.response?.data?.blockers?.join(' ')||e?.response?.data?.error||e?.message||'Uložení konceptu selhalo.');}
+    finally{setLoading('');}
   };
-
-  const sendToClient = async () => {
-    if (!window.confirm(`Opravdu odeslat nabídku na ${clientEmail}? Tato akce je nevratná.`)) return;
-    setSendingClient(true);
-    setError('');
-    setSuccess('');
-    try {
-      const response = await base44.functions.invoke('sendClientOffer', {
-        project_id: projectId,
-        confirm_send: true,
-      });
-      const data = response.data;
-      if (data?.ok) {
-        setSuccess(`Nabídka odeslána na ${data.recipient}. Schválil: ${data.approved_by}.`);
-      } else {
-        setError(data?.error || 'Odeslání selhalo.');
-      }
-    } catch (err) {
-      setError(err?.response?.data?.error || err?.message || 'Chyba při odesílání.');
-    } finally {
-      setSendingClient(false);
-    }
-  };
-
-  const canSend = offerStatus === 'schvaleno' || offerStatus === 'odeslano';
-
-  return (
-    <div className="border-t border-border bg-card">
-      {/* Header */}
-      <div className="flex items-center gap-2 border-b border-border bg-muted/30 px-6 py-3">
-        <Mail size={16} className="text-primary" />
-        <h4 className="text-sm font-bold">Klientský e-mail nabídky</h4>
-        <span className="ml-auto text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
-          {quoteNumber || '—'}
-        </span>
+  return <section aria-label="Schválení a náhled klientské nabídky" className="mt-4 rounded-2xl border border-slate-200 bg-white p-4 text-[#102b3a] sm:p-5">
+    <div className="flex flex-wrap items-start justify-between gap-3">
+      <div>
+        <p className="text-[10px] font-bold uppercase tracking-[.16em] text-[#008ea5]">MLŽIDLA.cz / schválení nabídky</p>
+        <h3 className="mt-1 flex items-center gap-2 text-lg font-bold"><Mail size={18} className="text-[#008ea5]"/>Náhled e-mailu zákazníkovi</h3>
+        <p className="mt-1 text-xs text-slate-600">Nabídka {quoteNumber||'bez čísla'} · {clientEmail||'neznámý příjemce'} · skutečné odeslání je vždy ruční.</p>
       </div>
-
-      {/* Safety gate notice */}
-      <div className="flex items-start gap-2 border-b border-amber-200 bg-amber-50 px-6 py-2.5">
-        <Shield size={13} className="mt-0.5 shrink-0 text-amber-600" />
-        <p className="text-[11px] leading-relaxed text-amber-800">
-          <strong>Bezpečnostní brána:</strong> E-mail se zákazníkovi neodesílá automaticky. Nejprve schvalte koncept, poté odešlete ručně.
-        </p>
-      </div>
-
-      <div className="px-6 py-4">
-        {error && (
-          <div className="mb-3 flex items-start gap-2 rounded-lg border border-destructive/20 bg-destructive/5 px-3 py-2 text-xs text-destructive">
-            <AlertTriangle size={13} className="mt-0.5 shrink-0" />
-            {error}
-          </div>
-        )}
-        {success && (
-          <div className="mb-3 flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs text-emerald-700">
-            <CheckCircle2 size={13} className="mt-0.5 shrink-0" />
-            {success}
-          </div>
-        )}
-
-        {/* Action buttons */}
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            onClick={loadPreview}
-            disabled={loading}
-            className="inline-flex items-center gap-2 border border-border px-3 py-2 text-xs font-semibold hover:bg-muted disabled:opacity-60"
-          >
-            {loading ? <Loader2 size={13} className="animate-spin" /> : <Eye size={13} />}
-            {loading ? 'Načítám…' : 'Preview e-mailu'}
-          </button>
-
-          <button
-            onClick={sendTestEmail}
-            disabled={sendingTest || !preview}
-            className="inline-flex items-center gap-2 border border-border px-3 py-2 text-xs font-semibold hover:bg-muted disabled:opacity-60"
-            title="Odešle testovací náhled na jakub1duch@gmail.com"
-          >
-            {sendingTest ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
-            {sendingTest ? 'Odesílám…' : 'Testovací e-mail na Jakub'}
-          </button>
-
-          {canSend && (
-            <button
-              onClick={sendToClient}
-              disabled={sendingClient}
-              className="inline-flex items-center gap-2 bg-primary px-4 py-2 text-xs font-bold text-white hover:bg-secondary disabled:opacity-60"
-            >
-              {sendingClient ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}
-              {sendingClient ? 'Odesílám…' : 'Odeslat klientovi'}
-            </button>
-          )}
-        </div>
-
-        {/* Preview info */}
-        {preview && !showPreview && (
-          <div className="mt-3 text-xs text-muted-foreground">
-            Připraveno: {preview.visualizations_count} vizualizací, {preview.attachments?.length || 0} příloh,
-            SUPLA: {preview.smart_control_included ? 'ano' : 'ne'}
-          </div>
-        )}
-
-        {/* Email preview */}
-        {preview && showPreview && (
-          <div className="mt-4">
-            <div className="mb-2 flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground">Náhled e-mailu</span>
-              <button
-                onClick={() => setShowPreview(false)}
-                className="text-[10px] text-muted-foreground underline"
-              >
-                Skrýt
-              </button>
-            </div>
-            <div className="overflow-hidden rounded-lg border border-border">
-              <div className="border-b border-border bg-muted/50 px-3 py-2 text-xs">
-                <div><strong>Předmět:</strong> {preview.subject}</div>
-                <div className="text-muted-foreground"><strong>Příjemce:</strong> {preview.recipient}</div>
-              </div>
-              <iframe
-                srcDoc={preview.html}
-                title="Náhled e-mailu"
-                className="h-[500px] w-full border-0"
-                sandbox="allow-same-origin"
-              />
-            </div>
-          </div>
-        )}
+      <div className="flex flex-wrap gap-2">
+        <a href={CANVA_TEMPLATE} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-10 items-center gap-1 rounded-lg border border-slate-200 px-3 text-xs font-semibold hover:border-[#008ea5]"><FileText size={14}/> Canva šablona <ExternalLink size={12}/></a>
+        <button type="button" onClick={checkCRM} disabled={!!loading} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-semibold disabled:opacity-50">HubSpot · ověřit CRM</button>
+        <button type="button" onClick={fetchPreview} disabled={!!loading} className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-[#102b3a] px-3 text-xs font-semibold text-white disabled:opacity-50">{loading==='preview'?<Loader2 size={14} className="animate-spin"/>:<Eye size={14}/>} {loading==='preview'?'Načítám…':'Zkontrolovat doručený vzhled'}</button>
       </div>
     </div>
-  );
+    <div className="mt-3 flex items-start gap-2 rounded-xl border border-cyan-100 bg-[#f3fafc] p-3 text-xs leading-5 text-[#19475b]">
+      <ShieldCheck size={16} className="mt-0.5 shrink-0"/><p>Náhled nic neodesílá. Gmail koncept vznikne pouze po schválení a po ověření firemního účtu, HubSpot kontaktu a fyzického PDF.</p>
+    </div>
+    {crm&&<div className="mt-4 rounded-xl border border-[#cde5ec] bg-[#f5fafc] p-4">
+      <p className="text-xs font-bold">HubSpot · kontrola propojení poptávky</p>
+      <p className="mt-1 text-xs text-slate-600">{crm.email} · Portál {crm.portal_id}</p>
+      <ul className="mt-2 list-inside list-disc space-y-1 text-xs text-slate-700">{(crm.actions||[]).map((v,i)=><li key={i}>{v}</li>)}</ul>
+      <button type="button" onClick={syncCRM} disabled={!!loading} className="mt-3 min-h-10 rounded-lg bg-[#102b3a] px-4 text-xs font-semibold text-white disabled:opacity-40">{loading==='crm_sync'?'Propojuji…':'Potvrdit synchronizaci do HubSpotu'}</button>
+    </div>}
+    {crmResult&&<p role="status" className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900">
+      CRM záznamy ověřeny: kontakt {crmResult.contact_id}, Deal {crmResult.deal_id}.
+      {crmResult.associated===false&&' Propojení asociací vyžaduje kontrolu.'}
+      <a className="ml-2 font-semibold underline" target="_blank" rel="noopener noreferrer" href={crmResult.deal_url}>Otevřít Deal</a>
+    </p>}
+    {error&&<p role="alert" className="mt-3 flex items-start gap-2 rounded-lg bg-rose-50 p-3 text-xs text-rose-800"><AlertTriangle size={15}/>{error}</p>}
+    {draft&&<div role="status" className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900"><CheckCircle2 className="mr-2 inline" size={17}/>Gmail koncept vytvořen pro {draft.recipient}. {draft.attachments?.length||0} PDF příloh. Zpráva nebyla odeslána. {draft.audit_saved===false&&'Zkontrolujte auditní záznam v administraci.'}<a href="https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts" target="_blank" rel="noopener noreferrer" className="mt-2 block font-semibold underline">Otevřít Gmail koncepty <ExternalLink size={12} className="inline"/></a></div>}
+    {preview&&<>
+      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+        <div className="rounded-xl bg-[#f5f9fa] p-3"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Příjemce</p><p className="mt-1 break-all text-sm font-semibold">{preview.recipient}</p></div>
+        <div className="rounded-xl bg-[#f5f9fa] p-3"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">CRM</p><p className="mt-1 text-sm font-semibold">{preview.hubspot_contact_id?'HubSpot 149778217 · kontakt ověřen':'HubSpot · vyžaduje kontrolu'}</p></div>
+      </div>
+      <p className="mt-3 text-sm font-semibold">{preview.subject}</p>
+      <div className="mt-2 overflow-hidden rounded-xl border border-slate-200">
+        <iframe sandbox="" srcDoc={preview.html} title="Bezpečný náhled HTML e-mailu pro zákazníka" className="h-[520px] w-full border-0 bg-white"/>
+      </div>
+      <div className="mt-3 rounded-xl border border-slate-200 p-3">
+        <h4 className="text-xs font-bold">PDF přílohy a vizualizace</h4>
+        <p className="mt-1 text-xs text-slate-600">Fyzická cenová nabídka PDF je povinná. Další prezentační PDF se připojí, pokud je dostupné a ověřené.</p>
+        <ul className="mt-2 list-inside list-disc text-xs text-slate-700">{(preview.attachments||[]).map((x,i)=><li key={i}>{x.name}</li>)}</ul>
+      </div>
+      {preview.blockers?.length>0&&<div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 p-3"><p className="flex gap-2 text-xs font-bold text-amber-900"><AlertTriangle size={15}/> Co je nutné před vytvořením konceptu doplnit</p><ul className="mt-2 list-inside list-disc space-y-1 text-xs text-amber-900">{preview.blockers.map((x,i)=><li key={i}>{x}</li>)}</ul></div>}
+      <fieldset className="mt-4 space-y-3" disabled={!preview.can_create_draft}>
+        <legend className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#102b3a]"><ClipboardCheck size={16}/> Kontrola obchodníkem</legend>
+        {CHECKS.map(x=><label key={x.key} className="flex cursor-pointer items-start gap-3 text-xs leading-5 text-slate-700"><input type="checkbox" className="mt-1 accent-[#008ea5]" checked={checks.includes(x.key)} onChange={e=>setChecks(v=>e.target.checked?[...v,x.key]:v.filter(k=>k!==x.key))}/><span>{x.label}</span></label>)}
+      </fieldset>
+      <button type="button" onClick={createDraft} disabled={loading!==''||!preview.can_create_draft||checks.length!==CHECKS.length} className="mt-5 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#008ea5] px-5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40">
+        {loading==='draft'?<Loader2 className="animate-spin" size={16}/>:<Mail size={16}/>} {loading==='draft'?'Ukládám…':'Schválit a vytvořit Gmail koncept s PDF'}
+      </button>
+    </>}
+  </section>;
 }

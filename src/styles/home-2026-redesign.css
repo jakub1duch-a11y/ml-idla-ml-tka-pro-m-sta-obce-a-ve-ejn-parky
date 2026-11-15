@@ -9,7 +9,9 @@
 .ml-home26-btn-primary{background:#18b8be;color:#073037}.ml-home26-btn-primary:hover{background:#7de9e4}.ml-home26-btn-outline{background:rgba(8,30,35,.17);color:white;border:1px solid rgba(255,255,255,.62)}.ml-home26-btn-outline:hover{background:rgba(255,255,255,.16)}.ml-home26-btn-dark{background:#13343d;color:#fff}.ml-home26-btn-dark:hover{background:#1b5260}
 .ml-home26-textlink{display:inline-flex;align-items:center;gap:12px;color:#087f87;font-weight:800;font-size:15px;text-decoration:none;border-bottom:1px solid currentColor;padding:0 0 5px;min-height:44px}
 .ml-home26-hero{position:relative;isolation:isolate;display:flex;min-height:680px;height:100vh;height:100svh;background:#102930;color:#fff}
-.ml-home26-hero-media{position:absolute;inset:0;z-index:-3}.ml-home26-hero-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:55% center}
+.ml-home26-hero-media{position:absolute;inset:0;z-index:-3}.ml-home26-hero-media img{display:block;width:100%;height:100%;object-fit:cover;object-position:55% center;animation:ml-home26-hero-arrive 1.2s cubic-bezier(.22,1,.36,1) both;transform-origin:55% 50%}
+@keyframes ml-home26-hero-arrive{from{opacity:.82;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.ml-home26-hero-media img{animation:none!important}}
 .ml-home26-hero-shade{position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(90deg,rgba(3,24,30,.90) 0%,rgba(3,24,30,.76) 28%,rgba(3,24,30,.32) 59%,rgba(3,24,30,.06) 85%),linear-gradient(0deg,rgba(5,27,30,.48),transparent 28%)}
 .ml-home26-hero-inner{display:flex;flex-direction:column;justify-content:space-between;padding-top:max(138px,calc(var(--site-header-height,68px) + 58px));padding-bottom:50px;min-height:100%}
 .ml-home26-hero-copy{width:min(650px,57%);margin:auto 0}.ml-home26-hero-copy h1{margin:18px 0 22px;font-size:clamp(52px,6vw,102px);font-weight:850;line-height:.99;letter-spacing:-.07em;max-width:730px}.ml-home26-hero-copy h1 em{font-style:normal;color:#a6eeec}

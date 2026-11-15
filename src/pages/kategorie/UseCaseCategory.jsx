@@ -1,3 +1,4 @@
+import EditorialPhotoHero from '@/components/editorial/EditorialPhotoHero';
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowRight, TrainFront, Dumbbell, Hotel, Landmark } from 'lucide-react';
@@ -56,6 +57,7 @@ export default function UseCaseCategory() {
   }, [categorySlug, data]);
 
   return <main className="min-h-screen bg-white">
+    <EditorialPhotoHero eyebrow={data.eyebrow} title={data.title} description={data.description} image="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp" imageAlt="Designové mlžítko v městském parku" credit="Katalogová vizualizace MLŽIDLA.cz" cta="Prohlédnout katalog" href="/katalog" />
     <section className="relative overflow-hidden bg-[#082C3F] text-white">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(38,198,233,.28),transparent_55%)]" />
       <div className="relative mx-auto max-w-7xl px-6 pb-16 pt-24 lg:px-10 lg:pb-24 lg:pt-32">

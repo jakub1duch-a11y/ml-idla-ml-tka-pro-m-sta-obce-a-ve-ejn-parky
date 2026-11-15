@@ -57,3 +57,9 @@ npx skills add base44/skills
 - Potvrzené změny synchronizuj pouze přes ověřené konektory Base44, Obchodní centrum, Sheets/Drive, Gmail, HubSpot a Canva, s mapováním ID, auditním logem, idempotencí a řešením konfliktů. Dokumentace sama není funkční synchronizace.
 - Bez schválení správce neposílej e-maily, neprováděj merge ani produkční nasazení.
 
+
+## Jednotná identita a obchodní fotobloky (2026-11-14)
+
+- Při každé změně e-mailové šablony, webové prezentace, Canva nabídky nebo CRM výstupu dodržuj `docs/MLZIDLA_BRAND_OMNICHANNEL_WORKFLOW.md`.
+- Zachovej profesionální HTML fotobloky a ověř jejich čitelnost i celé fotografie na mobilu; respektuj aktuální schválené brand soubory.
+- Po schválené změně koordinuj kontrolované aktualizace navazujících aplikací, bez předstírání automatické synchronizace a bez neověřeného publikování.

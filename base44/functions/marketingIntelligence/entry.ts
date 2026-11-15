@@ -213,7 +213,7 @@ async function getGa4(base44: any) {
     if (accountResponse.ok) accountEmail = String((await accountResponse.json())?.email || '').trim().toLowerCase();
   } catch { /* Diagnostics only; missing account must not fabricate identity. */ }
   return {
-    available: true, property_id: propertyId, site_host: SITE_HOST,
+    available: true, propertyId, property_id: propertyId, site_host: SITE_HOST,
     account_email: accountEmail || null,
     account_matches_business: accountEmail ? accountEmail === 'meduna@holmtec.cz' : null,
     today: toSummary(todayRaw),

@@ -32,6 +32,8 @@ export default function AdminAnalytics() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [property, setProperty] = useState(null);
+  const [propertyError, setPropertyError] = useState('');
 
   const load = async () => {
     setLoading(true); setError('');
@@ -41,6 +43,15 @@ export default function AdminAnalytics() {
       if (result?.error) throw new Error(result.error);
       if (!result?.ok) throw new Error('Server nevrátil platná analytická data.');
       setData(result);
+      setProperty(null);
+      try {
+        const config = await base44.functions.invoke('getPublicAnalyticsConfig', {});
+        if (config?.data?.error) throw new Error(config.data.error);
+        setProperty(config?.data || null);
+        setPropertyError('');
+      } catch (configError) {
+        setPropertyError(configError?.message || 'Nepodařilo se ověřit GA4 stream.');
+      }
     } catch (e) {
       setError(e?.message || 'Analytická data se nepodařilo načíst.');
     } finally { setLoading(false); }
@@ -66,7 +77,11 @@ export default function AdminAnalytics() {
   const googleAds = data?.googleAds || {};
   const adsCurrency = ads?.account?.currency || 'CZK';
   const eventCount = (name) => gaReady ? fmt(ga?.eventMap?.[name]?.eventCount || 0) : '—';
-  const trendMax = Math.max(1, ...(ga.trend || []).map(d => Number(d.sessions || 0)));
+  const trend = gaReady && Array.isArray(ga.trend) ? ga.trend : [];
+  const maxSessions = Math.max(1, ...trend.map((item) => Number(item.sessions) || 0));
+  const propertyMatch = gaReady && Boolean(property?.propertyId && property.propertyId === (ga.propertyId || ga.property_id));
+  const gaUnavailable = !gaReady;
+
   const funnelRows = [
     {
       title: 'Města a obce · 28 dní',
@@ -119,7 +134,42 @@ export default function AdminAnalytics() {
       {!gaReady && <p role="alert" className="mt-4 rounded-xl border border-amber-400/20 bg-amber-400/10 p-3 text-xs leading-5 text-amber-200">GA4 není možné považovat za připojené ke správné property. {ga.error || 'Ověřte přístup do Google Analytics a webový datový stream mlzidla.cz.'} Zobrazené pomlčky znamenají chybějící data, nikoli nulovou návštěvnost.</p>}
       {accountProblem && <p className="mt-3 text-xs text-amber-200">Pro firemní workflow doporučuji udělit přístup ke správné GA4 property účtu meduna@holmtec.cz a následně konektor znovu ověřit. Nynější čtení může fungovat pod jiným účtem.</p>}
     </section>
+    <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Mapa měření návštěv a videí">
+      <h3 className="text-sm font-semibold text-white">Měření stránek, produktů a videí</h3>
+      <div className="mt-3 grid gap-3 text-xs text-white/60 md:grid-cols-3">
+        <p><strong className="text-white/85">Stránky a segmenty</strong><span className="mt-1 block">page_view, section_view, scroll_depth a funnel_step pro města, školy a další segmenty.</span></p>
+        <p><strong className="text-white/85">Mlžítka a poptávky</strong><span className="mt-1 block">view_item, select_item, product_media_select a generate_lead. Poptávky porovnávejte s databází Base44.</span></p>
+        <p><strong className="text-white/85">Produktová videa</strong><span className="mt-1 block">video_start, video_progress (25/50/75 %) a video_complete. Jde o události přehrávání, nikoli záznam obrazovky návštěvníka.</span></p>
+      </div>
+      <p className="mt-3 text-xs text-amber-200/80">GA4 neukazuje identitu jednotlivých návštěvníků ani videozáznam jejich relací. Záznam obrazovky vyžaduje zvláštní službu, souhlas a maskování osobních údajů. Události se odesílají až po souhlasu s analytikou.</p>
+    </section>
     {error && <div className="rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs text-amber-200">{error}</div>}
+    <section className="rounded-xl border border-white/10 bg-white/3 p-4" aria-label="Stav propojení GA4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div><p className="font-mono text-[10px] uppercase tracking-widest text-white/40">Ověření existující služby GA4</p>
+          <p className="mt-1 text-sm text-white/80">{propertyMatch ? 'Ověřeno: webový stream a datová služba odpovídají stejné GA4 property' : 'Ověření streamu a datové služby není dokončeno'}</p>
+        </div>
+        <StatusBadge ok={propertyMatch}>{propertyMatch ? 'GA4 ověřeno' : 'vyžaduje kontrolu'}</StatusBadge>
+      </div>
+      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-white/50">
+        <span>Property ID: {property?.propertyId || ga.propertyId || 'nezjištěno'}</span>
+        <span>Measurement ID: {property?.measurementId || 'nezjištěno'}</span>
+        <span>Stream: {property?.defaultUri || 'nezjištěno'}</span>
+      </div>
+      {propertyError && <p className="mt-2 text-xs text-amber-300">{propertyError}</p>}
+      {gaUnavailable && <p className="mt-2 text-xs text-amber-300">GA4 data nejsou dostupná. Nulové hodnoty nepovažujte za skutečnou návštěvnost.</p>}
+    </section>
+    <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Vývoj návštěvnosti za sedm dní">
+      <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Návštěvnost · posledních 7 dní</h3><span className="text-xs text-white/40">GA4 sessions</span></div>
+      {trend.length ? <div className="mt-5 flex h-40 items-end gap-2" role="img" aria-label={trend.map((day) => `${day.date}: ${fmt(day.sessions)} návštěv`).join(', ')}>
+        {trend.map((day) => <div key={day.date} className="flex min-w-0 flex-1 flex-col items-center gap-2">
+          <span className="text-[10px] text-white/50">{fmt(day.sessions)}</span>
+          <div className="w-full max-w-14 rounded-t bg-cyan/75" style={{height: `${Math.max(3, (Number(day.sessions) || 0) / maxSessions * 105)}px`}}/>
+          <span className="truncate text-[10px] text-white/40">{String(day.date || '').slice(4, 6)}.{String(day.date || '').slice(6, 8)}</span>
+        </div>)}
+      </div> : <p className="mt-4 text-sm text-white/40">Vývoj návštěvnosti zatím není k dispozici.</p>}
+    </section>
+
 
     <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
       <MetricCard icon={Users} label="Návštěvy dnes · GA4" value={gaReady ? fmt(ga.today?.sessions) : '—'} note={gaReady ? `včera ${fmt(ga.yesterday?.sessions)}` : 'Bez ověřených GA4 dat'}/>
@@ -129,16 +179,7 @@ export default function AdminAnalytics() {
     </div>
 
     <div className="grid gap-4 xl:grid-cols-[1.5fr_1fr]">
-      <section className="rounded-xl border border-white/10 bg-white/[.03] p-5">
-        <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Návštěvnost · posledních 7 dní</h3><span className="text-[11px] text-white/40">GA4 sessions</span></div>
-        {gaReady && ga.trend?.length ? <div className="mt-5 flex h-44 items-end justify-around gap-2">
-          {ga.trend.map((day, i) => <div key={day.date || i} className="flex h-full flex-1 flex-col justify-end gap-2">
-            <span className="text-center font-mono text-[10px] text-white/50">{fmt(day.sessions)}</span>
-            <div className="flex h-28 items-end justify-center"><div title={`${day.date}: ${fmt(day.sessions)} sessions`} className="w-full max-w-12 rounded-t-md bg-cyan/70" style={{height: Math.max(3, Number(day.sessions || 0) / trendMax * 100) + '%'}} /></div>
-            <span className="text-center font-mono text-[10px] text-white/40">{day.date ? day.date.slice(6,8) + '.' + day.date.slice(4,6) + '.' : '—'}</span>
-          </div>)}
-        </div> : <p className="mt-6 text-sm text-white/35">Časová řada není dostupná.</p>}
-      </section>
+
       <section className="rounded-xl border border-white/10 bg-white/[.03] p-5">
         <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Zařízení návštěvníků</h3><span className="text-[11px] text-white/40">GA4 · 28 dní</span></div>
         <div className="mt-5 space-y-3">
@@ -170,6 +211,18 @@ export default function AdminAnalytics() {
       <div className="rounded-xl border border-amber-400/15 bg-amber-400/5 p-5"><div className="flex items-center gap-2 text-amber-300"><Zap size={15}/><p className="font-mono text-[10px] uppercase tracking-widest">Doporučení</p></div><ol className="mt-4 space-y-3">{(data?.intelligence?.recommendations || []).map((item, i) => <li key={i} className="text-sm leading-relaxed text-white/65"><span className="mr-2 font-mono text-amber-300/70">{String(i + 1).padStart(2, '0')}</span>{item}</li>)}</ol></div>
     </div>
 
+    <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Analýza chování a doporučení UX">
+      <div className="flex flex-wrap items-start justify-between gap-3"><div><h3 className="text-sm font-semibold text-white">Chování návštěvníků · doporučení UX</h3><p className="mt-1 text-xs text-white/40">Vyhodnocení dostupných GA4 událostí za reportované období. Hypotézy je potřeba ověřit záznamy relací nebo testem.</p></div><span className="rounded-full border border-white/15 px-3 py-1 text-[10px] text-white/50">Bez identifikace osob</span></div>
+      {!ga.available ? <p className="mt-4 text-sm text-amber-300">GA4 není dostupné. Doporučení nelze opřít o návštěvnost.</p> : <div className="mt-4 grid gap-3 lg:grid-cols-2">
+        {[
+          { title: 'Nejnavštěvovanější stránky', detail: (ga.pages || []).length ? `Nejvíce zobrazení: ${(ga.pages || []).slice(0, 3).map(p => `${p.pagePath || 'stránka'} (${fmt(p.views)})`).join(', ')}.` : 'Pro vybrané období nejsou dostupné údaje o stránkách.', recommendation: 'Na nejnavštěvovanějších stránkách ověřte viditelnost produktu, ceny na poptání a hlavního CTA.' },
+          { title: 'Kde návštěvníci končí', detail: 'Samotná zobrazení stránek neurčují poslední stránku relace ani důvod odchodu.', recommendation: 'Doplnit GA4 report koncových stránek a cest; při vyšším počtu odchodů ověřit formulář, navigaci a mobilní UX.' },
+          { title: 'Nejdéle prohlížené stránky', detail: 'V současném souhrnu není k dispozici průměrná aktivní doba zapojení po URL.', recommendation: 'Rozšířit serverový GA4 report o userEngagementDuration a views po pagePath; nerozhodovat podle pouhé délky otevřené záložky.' },
+          { title: 'Co návštěvník hledá', detail: `Interakce s produktem: ${eventCount('view_item')} zobrazení, ${eventCount('select_item')} výběrů, ${eventCount('quick_inquiry_click')} kliknutí na rychlou poptávku.`, recommendation: 'Opakované galerie a přechody k parametrům mohou ukazovat zájem o variantu; ověřte to v anonymizovaných relacích, ne jako jistý motiv.' },
+        ].map(item => <article key={item.title} className="rounded-lg border border-white/10 bg-white/[.025] p-4"><h4 className="text-sm font-medium text-white/85">{item.title}</h4><p className="mt-2 text-xs leading-relaxed text-white/55">{item.detail}</p><p className="mt-3 text-xs leading-relaxed text-cyan/85"><strong>Doporučený krok:</strong> {item.recommendation}</p></article>)}
+      </div>}
+      <p className="mt-4 text-xs text-white/40">Záznamy obrazovek, heatmapy, frustrace z opakovaného klikání a důvody odchodu vyžadují samostatný nástroj pro záznam relací. Před jeho zapnutím musí být nastaven souhlas a maskování osobních údajů.</p>
+    </section>
     <div className="grid gap-5 xl:grid-cols-2"><SimpleTable title="Top zdroje · 28 dní" rows={ga.sources} leftKey="sourceMedium" valueKey="sessions" valueLabel="sessions"/><SimpleTable title="Top stránky · 28 dní" rows={ga.pages} leftKey="pagePath" valueKey="views" valueLabel="views"/></div>
 
     <div className="grid gap-5 xl:grid-cols-2"><SimpleTable title="GA4 měřené události" rows={ga.events} leftKey="eventName" valueKey="eventCount" valueLabel="event count"/><div className="overflow-hidden rounded-xl border border-white/8"><div className="flex items-center gap-2 bg-white/5 px-4 py-3"><Search size={13} className="text-cyan"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Search Console · top dotazy</p></div><div className="divide-y divide-white/5">{(data?.search?.queries || []).slice(0, 8).map((q, i) => <div key={`${q.key}-${i}`} className="grid grid-cols-[1fr_auto_auto] gap-4 px-4 py-2.5 text-xs"><span className="truncate text-white/65">{q.key}</span><span className="font-mono text-cyan">{fmt(q.clicks)} kliků</span><span className="font-mono text-white/30">poz. {Number(q.position || 0).toFixed(1)}</span></div>)}{!data?.search?.queries?.length && <p className="px-4 py-4 text-sm text-white/25">Zatím bez dat.</p>}</div></div></div>

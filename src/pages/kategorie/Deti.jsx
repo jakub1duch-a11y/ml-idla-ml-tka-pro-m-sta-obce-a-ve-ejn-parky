@@ -14,17 +14,17 @@ import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigatio
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
-  { emoji: '🏫', title: 'Základní školy', desc: 'Ochlazení školních dvorů a venkovních areálů během horkých dnů, bezpečné pro provoz o přestávkách.' },
-  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná mlha bez tlakového rizika, potravinářská nerez a materiály certifikované pro dětské prostory.' },
-  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Interaktivní mlžné prvky, které dětem přinášejí radost a rodičům klid — bez chemie, bez rizika uklouznutí.' },
+  { emoji: '🏫', title: 'Základní školy', desc: 'Osvěžení školních dvorů a venkovních areálů. Provozní režim a dohled stanovíme podle konkrétní školy.' },
+  { emoji: '🧸', title: 'Mateřské školky', desc: 'Jemná vodní mlha pro školní zahrady. Materiál, tlak vody a hygienické podmínky ověřujeme podle konkrétní sestavy.' },
+  { emoji: '🛝', title: 'Dětská hřiště', desc: 'Mlžné prvky pro pobytové zóny u hřišť. Umístění navrhujeme s ohledem na dohled, povrchy a pohyb dětí.' },
   { emoji: '🎠', title: 'Zábavní centra', desc: 'Mlžné instalace jako atrakce v dětských zábavních a volnočasových centrech.' },
 ];
 
 const SAFETY = [
-  'Potravinářská nerezová ocel AISI 316L',
-  'Nízkotlaká mlha bez rizika uklouznutí',
-  'Žádná chemie ani přísady ve vodě',
-  'Certifikované materiály pro veřejné prostory',
+  'Materiál a povrch podle konkrétního produktu a technického listu',
+  'Posouzení rizika mokrých povrchů a uklouznutí v místě instalace',
+  'Kontrola kvality vody a hygienického provozního režimu',
+  'Mlžítko není herní prvek a nesplňuje ČSN EN 1176',
 ];
 
 export default function Deti() {
@@ -54,10 +54,10 @@ export default function Deti() {
               <p className="text-xs font-mono tracking-widest uppercase text-white/70">Školy, školky a děti</p>
             </div>
             <h1 className="font-heading text-4xl lg:text-6xl text-white mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1.05 }}>
-              Bezpečný chlad<br /><span style={{ fontStyle: 'italic' }}>pro dětskou radost.</span>
+              Mlžítka pro školky a školy<br /><span style={{ fontStyle: 'italic' }}>do venkovních prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Pro školy, školky a dětská hřiště navrhujeme mlžné systémy, které jsou bezpečné, jemné a bez chemie. Ochlazení až o 9 °C bez rizika uklouznutí — děti si mlhu užijí, rodiče i pedagogové budou mít klid.
+              Navrhujeme nerezová mlžítka a mlžné prvky pro mateřské školy, školní zahrady a pobytové zóny. Řešíme umístění, napojení vody, řízení provozu i údržbu. Mlžítka nejsou herními prvky; bezpečnost a hygienu posuzujeme podle konkrétní instalace.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -78,7 +78,7 @@ export default function Deti() {
             <div>
               <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-4">Bezpečnost na prvním místě</p>
               <h2 className="text-slate-900 text-3xl mb-6" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-                Navrženo pro<br /><span style={{ fontStyle: 'italic' }}>ty nejmenší.</span>
+                Mlžné prvky pro<br /><span style={{ fontStyle: 'italic' }}>školní zahrady.</span>
               </h2>
               <ul className="space-y-3">
                 {SAFETY.map(s => (
@@ -151,13 +151,26 @@ export default function Deti() {
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme řešení pro vaši školu či hřiště.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace a návrh zdarma · Odpovídáme do 24 h</p>
+            <p className="text-slate-500 text-sm mb-6">Popište místo instalace, požadovaný termín a možnosti napojení vody. Navrhneme další postup.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>
           </div>
           <CategoryInquiryForm category="Školy, školky a děti" projectScope="urban" />
         </div>
+      </section>
+      <section className="max-w-7xl mx-auto px-6 lg:px-10 pb-20" aria-labelledby="skoly-faq-title">
+        <p className="text-xs font-mono tracking-widest uppercase text-slate-500 mb-3">Provoz a údržba</p>
+        <h2 id="skoly-faq-title" className="text-3xl font-bold text-slate-900 mb-6">Časté dotazy k mlžítkům pro školy a školky</h2>
+        <div className="divide-y divide-slate-200 border-y border-slate-200">
+          {[
+            ['Co je potřeba připravit před instalací?', 'Prověříme přívod vody, vhodné umístění, kotvení, odvodnění okolí a přístup pro servis. Konkrétní řešení závisí na zvoleném modelu a místě.'],
+            ['Jak se řeší hygiena a bezpečnost?', 'Je potřeba stanovit provozní režim, kontrolu kvality vody a dohled nad prostorem. Mlžítko není herní prvek a nesplňuje ČSN EN 1176.'],
+            ['Jak probíhá údržba a zazimování?', 'Rozsah údržby závisí na filtraci, kvalitě vody a provozu. Před mrazy je nutné systém odstavit a zazimovat podle pokynů pro konkrétní instalaci.'],
+            ['Lze mlžení automaticky ovládat?', 'Podle konfigurace lze doplnit časové řízení nebo chytré ovládání SUPLA. Vhodné nastavení stanovíme s provozovatelem školy.']
+          ].map(([question, answer]) => <details key={question} className="py-5 group"><summary className="cursor-pointer font-semibold text-slate-900">{question}</summary><p className="mt-3 text-slate-600 leading-relaxed max-w-3xl">{answer}</p></details>)}
+        </div>
+        <Link to="/podpora" className="inline-flex items-center gap-2 mt-6 text-sm font-semibold text-slate-900 underline underline-offset-4">Další informace o provozu a údržbě <ArrowRight size={15} /></Link>
       </section>
       <AllProductsCatalog categoryTitle="školy, školky a dětská hřiště" />
       <B2BPortfolioNavigation current="Školy a školky" />

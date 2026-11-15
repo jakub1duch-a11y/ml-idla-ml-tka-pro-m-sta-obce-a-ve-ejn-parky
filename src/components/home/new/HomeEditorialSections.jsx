@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
+import { ArrowRight, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
 
 // Jednorázový, nenápadný akcent při vstupu do zorného pole; bez scroll hijackingu.
 function ScrollAccent({ children }) {

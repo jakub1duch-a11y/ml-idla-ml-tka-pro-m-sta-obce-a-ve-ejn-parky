@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
+import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
@@ -38,6 +39,7 @@ export default function Home() {
           <ReferencesStrip />
           <HomeHolmTec />
           <HomeInquiryForm />
+          <HomeFaqTeaser />
         </Suspense>
         <MobileStickyBar />
       </MotionConfig>

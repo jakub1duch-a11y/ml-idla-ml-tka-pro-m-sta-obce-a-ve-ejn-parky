@@ -2,7 +2,8 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.44';
 import { assertBusinessAccount, getVerifiedGoogleAccount } from '../../shared/businessWorkflowGuard.mjs';
 
 const SPREADSHEET_ID = '1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE';
-const CONTACT_SHEETS = ['Eventy a festivaly', 'ZOO botanické a safari ČR SK', 'Školy školky a koupaliště', 'Architekti a projektanti', 'Města a veřejná správa', 'Developeři a investoři', 'Hotely a gastro', 'Umělci a veřejné instalace', 'Domovy seniorů', 'Lázeňské areály', 'Nemocnice a léčebny', 'Technické služby a zeleň'];
+// Single authoritative contact list. Segment tabs are derived/historical and must not be imported again.
+const CONTACT_SHEETS = ['KONTAKTY – VŠE'];
 const ACCOUNT_EMAIL = 'meduna@holmtec.cz';
 
 function headerValue(headers, name) {
@@ -50,16 +51,17 @@ function findHeader(headers, patterns) {
 }
 async function syncContacts(base44, sheetsToken) {
   const rowsByEmail = new Map();
+  const ambiguousEmails = new Set();
   const sheetResults = [];
   for (const sheetName of CONTACT_SHEETS) {
     let rows = [];
-    try { rows = await readSheet(sheetsToken, sheetName); } catch { continue; }
+    rows = await readSheet(sheetsToken, sheetName); // Never silently treat an inaccessible central source as empty.
     if (!rows.length) continue;
     const headers = rows[0];
     const emailIndex = findHeader(headers, [/e-?mail/i, /email/i]);
     if (emailIndex < 0) continue;
-    const nameIndex = findHeader(headers, [/^jméno/i, /^jmeno/i, /lead/i, /kontakt/i]);
-    const orgIndex = findHeader(headers, [/organiz/i, /firma/i, /společnost/i, /mesto|město/i]);
+    const nameIndex = findHeader(headers, [/^kontaktní osoba$/i, /^jméno/i, /^jmeno/i, /kontakt/i]);
+    const orgIndex = findHeader(headers, [/^organizace$/i, /firma/i, /společnost/i]);
     const roleIndex = findHeader(headers, [/pozic/i, /role/i, /funkc/i]);
     const statusIndex = findHeader(headers, [/stav osloven/i, /^stav$/i, /status/i]);
     const responseIndex = findHeader(headers, [/poslední odpověď/i, /posledni odpoved/i, /odpověď/i]);
@@ -67,8 +69,9 @@ async function syncContacts(base44, sheetsToken) {
     for (let rowNumber = 1; rowNumber < rows.length; rowNumber += 1) {
       const row = rows[rowNumber] || [];
       const email = String(row[emailIndex] || '').trim().toLowerCase();
-      if (!email || !email.includes('@')) continue;
-      const current = rowsByEmail.get(email) || {};
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) continue;
+      if (rowsByEmail.has(email)) { ambiguousEmails.add(email); continue; }
+      const current = {};
       rowsByEmail.set(email, { email, name: current.name || String(row[nameIndex] || '').trim(), organization: current.organization || String(row[orgIndex] || '').trim(), role: current.role || String(row[roleIndex] || '').trim(), status: current.status || String(row[statusIndex] || '').trim(), next_step: current.next_step || String(row[nextIndex] || '').trim(), last_subject: current.last_subject || String(row[responseIndex] || '').trim(), source: 'google_sheet', sheet_name: sheetName, sheet_row: rowNumber + 1 });
     }
     sheetResults.push({ sheet: sheetName, rows: rows.length - 1 });
@@ -77,12 +80,13 @@ async function syncContacts(base44, sheetsToken) {
   const existingByEmail = new Map((existing || []).map((item) => [String(item.email || '').toLowerCase(), item]));
   let imported = 0; let updated = 0;
   for (const contact of rowsByEmail.values()) {
+    if (ambiguousEmails.has(contact.email)) continue; // Require human matching for duplicate email rows.
     const previous = existingByEmail.get(contact.email);
-    const data = { ...contact, status: contact.status || previous?.status || 'new', action_required: previous?.action_required || false, next_step: contact.next_step || previous?.next_step || '', thread_url: previous?.thread_url || '', last_inbound_at: previous?.last_inbound_at || '', last_outbound_at: previous?.last_outbound_at || '' };
+    const data = { ...contact, status: previous?.status || 'new', action_required: previous?.action_required || false, next_step: contact.next_step || previous?.next_step || '', thread_url: previous?.thread_url || '', last_inbound_at: previous?.last_inbound_at || '', last_outbound_at: previous?.last_outbound_at || '' };
     if (previous) { await base44.asServiceRole.entities.CrmContact.update(previous.id, data); updated += 1; }
     else { await base44.asServiceRole.entities.CrmContact.create(data); imported += 1; }
   }
-  return { imported, updated, total: rowsByEmail.size, sheets: sheetResults };
+  return { imported, updated, total: rowsByEmail.size, duplicates_skipped: ambiguousEmails.size, sheets: sheetResults };
 }
 async function syncGmail(base44, gmailToken) {
   const q = encodeURIComponent('after:2026/01/01 {mlžidla mlžení mlžítka MLŽIDLA.cz}');
@@ -96,6 +100,9 @@ async function syncGmail(base44, gmailToken) {
   for (const id of ids) {
     if (existingById.has(id)) continue;
     const message = await googleGet('https://gmail.googleapis.com/gmail/v1/users/me/messages/' + id + '?format=full', gmailToken);
+    const labels = Array.isArray(message.labelIds) ? message.labelIds : [];
+    // A draft is not a sent offer; exclude spam, trash and ambiguous outgoing messages.
+    if (labels.some(label => ['DRAFT','SPAM','TRASH'].includes(label))) continue;
     const headers = message.payload?.headers || [];
     const from = parseAddress(headerValue(headers, 'From'));
     const to = parseAddress(headerValue(headers, 'To'));
@@ -103,7 +110,9 @@ async function syncGmail(base44, gmailToken) {
     const subject = headerValue(headers, 'Subject');
     const internalDate = message.internalDate ? new Date(Number(message.internalDate)).toISOString() : new Date().toISOString();
     const inbound = from.email !== ACCOUNT_EMAIL;
+    if (!inbound && !labels.includes('SENT')) continue;
     const contact = inbound ? from : to;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)) continue;
     const body = htmlToText(flattenBody(message.payload)).slice(0, 12000);
     const actionRequired = inbound && isActionRequired(subject, body);
     const threadUrl = 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#all/' + (message.threadId || id);

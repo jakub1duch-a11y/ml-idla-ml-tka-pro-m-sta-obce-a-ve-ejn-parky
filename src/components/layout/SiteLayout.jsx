@@ -10,6 +10,7 @@ import WhatsAppContactWidget from '@/components/common/WhatsAppContactWidget';
 import useGlobalLenis from '@/hooks/useGlobalLenis';
 import ScrollMotionController from '@/components/common/ScrollMotionController';
 import 'lenis/dist/lenis.css';
+import '@/styles/footer-reveal.css';
 
 /**
  * The footer stays under the page on larger screens and is uncovered while

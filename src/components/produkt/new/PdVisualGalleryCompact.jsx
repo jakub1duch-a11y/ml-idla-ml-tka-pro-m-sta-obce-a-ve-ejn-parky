@@ -237,12 +237,12 @@ export default function PdVisualGalleryCompact({ product }) {
     }));
 
     const primaryProductItems = productItems.slice(0, 2);
-    const additionalProductItems = productItems.slice(2);
     // Product proposal for Polná/Peklo: show among the first gallery images,
     // distinctly labelled as visualization, never as installed GATE.
     const pekloProposalUrl = product.slug === 'mlzna-brana-gate'
       ? (product.gallery_urls || []).find((url) => url.includes('MLZIDLA_Polna_Peklo_GATE_vizualizace_16x9.webp'))
       : null;
+    const additionalProductItems = productItems.slice(2).filter((item) => item.url !== pekloProposalUrl);
     const pekloProposal = pekloProposalUrl && isProductMediaAllowed(product, pekloProposalUrl) ? [{
       url: pekloProposalUrl,
       title: 'BRÁNA GATE — Polná, rybník Peklo',

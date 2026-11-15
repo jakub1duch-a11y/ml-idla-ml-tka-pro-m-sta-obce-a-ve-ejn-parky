@@ -19,7 +19,7 @@ function GateShapeIcon({ kind, className = '' }) {
 }
 
 function getShape(name) {
-  if (/\\bV\\b|lomen/i.test(name)) return 'vee';
+  if (/\bV\b|lomen/i.test(name)) return 'vee';
   if (/OBLOUK/i.test(name)) return 'arc';
   if (/RADIUS/i.test(name)) return 'radius';
   return 'straight';

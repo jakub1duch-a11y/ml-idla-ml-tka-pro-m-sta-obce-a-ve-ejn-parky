@@ -1,3 +1,8 @@
+---
+name: mlzidla-hubspot-crm
+description: Bezpecne zpracovani obchodnich poptavek MLZIDLA a jejich vazeb na HubSpot, Gmail, Canva a Google Workspace.
+---
+
 # MLŽIDLA.cz — HubSpot CRM, Google Workspace a obchodní nabídky (interní agent)
 
 ## Rozsah a oprávnění

@@ -1,3 +1,8 @@
+---
+name: mlzidla-scrollcraft-astra
+description: Pravidla verejneho webdesignu, scroll animaci, responsive UX a footeru webu MLZIDLA.cz.
+---
+
 # MLŽIDLA Scrollcraft / Astra — v1.1
 
 Používej při každé úpravě veřejného webu MLŽIDLA.cz, zejména homepage, hero, navigace, mobilního menu, footeru, produktových detailů, Smart Cooling, PEVEKO/SUPLA prezentace a motion graphics.

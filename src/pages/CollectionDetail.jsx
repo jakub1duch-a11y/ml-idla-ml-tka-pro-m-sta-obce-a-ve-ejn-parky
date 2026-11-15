@@ -137,7 +137,7 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-16 lg:flex-row lg:items-end lg:px-10 lg:py-20">
           <div>
             <p className="font-mono text-sm tracking-[.18em] uppercase text-accent">ŘEŠENÍ NA MÍRU</p>
-            <h2 className="mt-4 max-w-2xl font-heading text-4xl">{isCity ? 'Připravíme městské mlžítko pro konkrétní prostor a způsob provozu.' : isGarden ? 'Vybereme zahradní mlžítko, které bude fungovat technicky i vizuálně.' : 'Společně vybereme správný model, rozměr i způsob instalace.'}</h2>
+            <h2 className="mt-4 max-w-2xl min-w-0 whitespace-normal break-words font-heading text-[clamp(2rem,7.4vw,3rem)] leading-[1.12]">{isCity ? 'Připravíme městské mlžítko pro konkrétní prostor a způsob provozu.' : isGarden ? 'Vybereme zahradní mlžítko, které bude fungovat technicky i vizuálně.' : 'Společně vybereme správný model, rozměr i způsob instalace.'}</h2>
             {(isCity || isGarden) && <p className="mt-5 max-w-xl text-base leading-relaxed text-white/70">{isCity ? 'Pošlete nám základní informace o místě. Doporučíme vhodné řešení a další postup.' : 'Stačí fotografie nebo rozměry prostoru a informace o přívodu vody. Navrhneme vhodný model a způsob instalace.'}</p>}
           </div>
           <Link to="/poptavka" className="inline-flex shrink-0 items-center gap-2 bg-accent px-6 py-3 text-base font-semibold text-accent-foreground">Nezávazná poptávka <ArrowRight size={17} /></Link>

@@ -128,9 +128,9 @@ export default function PolnaCaseStudy() {
         <motion.figure {...reveal} className="relative mx-3 overflow-hidden rounded-[1.15rem] border border-white/10 bg-[#EDF6FA] sm:mx-6 sm:rounded-[1.5rem] lg:mx-10">
           <picture>
             <source media="(max-width: 639px)" srcSet={MOBILE_IMAGE} type="image/webp"/>
-            <img src={DESKTOP_IMAGE} alt="Polná, mlžítko MRKEV: vlevo původní technický výkres, vpravo skutečný záběr instalace z reportáže i-vysočina.cz"
+            <img src={DESKTOP_IMAGE} alt="Mlžítko MRKEV v Polné: původní technický výkres a skutečný záběr instalace z reportáže i-vysočina.cz"
               loading="lazy" decoding="async"
-              width="1648" height="928"
+              width="2400" height="1350"
               className="block h-auto w-full object-contain"
               style={{ aspectRatio: 'auto' }}/>
           </picture>

@@ -57,6 +57,16 @@ export default async function(req) {
     if(inquiry?.offer_status!=='schvaleno'&&!runs.some(r=>r.run_status==='approved'&&r.qa_passed===true&&r.approved_by))blockers.push('Chybí schválení nabídky v administraci.');
     const existing=arr(await base44.asServiceRole.entities.OfferDeliveryReview.filter({project_order_id:id}).catch(()=>[])).find(x=>x.status==='gmail_draft'&&x.gmail_draft_id);
     if(existing)blockers.push('Pro tento projekt již existuje Gmail koncept.');
+    try {
+      const gc=await base44.asServiceRole.connectors.getConnection('gmail');
+      assertBusinessAccount(await getVerifiedGoogleAccount(gc?.accessToken,'gmail'),'gmail');
+    } catch { blockers.push('Gmail není autorizován firemním účtem meduna@holmtec.cz.'); }
+    if(project.quote_pdf_url && source(project.quote_pdf_url)?.kind==='drive') {
+      try {
+        const dc=await base44.asServiceRole.connectors.getConnection('googledrive');
+        assertBusinessAccount(await getVerifiedGoogleAccount(dc?.accessToken,'googledrive'),'googledrive');
+      } catch { blockers.push('PDF je na Google Disku připojeném nesprávným účtem.'); }
+    }
     let hubId=null;
     try{
       const c=await base44.asServiceRole.connectors.getConnection('hubspot');

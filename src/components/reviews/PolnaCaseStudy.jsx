@@ -19,7 +19,7 @@ export default function PolnaCaseStudy() {
           <div className="max-w-[770px]">
             <p className="font-mono text-[10px] font-bold uppercase tracking-[.18em] text-[#7CDAFA]">Reference / městská zakázka / 2026</p>
             <h2 id="polna-case-study" className="mt-3 font-heading text-[clamp(1.8rem,4vw,3.4rem)] font-bold leading-[1.08] tracking-tight">Polná. Od prvního návrhu po mlžítko MRKEV.</h2>
-            <p className="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">Nerezová mlžná socha navržená přímo pro veřejný prostor města Polná. Motiv mrkve propojuje místní tradici, technickou výrobu a příjemné ochlazení v letních dnech.</p>
+            <p className="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">Pro město Polná jsme navrhli a vyrobili nerezové mlžítko MRKEV, jehož tvar vychází z místní tradice spojené s mrkví. Od prvních návrhů a technického rozkresu jsme přešli k výrobě konstrukce a instalaci ve veřejném prostoru. Výsledkem je výrazný městský prvek, který v letních dnech vytváří jemnou vodní mlhu a současně odkazuje na identitu místa.</p>
           </div>
           <span className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white/85">Skutečná realizace</span>
         </motion.div>
@@ -38,8 +38,8 @@ export default function PolnaCaseStudy() {
         <div className="mt-7 grid gap-6 border-t border-white/15 pt-7 lg:grid-cols-[1fr_auto] lg:items-center">
           <div>
             <p className="font-mono text-[10px] font-bold uppercase tracking-[.14em] text-[#7CDAFA]">Videoreportáž i-vysočina.cz</p>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">MRKEV přináší osvěžení do centra Polné. Reportáž zachycuje skutečnou instalaci a její představení ve městě.</p>
-            <p className="mt-2 text-xs leading-5 text-white/50">Video je uložené v projektovém archivu na Google Disku. Jeho přehrání se řídí oprávněními souboru; před veřejným použitím je nutné ověřit souhlas s publikací.</p>
+            <p className="mt-2 max-w-2xl text-sm leading-6 text-white/75">Reportáž <em>MRKEV PŘINÁŠÍ OSVĚŽENÍ DO CENTRA POLNÉ</em> představuje zakázkovou realizaci mlžítka MRKEV pro město Polná. Podívejte se na hotovou nerezovou konstrukci v prostředí, pro které vznikla, a na její využití pro letní osvěžení veřejného prostoru.</p>
+            <p className="mt-3 text-xs leading-6 text-white/70"><strong className="font-semibold text-white">Zdroj a autor videoreportáže:</strong> <a href="https://www.i-vysocina.cz/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#8CE4FA] underline underline-offset-4 hover:text-white">i-vysočina.cz <ExternalLink size={12} className="inline" aria-hidden="true" /></a> · archivní kopie na sdíleném Mlžném disku HolmTec. Video se spustí po kliknutí; dostupnost přehrávání závisí na přístupových právech souboru.</p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={() => setVideoOpen(true)} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1AB9E8] px-5 py-3 text-sm font-bold text-[#042438] transition hover:bg-[#77DCF6]">
@@ -60,7 +60,7 @@ export default function PolnaCaseStudy() {
               <button autoFocus type="button" onClick={() => setVideoOpen(false)} aria-label="Zavřít reportáž" className="grid h-11 w-11 place-items-center rounded-full border border-white/35 text-white hover:bg-white/10"><X size={20}/></button>
             </div>
             <iframe title="Videoreportáž MRKEV — i-vysočina.cz" src={DRIVE_PREVIEW + '?autoplay=1'} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="aspect-video w-full rounded-2xl border border-white/15 bg-black"/>
-            <a href={DRIVE_VIDEO} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-xs text-white/70 underline underline-offset-4 hover:text-white">Otevřít video na Google Disku <ExternalLink size={13}/></a>
+            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-xs text-white/75"><span>Zdroj reportáže: <a href="https://www.i-vysocina.cz/" target="_blank" rel="noopener noreferrer" className="font-semibold text-[#8CE4FA] underline underline-offset-4">i-vysočina.cz</a></span><a href={DRIVE_VIDEO} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 underline underline-offset-4 hover:text-white">Otevřít archivní video na Google Disku <ExternalLink size={13}/></a></div>
           </div>
         </div>
       )}

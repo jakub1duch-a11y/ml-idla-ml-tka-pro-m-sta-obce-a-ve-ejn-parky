@@ -29,3 +29,9 @@ Pracuješ ve zdrojovém repozitáři webu MLŽIDLA.cz (React, Vite, Base44). Odp
 
 ## Před odevzdáním
 Uveď seznam změněných souborů, výsledky skutečně spuštěných kontrol, rizika pro Base44 a odkaz na PR. Nikdy netvrď, že je změna nasazena, pokud není ověřena na mlzidla.cz.
+
+## Napojení na obchodní workflow
+- Před CRM prací vždy načti `docs/QWEN_WORKFLOW_MLZIDLA.md` a audit `docs/audits/2026-11-14-web-workflow-etapa-1.md`.
+- Pozor na rozpor portálů HubSpot: `hubspotOfferCaseGateway` používá `149778217`, zatímco `HubspotCatalogSync` používá `149032244`. Neprováděj žádný automatický zápis ani sjednocení bez ověření.
+- Primárním cílem Qwen je audit a bezpečné úpravy kódu. Poptávka → deduplikace → produkt/MASTER → kalkulace → Canva PDF → Gmail koncept → QA → schválení → následné kroky jsou workflow stavy, nikoli důkaz aktivního propojení.
+- V přehledech uváděj odděleně ověřená data, neověřené údaje, blokace a doporučený další krok; nikdy netvrď „synchronizováno“ jen na základě existence konektoru.

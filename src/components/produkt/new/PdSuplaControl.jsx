@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Clock3, Droplets, Gauge, ShieldCheck, Smartphone, ThermometerSun, Wifi, Workflow } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Clock3, Droplets, Gauge, ShieldCheck, ThermometerSun, Wifi, Workflow } from 'lucide-react';
 
 /**
  * Shared, product-specific smart-control presentation.
  * This is an educational interactive demo, not a live SUPLA interface.
  */
 export default function PdSuplaControl({ product }) {
-  const [demoActive, setDemoActive] = useState(true);
+  const [mode, setMode] = useState('time');
   const productName = product?.name || 'mlžítko';
   const productSlug = product?.slug || '';
 
@@ -64,41 +64,32 @@ export default function PdSuplaControl({ product }) {
             <div className="relative rounded-[2rem] border border-white/15 bg-[linear-gradient(145deg,#153B4A,#0A1F30)] p-5 shadow-[0_35px_100px_rgba(0,0,0,.28)] sm:p-7">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#8DE2EF]">Princip ovládání</p>
-                  <h3 className="mt-2 font-heading text-xl font-bold">Ukázka SUPLA scénáře</h3></div>
-                <span className="rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-medium text-white/65">Ilustrace · bez připojení</span>
+                  <h3 className="mt-2 font-heading text-xl font-bold">Jak nastavit mlžení</h3></div>
+
               </div>
 
-              <div className="mt-6 min-w-0 rounded-[1.7rem] border border-white/20 bg-white p-3 text-[#0A2837] shadow-xl sm:p-6">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex min-w-0 items-center gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#E8F7FA] text-[#087EA0]"><Smartphone size={22} aria-hidden="true" /></span>
-                    <div className="min-w-0"><p className="text-[10px] font-bold uppercase tracking-[.14em] text-[#426374]">SUPLA · ilustrační režim</p><p className="truncate font-heading text-lg font-bold">{productName}</p></div>
-                  </div>
-                  <button type="button" onClick={() => setDemoActive((value) => !value)} aria-pressed={demoActive}
-                    aria-label={demoActive ? 'Vypnout ilustrační mlžení' : 'Zapnout ilustrační mlžení'}
-                    className={`relative h-9 w-[62px] shrink-0 rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#007EA3] ${demoActive ? 'bg-[#087E9D]' : 'bg-[#B8CBD4]'}`}>
-                    <span className={`absolute left-[5px] top-[5px] h-[26px] w-[26px] rounded-full bg-white shadow-md transition-transform ${demoActive ? 'translate-x-[26px]' : 'translate-x-0'}`} aria-hidden="true" />
-                  </button>
+              <div className="mt-6 min-w-0 rounded-[1.7rem] bg-white p-5 text-[#0A2837] shadow-xl sm:p-6">
+                <p className="text-xs font-bold uppercase tracking-widest text-[#426374]">Možnosti řízení SUPLA</p>
+                <p className="mt-2 break-words font-heading text-xl font-bold">{productName}</p>
+                <div className="mt-6 grid gap-3 sm:grid-cols-2" aria-label="Způsob řízení">
+                  {[
+                    { id: 'time', icon: Clock3, label: 'Časový režim', detail: 'Plán a cykly mlžení' },
+                    { id: 'conditions', icon: Gauge, label: 'Podmínky', detail: 'Reakce na osazená čidla' },
+                  ].map(({ id, icon: Icon, label, detail }) => (
+                    <button key={id} type="button" aria-pressed={mode === id} aria-controls="supla-mode-detail" onClick={() => setMode(id)}
+                      className={`min-h-28 rounded-2xl border-2 p-4 text-left transition-colors duration-200 motion-safe:transition-transform motion-safe:active:scale-[.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#087E9D] ${mode === id ? 'border-[#087E9D] bg-[#E8F7FA]' : 'border-[#DCECF1] bg-white hover:border-[#087E9D]'}`}>
+                      <Icon size={24} className="text-[#087E9D]" aria-hidden="true" />
+                      <strong className="mt-3 block text-lg">{label}</strong>
+                      <span className="mt-1 block text-sm leading-5 text-[#426374]">{detail}</span>
+                    </button>
+                  ))}
                 </div>
-                <div className="mt-5 rounded-2xl bg-[#F0FAFC] p-3 sm:p-5">
-                  <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="text-sm font-semibold text-[#244758]">Ukázkový stav</span>
-                    <span className={`inline-flex items-center gap-2 text-xs font-bold ${demoActive ? 'text-[#087D99]' : 'text-[#617987]'}`}>
-                      <span className={`h-2 w-2 rounded-full ${demoActive ? 'bg-[#04B5CB] motion-safe:animate-pulse' : 'bg-[#93AAB3]'}`} />
-                      {demoActive ? 'Mlžení zapnuto' : 'Mlžení vypnuto'}
-                    </span>
+                <div id="supla-mode-detail" aria-live="polite" className="mt-5 min-h-44 rounded-2xl bg-[#F0FAFC] p-5">
+                  <h4 className="font-bold">{mode === 'time' ? 'Mlžení podle vašeho plánu' : 'Mlžení podle podmínek'}</h4>
+                  <p className="mt-2 text-sm leading-6 text-[#426374]">{mode === 'time' ? 'Zvolíte provozní dny, čas spuštění a ukončení. Podle řídicí sestavy lze nastavit také délku mlžení a přestávky mezi cykly.' : 'S odpovídajícími čidly lze navázat spuštění na teplotu nebo vlhkost. Dostupné podmínky a jejich kombinace navrhneme podle osazeného systému.'}</p>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold">
+                    {(mode === 'time' ? ['Provozní dny', 'Čas od–do', 'Mlžení / pauza'] : ['Teplota', 'Vlhkost', 'Volitelná čidla']).map(label => <span key={label} className="rounded-full border border-[#B8DCE5] bg-white px-3 py-2">{label}</span>)}
                   </div>
-                  <div className="mt-5 flex items-end justify-center gap-2" aria-hidden="true">
-                    {[2, 5, 3, 7, 4, 6, 2].map((height, index) => (
-                      <span key={index} style={{ height: `${height * 8}px` }}
-                        className={`w-4 rounded-t-full transition-colors duration-300 ${demoActive ? 'bg-gradient-to-t from-[#087E9D] to-[#89E7F0]' : 'bg-[#D4E5EA]'}`} />
-                    ))}
-                  </div>
-                  <p className="mt-4 text-center text-xs text-[#557482]">V ukázce přepněte stav vypnuto / zapnuto. Nejde o skutečné ovládání zařízení.</p>
-                </div>
-                <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
-                  <div className="rounded-xl border border-[#DCECF1] p-3"><Clock3 size={16} className="text-[#087E9D]" aria-hidden="true" /><strong className="mt-2 block">Časový režim</strong><span className="mt-1 block text-[#53727E]">Nastavitelný plán</span></div>
-                  <div className="rounded-xl border border-[#DCECF1] p-3"><Gauge size={16} className="text-[#087E9D]" aria-hidden="true" /><strong className="mt-2 block">Podmínky</strong><span className="mt-1 block text-[#53727E]">Dle osazených čidel</span></div>
                 </div>
               </div>
 
@@ -112,7 +103,7 @@ export default function PdSuplaControl({ product }) {
                   </div>
                 ))}
               </div>
-              <p className="mt-5 flex items-start gap-2 text-xs leading-5 text-white/65"><ShieldCheck size={15} className="mt-0.5 shrink-0 text-[#8DE2EF]" aria-hidden="true" /> Dostupné funkce a zapojení se potvrzují podle konfigurace výrobku, vody, napájení a signálu Wi-Fi. Ilustrace neznamená, že je SUPLA součástí základní dodávky.</p>
+              <p className="mt-5 flex items-start gap-2 text-xs leading-5 text-white/65"><ShieldCheck size={15} className="mt-0.5 shrink-0 text-[#8DE2EF]" aria-hidden="true" /> Dostupné funkce a zapojení se potvrzují podle konfigurace výrobku, vody, napájení a signálu Wi-Fi. Řízení SUPLA je volitelný doplněk.</p>
             </div>
           </div>
         </div>

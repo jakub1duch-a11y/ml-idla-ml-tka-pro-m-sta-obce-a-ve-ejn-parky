@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import DOMPurify from 'dompurify';
 import ReactMarkdown from 'react-markdown';
 
@@ -11,6 +11,11 @@ const isImage = (url) => typeof url === 'string' && IMAGE_RE.test(url);
 
 export default function PdDescription({ product }) {
   const reduced = useReducedMotion();
+  const stage = useRef(null);
+  const [motionEnabled, setMotionEnabled] = useState(true);
+  const { scrollYProgress } = useScroll({ target: stage, offset: ['start end', 'end start'] });
+  const photoY = useTransform(scrollYProgress, [0, 1], [8, -8]);
+  const moving = motionEnabled && !reduced;
   const reveal = {
     initial: reduced ? false : { opacity: 0.94, y: 18 },
     whileInView: { opacity: 1, y: 0 },
@@ -31,9 +36,10 @@ export default function PdDescription({ product }) {
           <p className="pd-desc-sub">Provedení, princip a technické souvislosti pro výběr řešení.</p>
 
           {studio && (
-            <figure className="pd-desc-studio">
+            <figure ref={stage} className="pd-desc-studio">
               <span className="pd-desc-studio-badge">Studiový náhled</span>
-              <img
+              <motion.img
+                style={{ y: moving ? photoY : 0 }}
                 src={studio}
                 alt={product.image_alt || `${product.name} — studiový náhled produktu`}
                 width={1200}
@@ -41,6 +47,7 @@ export default function PdDescription({ product }) {
                 loading="eager"
                 decoding="async"
               />
+              {!reduced && <button type="button" aria-pressed={motionEnabled} onClick={() => setMotionEnabled(value => !value)} className="pd-desc-motion-toggle">{motionEnabled ? 'Zastavit pohyb' : 'Zapnout pohyb'}</button>}
             </figure>
           )}
         </motion.div>

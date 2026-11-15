@@ -218,7 +218,7 @@ export default function ONas() {
           <div className="mt-9"><Action to="/kontakt" variant="navy">Spojit se s námi</Action></div>
         </div>
         <div className="about-contact__panel">
-          <div className="flex items-center gap-3"><span className="about-contact__mark">H</span><div><span className="block font-mono text-xs uppercase tracking-widest text-[#4C7895]">Provozovatel a výrobce</span><strong className="font-heading text-2xl font-semibold">{COMPANY.name}</strong></div></div>
+          <div className="flex flex-col items-start gap-5"><a href="https://holmtec.cz" aria-label="HolmTec – ohýbání trubek"><img src="/media/brand/holmtec-tube-bending.svg" width="264" height="72" loading="lazy" alt="HolmTec – ohýbání trubek" className="h-auto w-56 max-w-full" /></a><div><span className="block font-mono text-xs uppercase tracking-widest text-[#4C7895]">Provozovatel a výrobce</span><strong className="font-heading text-2xl font-semibold">{COMPANY.name}</strong></div></div>
           <div className="mt-9 grid gap-5 text-sm text-slate-700 sm:grid-cols-2">
             <div className="flex items-start gap-3"><MapPin size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><span>{COMPANY.address}</span></div>
             <div className="flex items-start gap-3"><Mail size={19} className="mt-0.5 shrink-0 text-[#147FB9]" aria-hidden="true" /><a href="mailto:obchod1@holmtec.cz" className="break-all underline-offset-4 hover:underline">{COMPANY.email}</a></div>

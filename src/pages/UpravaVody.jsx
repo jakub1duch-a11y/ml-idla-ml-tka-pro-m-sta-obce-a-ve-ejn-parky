@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Droplets, Filter, Gauge, ArrowRight, ShieldCheck, Wrench } from 'lucide-react';
+import { Droplets, Filter, Gauge, ArrowRight, ShieldCheck } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 
 const steps = [

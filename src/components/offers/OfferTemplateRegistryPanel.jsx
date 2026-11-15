@@ -43,7 +43,7 @@ export default function OfferTemplateRegistryPanel({ prepared, selected, selecte
           Otevřít výchozí šablonu <ExternalLink size={14} aria-hidden="true"/>
         </a>
       </div>
-      <p className="mt-3 text-xs font-semibold text-[#8A5500]">Canva Autofill: nedostupný (šablona nemá datová pole). PDF, ceny a Gmail koncept vyžadují ověřený export a kontrolu.</p>
+      <p className="mt-3 text-xs font-semibold leading-5 text-[#8A5500]">Šablona má 1 stránku pro AURA 700 a obsahuje pevně zapsané orientační/starší ceny i technické údaje. Pro jiný produkt všechny údaje a obrázky nahradit a ověřit. Bez kompletní revize PDF nelze připravit přílohu Gmail konceptu. Autofill dataset není dostupný.</p>
     </div>
     <div className="mt-4 grid gap-2 sm:grid-cols-3">
       {Object.entries(MLZ_CANVA_WORKING_TEMPLATES).map(([key,item])=><button key={key} type="button" onClick={()=>setKind(key)}

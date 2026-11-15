@@ -12,7 +12,7 @@ export const CURRENT_PUBLIC_CATALOG = Object.freeze({
 });
 export const PRODUCT_CATALOG_FOLDER_ID = '1KJqen97HpD9yAmo7yMBpaFZI8iqk0mdE';
 
-const LABELS = { googledrive:'Google Drive', gmail:'Gmail', googlesheets:'Google Sheets' };
+const LABELS = { googledrive:'Google Drive', googledocs:'Google Docs', gmail:'Gmail', googlesheets:'Google Sheets' };
 const cleanEmail = value => String(value || '').trim().toLowerCase();
 
 export function assertBusinessAccount(email, type) {
@@ -29,6 +29,7 @@ export async function getVerifiedGoogleAccount(accessToken, type, fetcher = fetc
     googledrive: 'https://www.googleapis.com/drive/v3/about?fields=user(emailAddress)',
     gmail: 'https://gmail.googleapis.com/gmail/v1/users/me/profile',
     googlesheets: 'https://www.googleapis.com/oauth2/v3/userinfo',
+    googledocs: 'https://www.googleapis.com/oauth2/v3/userinfo',
   };
   if (!endpoints[type]) throw new Error('Nepodporovaný typ konektoru.');
   const response = await fetcher(endpoints[type], {

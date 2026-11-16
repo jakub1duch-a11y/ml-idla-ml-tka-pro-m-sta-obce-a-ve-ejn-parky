@@ -84,7 +84,7 @@ export default function AdminAnalytics() {
   const conversion = useMemo(() => data?.intelligence?.dbConversion || 0, [data]);
 
   if (loading) return <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-cyan/50"/></div>;
-  if (error && !data) return <div className="p-6"><div className="rounded-xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300">{error}</div></div>;
+  if (error && !data) return <div className="space-y-6 p-6"><HubspotSalesOverview/><div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-5 text-sm text-amber-200" role="status">GA4 a marketingová analytika se nenačetly: {error}. Obchodní přehled HubSpot je dostupný samostatně výše.</div></div>;
 
   const ga = data?.ga4 || {};
   const leads = data?.leads || {};

@@ -32,7 +32,16 @@ test('packet uses exact variant, public price, verified master and mandatory SUP
   assert.equal(packet.product.variant, 'AURA 700');
   assert.equal(packet.product.price_ex_vat, 26580);
   assert.equal(packet.product.image_url, product.variants[0].visual_master_reference_url);
-  assert.equal(packet.supla.required_sheet, true);
+  assert.equal(packet.presentation.control_modes[0].id, 'without_app');
+  assert.equal(packet.presentation.control_modes[0].price_ex_vat, null);
+  assert.equal(packet.presentation.control_modes[1].id, 'supla_app');
+  assert.equal(packet.presentation.placement.dry_ground_guaranteed, false);
+  assert.equal(packet.crm.portal_id, 149778217);
+  assert.equal(packet.crm.pipeline_id, '4351532258');
+  assert.equal(packet.crm.verified_deal_id, null);
+  assert.equal(packet.crm.sync_state, 'requires_authenticated_preflight');
+  assert.equal(packet.crm.offers_sent_automatically, false);
+    assert.equal(packet.supla.required_sheet, true);
   assert.equal(packet.supla.price_ex_vat, null);
   assert.equal(packet.supla.shaft_switchboard_required_to_define, true);
   assert.equal(packet.workflow.email_mode, 'draft_only');

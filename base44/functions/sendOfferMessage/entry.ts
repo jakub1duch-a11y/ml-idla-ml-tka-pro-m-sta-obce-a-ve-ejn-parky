@@ -1,3 +1,4 @@
+const EMAIL_SENDING_PAUSED = true; // Owner-ordered global email pause; 2026-11-16.
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { clientMessageView } from '../../shared/clientPortal.ts';
 
@@ -74,7 +75,8 @@ export default async function(req) {
         </div>
       </div>`;
 
-    await Promise.all(TEAM_RECIPIENTS.map((to) => base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)));
+    // Owner emergency pause: keep the portal message, do not email the team.
+    if (!EMAIL_SENDING_PAUSED) await Promise.all(TEAM_RECIPIENTS.map((to) => base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)));
 
     const messages = (await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []))
       .map(clientMessageView)

@@ -1,3 +1,4 @@
+const EMAIL_SENDING_PAUSED = true; // Owner-ordered global email pause; 2026-11-16.
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.46';
 
 const TEAM_RECIPIENTS = ['jakub1duch@gmail.com', 'info@mlzidla.cz', 'meduna@holmtec.cz'];
@@ -90,7 +91,8 @@ export default async function(req) {
         </div>
       </div>`;
 
-    await Promise.all(TEAM_RECIPIENTS.map((to) =>
+    // Owner emergency pause: lead is stored, no notification email is sent.
+    if (!EMAIL_SENDING_PAUSED) await Promise.all(TEAM_RECIPIENTS.map((to) =>
       base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)
     ));
 

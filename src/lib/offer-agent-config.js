@@ -1,6 +1,6 @@
 export const OFFER_AGENT_CONFIG = Object.freeze({
   key: 'nabidkovy_super_agent',
-  displayName: 'Nabídkový Super Agent',
+  displayName: 'MLŽIDLA.cz · Obchodní a produktový asistent',
   version: '1.1.0',
   description: 'Super Agent pro tvorbu nabídek — automaticky připraví kompletní, odbornou nabídku pro města a obce včetně zónování prostoru (mlžná zóna, stínění, zeleň, aktivní mlžení), vizualizací a náhledů produktů z konkrétního místa. Nikdy neodesílá nabídku automaticky.',
   mcpEndpoint: 'https://mlzidla-mlzitka-pro-mesta-obce-a-588c4d68.base44.app/api/mcp',
@@ -55,13 +55,18 @@ export const OFFER_AGENT_CONFIG = Object.freeze({
     commercialBrand: 'MLŽIDLA.cz',
     supplier: 'HolmTec s.r.o.',
     billingBrand: 'HolmTec',
-    invoiceAndQuoteLogo: 'HolmTec',
+    invoiceAndQuoteLogo: 'HolmTec', // legacy kombinovaný údaj, neměnit kvůli účetním dokladům
+    productSheetLogo: '/brand/mlzidla-logo-2026-on-light.svg',
+    offerSheetLogo: '/brand/mlzidla-logo-2026-on-light.svg',
+    offerSheetLogoDark: '/brand/mlzidla-logo-2026-on-dark.svg',
+    agentAvatar: '/brand/mlzidla-mark-2026.svg',
+    invoiceLegalSupplier: 'HolmTec s.r.o.',
   }),
 });
 
 export function buildOfferAgentSeedPrompt({ inquiryId, inquiryType } = {}) {
   if (!inquiryId) {
-    return 'Jsem Nabídkový agent HolmTec / MLŽIDLA. Pro zpracování potřebuji ID poptávky a typ poptavka/contact, případně vyber poptávku v administraci. Všechny výstupy připravuji ke kontrole; nic zákazníkovi automaticky neodesílám.';
+    return 'Jsem interní obchodní a produktový asistent MLŽIDLA.cz od výrobce HolmTec s.r.o. Pro zpracování potřebuji ID poptávky a typ poptavka/contact, případně vyber poptávku v administraci. Všechny výstupy připravuji ke kontrole; nic zákazníkovi automaticky neodesílám.';
   }
 
   const type = inquiryType === 'contact' ? 'contact' : 'poptavka';
@@ -77,7 +82,7 @@ export function buildOfferAgentSeedPrompt({ inquiryId, inquiryType } = {}) {
     'Tato Canva brand šablona má aktuálně prázdný dataset; Autofill nefunguje. Před vyplněním/exportem vyžaduj ruční nebo jinak prokazatelně funkční doplnění prvků a kontrolu všech stran. Neslibuj hotový PDF soubor, pokud reálně nevznikl.',
     'Každá nabídka obsahuje přesné fotografie a schválené vizualizace, specifikaci produktu, ověřenou cenu položek bez DPH, DPH a součet včetně DPH, případně samostatný list SUPLA, podmínky, platnost, číslo revize a dodavatele HolmTec.',
     'Připrav kompletní PDF cenovou nabídku a stručný koncept zprávy klientovi, ale pouze po úspěšné kontrole podkladů a skutečném exportu.',
-    'Pro cenové nabídky a fakturační dokumenty používej HolmTec jako dodavatele a firemní identitu; MLŽIDLA.cz zůstává obchodní/prezentační značkou.',
+    'V produktových listech, cenových nabídkách a Canva prezentacích použij originální logo MLŽIDLA.cz (src/components/brand/MlzidlaLogoSvg.jsx); HolmTec s.r.o. je vždy fakturační dodavatel. Pro právní a účetní doklady zachovej náležitosti HolmTec.',
     'Nabídku, PDF a vizualizace ulož na sdílený Mlžný disk.',
     'Po QA nastav pending_approval. approval_required musí zůstat true a send_allowed false, dokud uživatel nabídku výslovně neschválí.',
     'V HubSpotu propojuj pouze ověřený kontakt a konkrétní Deal; uchovej source inquiry ID a kontroluj duplicity.',

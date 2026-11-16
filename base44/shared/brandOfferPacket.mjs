@@ -1,5 +1,7 @@
 // Side-effect-free, PUBLIC-only Canva offer packet builder.
 // Intentionally never spreads Product or Sheet data into the response: both may include private pricing.
+import { buildOfferInstallationControlSummary } from './offerInstallationControl.mjs';
+
 export const MLZIDLA_CANVA_BRAND_TEMPLATE = 'EAHbBX1hTpE';
 export const MLZIDLA_CANVA_BRAND_TEMPLATE_URL = 'https://www.canva.com/brand/brand-templates/EAHbBX1hTpE';
 
@@ -56,6 +58,7 @@ export function createBrandOfferPacket({ product, variant, price }) {
       price_inc_vat: amount === null ? null : Math.round(amount * 1.21 * 100) / 100,
       price_source: amount === null ? null : String(price.source || ''),
     },
+    presentation: buildOfferInstallationControlSummary({ product }),
     supla: {
       required_sheet: true,
       price_ex_vat: null,
@@ -68,7 +71,7 @@ export function createBrandOfferPacket({ product, variant, price }) {
       publish_allowed: false,
       customer_send_allowed: false,
       human_approval_required: true,
-      required_outputs: ['produktový list Canva', 'samostatný list SUPLA', 'PDF', 'WebP', 'archiv MLŽNÝ DISK'],
+      required_outputs: ['produktový list Canva se skutečnou MASTER fotografií', 'produkt + cenová nabídka + varianty ovládání', 'strana vizualizace s označeným původem', 'samostatný list SUPLA', 'PDF', 'WebP', 'archiv MLŽNÝ DISK'],
     },
   };
 }

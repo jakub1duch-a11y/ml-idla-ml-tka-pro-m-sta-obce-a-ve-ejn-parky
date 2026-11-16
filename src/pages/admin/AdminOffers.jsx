@@ -290,6 +290,34 @@ export default function AdminOffers() {
                         <p>Kontrola kvality: {latestRun?.qa_passed ? 'evidovaná' : 'vyžaduje kontrolu'} · Zdroje cen: {(latestRun?.pricing_sources || []).length}</p>
                         <a href="/admin?tab=approvals" className="mt-2 inline-block text-cyan">Otevřít schvalovací centrum ↗</a>
                       </div>
+                      <div className="rounded-xl border border-cyan/20 bg-[#102b3a] p-4 space-y-3" aria-label="Náhled obsahu obchodní zprávy">
+                        <h5 className="text-sm font-semibold text-white">Náhled zprávy · cenová nabídka a přílohy</h5>
+                        <p className="text-xs text-white/65">Dobrý den, připravili jsme pro Vás návrh řešení {o.product_name || o.project_name || 'mlžení'}.</p>
+                        <div className="overflow-x-auto rounded-lg border border-white/10">
+                          <table className="w-full text-left text-xs text-white/80">
+                            <thead className="bg-white/10"><tr><th className="p-2">Položka</th><th className="p-2 text-right">Cena</th></tr></thead>
+                            <tbody>
+                              <tr className="border-t border-white/10"><td className="p-2">{o.product_name || 'Mlžítko / sestava'}</td><td className="p-2 text-right">Dle schválené kalkulace</td></tr>
+                              <tr className="border-t border-white/10"><td className="p-2">Vodní technologie, řízení, instalace</td><td className="p-2 text-right">Dle rozsahu nabídky</td></tr>
+                              <tr className="border-t border-white/10 font-semibold"><td className="p-2">Celková cena v evidenci</td><td className="p-2 text-right">{money(o.total_price)}</td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div className="text-xs text-white/70">
+                          <p className="font-semibold text-white mb-1">Co nabídka obsahuje</p>
+                          <p>Konkrétní rozsah musí být potvrzen v PDF: produkt a varianta, technologie, případné řízení SUPLA/BOT, montáž a stavební připravenost.</p>
+                        </div>
+                        <div className="text-xs text-white/70">
+                          <p className="font-semibold text-white mb-1">Přílohy k ověření ({linked.length + (o.quote_pdf_url ? 1 : 0)})</p>
+                          {o.quote_pdf_url ? <p>✓ Cenová nabídka PDF</p> : <p className="text-amber-300">! Cenová nabídka PDF chybí</p>}
+                          {linked.filter(f => f.selected_for_offer).map(f => <p key={f.id}>✓ {f.title || f.file_name || 'Vybraná příloha'}</p>)}
+                          {!linked.some(f => f.selected_for_offer) && <p className="text-amber-300">! Nejsou potvrzené další přílohy k odeslání</p>}
+                        </div>
+                        <div className="rounded-lg bg-cyan/10 border border-cyan/20 p-3 text-center">
+                          <p className="text-xs font-semibold text-cyan">CTA: Odpovězte na tento e-mail a potvrďte variantu nebo požádejte o úpravu.</p>
+                        </div>
+                        <p className="text-[11px] text-amber-200">Pouze interní náhled. Před vytvořením finálního Gmail konceptu ověřit položkové ceny, DPH, rozsah dodávky a skutečně přiložené soubory.</p>
+                      </div>
                       {actionMessage[o.id] && <p role="status" className="text-xs text-amber-200">{actionMessage[o.id]}</p>}
                       <p className="text-xs text-white/40">Server Gmailu před uložením ověřuje účet, cenu, schválení a PDF. Bez ověření ukládá pouze interní návrh. Žádné automatické odesílání.</p>
                     </div>

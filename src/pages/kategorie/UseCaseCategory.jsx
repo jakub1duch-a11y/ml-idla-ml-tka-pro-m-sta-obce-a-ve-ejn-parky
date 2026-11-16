@@ -43,6 +43,8 @@ const CATEGORIES = {
     eyebrow: 'Komfort venkovních pobytových zón',
     description: 'Designová mlžítka pro hotelové vstupy, terasy, zahrady, nádvoří a wellness areály. Návrh propojuje komfort hostů, architekturu a servisní přístup.',
     icon: Hotel,
+    image: '/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp',
+    imageAlt: 'Ilustrační vizualizace nerezového mlžítka u venkovní terasy',
     uses: ['Hotelové terasy', 'Vstupy a nádvoří', 'Wellness zahrady', 'Resorty a venkovní lounge'],
     placementTitle: 'Mlžítko jako součást zahrady, ne překážka u stolu.',
     placementText: 'Pro hotelové terasy a pobytové zóny doporučujeme nízkotlaké mlžítko umístit mimo bezprostřední posezení. Při návrhu zohledníme charakter zahrady i provoz hostů.',
@@ -90,9 +92,9 @@ export default function UseCaseCategory() {
       eyebrow={data.eyebrow}
       title={data.title}
       description={data.description}
-      image="/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp"
-      imageAlt="Ilustrační vizualizace mlžítka v městském parku"
-      credit="Ilustrační vizualizace · vhodnost konkrétního výrobku se ověřuje"
+      image={data.image || '/media/optimized/1e0142d25_Mlzitko-v-mestskem-parku-VDMA.webp'}
+      imageAlt={data.imageAlt || 'Ilustrační vizualizace mlžítka v městském parku'}
+      credit="Katalogová vizualizace · není fotografií potvrzené realizace"
       cta="Prohlédnout katalog"
       href="#katalog-produktu"
       headingLevel="h1"

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { BarChart3, CheckCircle2, Loader, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import HubspotSalesOverview from '@/components/admin/crm/HubspotSalesOverview';
 
 const fmt = (value = 0) => Math.round(Number(value) || 0).toLocaleString('cs-CZ');
 const pct = (value = 0) => `${Number(value || 0).toFixed(1).replace('.', ',')} %`;
@@ -162,6 +163,7 @@ export default function AdminAnalytics() {
       {propertyError && <p className="mt-2 text-xs text-amber-300">{propertyError}</p>}
       {gaUnavailable && <p className="mt-2 text-xs text-amber-300">GA4 data nejsou dostupná. Nulové hodnoty nepovažujte za skutečnou návštěvnost.</p>}
     </section>
+    <HubspotSalesOverview />
     <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Vývoj návštěvnosti za sedm dní">
       <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Návštěvnost · posledních 7 dní</h3><span className="text-xs text-white/40">GA4 sessions</span></div>
       {trend.length ? <div className="mt-5 flex h-40 items-end gap-2" role="img" aria-label={trend.map((day) => `${day.date}: ${fmt(day.sessions)} návštěv`).join(', ')}>

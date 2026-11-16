@@ -34,14 +34,7 @@ export default function UseCaseExperience({ variant = 'city' }) {
                 ? 'Od soukromé zahrady přes hotelovou terasu až po lázeňský nebo seniorský areál. Jemná mlha vytváří příjemnější mikroklima bez toho, aby přebila architekturu prostoru.'
                 : 'Náměstí, parky, sportoviště, nádraží, promenády, hotely, lázně i domovy seniorů. Navrhujeme ochlazovací body podle pohybu lidí, stínu, větru a skutečného provozu.'}
             </p>
-            <motion.p
-              initial={{ opacity: 0, x: -12 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="mt-5 font-heading text-xl font-semibold tracking-[-.02em] text-[#153863] sm:text-2xl"
-            >
-              Ochlazujeme vzduch kolem vás. Dýchejte lépe.
-            </motion.p>
+
           </div>
         </div>
 

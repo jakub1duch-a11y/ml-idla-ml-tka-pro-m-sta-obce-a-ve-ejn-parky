@@ -44,6 +44,11 @@ export function createBrandOfferPacket({ product, variant, price }) {
     ready_for_canva: blockers.length === 0,
     blockers,
     brand: { name: 'MLŽIDLA.cz', supplier: 'HolmTec s.r.o.', canva_template_id: MLZIDLA_CANVA_BRAND_TEMPLATE, canva_template_url: MLZIDLA_CANVA_BRAND_TEMPLATE_URL, autofill_ready: false,
+      working_offer_design_id: 'DAHbHrijg6I',
+      working_offer_url: 'https://www.canva.com/d/r4hRReci7q1wlnQ',
+      offer_generator_source_drive_id: '1bkHcXRUtvGLKgQwGEXV-5D4J1HlgvU0w',
+      dynamic_product_pages: 'prototype_preflight_only',
+      installation_page: 'realistic_concept_non_construction_drawing',
       logo: {
         name: 'MLŽIDLA.cz',
         source_component: 'src/components/brand/MlzidlaLogoSvg.jsx',

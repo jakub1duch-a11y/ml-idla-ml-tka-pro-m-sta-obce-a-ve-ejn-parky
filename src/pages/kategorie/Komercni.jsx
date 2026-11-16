@@ -1,16 +1,12 @@
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
-import ProductExperience from '@/components/ui/ProductExperience';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, MotionConfig } from 'framer-motion';
-import { ArrowRight, Factory, Loader } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
-import { sortByStructure } from '@/lib/productFamilies';
+import { ArrowRight, Factory } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
-import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
 { emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Mlžení může zpříjemnit horké letní dny. Umístění doporučíme mimo bezprostřední okolí stolů a míst k sezení.' },
@@ -20,14 +16,8 @@ const USE_CASES = [
 
 
 export default function Komercni() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     setSEO(SEO_PAGES.komercni);
-    base44.entities.Product.list().catch(() => []).then((p) => {
-      setProducts(sortByStructure(p || []).slice(0, 6));
-    }).finally(() => setLoading(false));
   }, []);
 
   return (
@@ -120,33 +110,6 @@ export default function Komercni() {
             </p>
           </motion.div>
         </div>
-      </section>
-
-      <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty</p>
-        <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Katalogové modely pro inspiraci.</h2>
-        {loading ?
-        <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
-
-        <ProductExperience products={products}>
-<div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {products.map((p, i) =>
-            <motion.div key={p.id} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}>
-                <Link to={`/produkt/${p.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-slate-300 shadow-sm transition-all">
-                  <ProductHoverImage product={p} alt={p.name} className="aspect-[4/3] bg-slate-100" fullBleed cleanPreview />
-                  <div className="p-5 flex items-center justify-between">
-                    <div>
-                      <p className="text-slate-900 font-medium">{p.name}</p>
-                      {p.short_description && <p className="text-xs text-slate-400 mt-0.5 line-clamp-1">{p.short_description}</p>}
-                    </div>
-                    <ArrowRight size={15} className="text-slate-300 group-hover:text-slate-900 transition-colors shrink-0" />
-                  </div>
-                </Link>
-              </motion.div>
-            )}
-          </div>
-</ProductExperience>
-        }
       </section>
 
       <section id="poptavka" className="max-w-7xl mx-auto px-6 lg:px-10 pb-20 scroll-mt-24">

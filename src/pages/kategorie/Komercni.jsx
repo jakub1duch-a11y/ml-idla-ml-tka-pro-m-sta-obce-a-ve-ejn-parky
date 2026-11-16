@@ -9,11 +9,11 @@ import CategoryInquiryForm from '@/components/kategorie/CategoryInquiryForm';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
 
 const USE_CASES = [
-{ emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Mlžení může zpříjemnit horké letní dny. Umístění doporučíme mimo bezprostřední okolí stolů a míst k sezení.' },
-{ emoji: '🛍️', title: 'Nákupní centra', desc: 'Ochlazení vstupních zón, food courtů a venkovních průchodů.' },
-{ emoji: '🎪', title: 'Výstavy a showroomy', desc: 'Mlžné prvky jako součást prezentace — design i chlad.' },
-{ emoji: '🏭', title: 'Výrobní a průmyslové haly', desc: 'Možnosti technického ochlazování posoudíme podle provozu, hygienických požadavků a dostupného přívodu vody.' }];
-
+  { number: '01', title: 'Restaurace a kavárny', desc: 'Nerezové mlžítko jako samostatný prvek mimo bezprostřední posezení, navržený s ohledem na pohyb hostů.' },
+  { number: '02', title: 'Hotely a resorty', desc: 'Řešení pro nádvoří, vstupy a zahrady s důrazem na architekturu, technické napojení a údržbu.' },
+  { number: '03', title: 'Kiosky a sezónní stánky', desc: 'Výrazné místo osvěžení u stánku či promenády, s umístěním podle prostoru a provozu.' },
+  { number: '04', title: 'Fotopointy na míru', desc: 'Mlžná brána nebo zakázkový tvar jako vizuální prvek pro areál, vstupní prostor či letní akci.' },
+];
 
 export default function Komercni() {
   useEffect(() => {
@@ -46,20 +46,27 @@ export default function Komercni() {
             </a>
           </div>
         </motion.div>
-      <figure className="hero-content relative overflow-hidden rounded-3xl bg-slate-100"><img src="/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp" alt="Mlžení pro zahrady, hotely a restaurace" fetchPriority="high" className="aspect-[4/5] w-full object-cover" /><figcaption className="p-5 text-sm text-slate-600">Příjemnější atmosféra venkovních prostor.</figcaption></figure>
+      <figure className="hero-content relative overflow-hidden rounded-3xl bg-slate-100"><img src="/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp" alt="Ilustrační vizualizace nerezového mlžítka u venkovní terasy" fetchPriority="high" className="aspect-[4/5] w-full object-cover" /><figcaption className="p-5 text-xs leading-5 text-slate-600">Katalogová vizualizace využití mlžítka u terasy; nejde o fotografii potvrzené realizace.</figcaption></figure>
       </div></MotionConfig>
 
-      <section className="bg-slate-50 border-y border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {USE_CASES.map((u, i) =>
-            <motion.div key={u.title} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-            className="p-6 rounded-2xl bg-white border border-slate-200">
-                <span className="text-2xl mb-3 block">{u.emoji}</span>
-                <h3 className="text-slate-900 font-medium text-sm mb-2">{u.title}</h3>
-                <p className="text-xs text-slate-500 leading-relaxed font-light">{u.desc}</p>
-              </motion.div>
-            )}
+      <section className="border-y border-[#D9E6E9] bg-white py-16 sm:py-20" aria-labelledby="commercial-usecases-title">
+        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+          <div className="mb-9 max-w-2xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[.18em] text-[#21768B]">Podle typu provozu</p>
+            <h2 id="commercial-usecases-title" className="mt-3 font-heading text-3xl font-semibold tracking-[-.035em] text-[#102E3D] sm:text-4xl">
+              Každý prostor potřebuje jiné umístění.
+            </h2>
+          </div>
+          <div className="grid gap-x-10 border-t border-[#CFDFE4] md:grid-cols-2">
+            {USE_CASES.map(({ number, title, desc }) => (
+              <article key={number} className="grid grid-cols-[42px_1fr] gap-3 border-b border-[#CFDFE4] py-7 sm:py-9">
+                <span className="font-mono text-xs font-bold text-[#24788D]">{number}</span>
+                <div>
+                  <h3 className="font-heading text-xl font-semibold text-[#102E3D]">{title}</h3>
+                  <p className="mt-2 max-w-lg text-sm leading-7 text-[#536F79]">{desc}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -93,22 +100,39 @@ export default function Komercni() {
         </div>
       </section>
 
-      {/* Video */}
-      <section className="relative h-[60vh] min-h-[420px] overflow-hidden bg-slate-900">
-        <video src="https://media.base44.com/videos/public/69d723859ec0e3321c6b8bb6/a155bfef6_mlzisteprokomercniprostory.mp4"
-        className="absolute inset-0 w-full h-full object-cover opacity-20" autoPlay loop muted playsInline preload="metadata" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/30" />
-        <div className="relative h-full flex items-end">
-          <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-          className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
-            <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Mlžiště pro komerční prostory</p>
-            <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-              Osvěžení<br /><span style={{ fontStyle: 'italic' }}>s ohledem na prostor.</span>
+      <section className="bg-[#082738] py-16 text-white sm:py-20" aria-labelledby="commercial-photopoint-title">
+        <div className="mx-auto grid max-w-7xl items-center gap-9 px-6 lg:grid-cols-[1.04fr_.96fr] lg:gap-16 lg:px-10">
+          <figure className="overflow-hidden rounded-[1.5rem] border border-white/15 bg-[#153E4E]">
+            <img
+              src="/media/optimized/58e5e3931_MestskabranaGATE.webp"
+              alt="Ilustrační vizualizace nerezové mlžné brány jako fotopointu ve veřejném prostoru"
+              width="1024"
+              height="680"
+              loading="lazy"
+              decoding="async"
+              className="aspect-[4/3] w-full object-cover object-center"
+            />
+            <figcaption className="px-5 py-3 text-[11px] leading-5 text-white/70">
+              Ilustrační vizualizace mlžné brány. Přesnou geometrii, rozměry a umístění určuje vybraný model a konkrétní projekt.
+            </figcaption>
+          </figure>
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[.17em] text-[#9EE4EF]">Fotopoint a zakázková výroba</p>
+            <h2 id="commercial-photopoint-title" className="mt-4 max-w-xl font-heading text-3xl font-semibold leading-[1.1] tracking-[-.035em] sm:text-4xl">
+              Výrazný prvek, který přirozeně patří k vašemu místu.
             </h2>
-            <p className="text-white/70 leading-relaxed font-light max-w-xl">
-              Umístění mlžítka navrhneme tak, aby doplnilo charakter venkovního provozu. Provozní režim přizpůsobíme skutečným podmínkám v místě.
+            <p className="mt-6 max-w-lg text-base leading-7 text-white/80">
+              Mlžná brána, kruhový motiv nebo vlastní tvar mohou doplnit vstupní prostor, letní akci i prezentaci značky. V HolmTec ověříme proveditelnou geometrii a způsob instalace.
             </p>
-          </motion.div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/zakazkova-mlzitka" className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#9BE4EE] px-5 py-3 text-sm font-semibold text-[#092B3B] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">
+                Výroba na míru <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+              <a href="#poptavka" className="inline-flex min-h-12 items-center gap-2 border-b border-white/50 px-2 py-3 text-sm font-semibold text-white hover:border-white">
+                Probrat vlastní nápad <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 

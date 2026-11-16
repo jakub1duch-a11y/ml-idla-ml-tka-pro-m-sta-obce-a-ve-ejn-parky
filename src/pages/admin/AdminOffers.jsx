@@ -96,11 +96,11 @@ export default function AdminOffers() {
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyan/30 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan hover:bg-cyan/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan">
             <Building2 size={15} aria-hidden="true" /> Obchodní centrum HubSpot <ExternalLink size={13} aria-hidden="true" />
           </a>
-          <a href="https://www.canva.com/d/lzPlXZ-s3O8teFh"
+          <a href="https://www.canva.com/d/DRLGkJ5osNGTy58"
             target="_blank" rel="noopener noreferrer"
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-white/80 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan"
-            title="Pracovní vzor Canva A4, před klientským použitím vyžaduje kopii, ověřenou kalkulaci a schválení">
-            <FileText size={15} aria-hidden="true" /> Canva · vzor nabídky A4 <ExternalLink size={13} aria-hidden="true" />
+            title="Pracovní REV2 Canva 9 stran: shrnutí sestavy, jednotkové ceny na každé produktové straně, varianty řízení, tištěná objednávka. Před odesláním vytvořit kopii a schválit údaje.">
+            <FileText size={15} aria-hidden="true" /> Canva · REV2 (9 listů A4) <ExternalLink size={13} aria-hidden="true" />
           </a>
           <button onClick={load} className="h-10 px-4 rounded-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/5 flex items-center justify-center gap-2">
             <RefreshCw size={15} /> Obnovit

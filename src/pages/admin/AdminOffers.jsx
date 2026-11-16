@@ -91,7 +91,7 @@ export default function AdminOffers() {
           <p className="text-white/40 text-sm mt-1 max-w-2xl">Evidence nabídek v Base44. Pro obchodní komunikaci a stav případu otevřete firemní HubSpot; koncept není odeslanou nabídkou.</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <a href="https://app-eu1.hubspot.com/contacts/149778217/objects/0-3/views/all/list?utm_source=mlzidla_admin&utm_medium=crm_link&utm_campaign=offer_workflow"
+          <a href="https://app-eu1.hubspot.com/contacts/149778217/objects/0-3/views/suggested_follow_ups/board"
             target="_blank" rel="noopener noreferrer"
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyan/30 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan hover:bg-cyan/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan">
             <Building2 size={15} aria-hidden="true" /> Obchodní centrum HubSpot <ExternalLink size={13} aria-hidden="true" />

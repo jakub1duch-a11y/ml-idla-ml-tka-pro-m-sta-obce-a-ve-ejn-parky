@@ -88,11 +88,18 @@ export default function AdminOffers() {
         <div>
           <p className="text-[10px] font-mono uppercase tracking-[.16em] text-cyan mb-2">Obchodní nabídky</p>
           <h1 className="text-2xl sm:text-3xl text-white font-semibold">Odeslané nabídky</h1>
-          <p className="text-white/40 text-sm mt-1 max-w-2xl">Přehled všech nabídek odeslaných klientům — stav otevření, objednání, platnosti a expirace.</p>
+          <p className="text-white/40 text-sm mt-1 max-w-2xl">Evidence nabídek v Base44. Pro obchodní komunikaci a stav případu otevřete firemní HubSpot; koncept není odeslanou nabídkou.</p>
         </div>
-        <button onClick={load} className="h-10 px-4 rounded-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/5 flex items-center justify-center gap-2">
-          <RefreshCw size={15} /> Obnovit
-        </button>
+        <div className="flex flex-wrap gap-2">
+          <a href="https://app-eu1.hubspot.com/contacts/149778217/objects/0-3/views/all/list?utm_source=mlzidla_admin&utm_medium=crm_link&utm_campaign=offer_workflow"
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-cyan/30 bg-cyan/10 px-4 py-2 text-xs font-semibold text-cyan hover:bg-cyan/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan">
+            <Building2 size={15} aria-hidden="true" /> Obchodní centrum HubSpot <ExternalLink size={13} aria-hidden="true" />
+          </a>
+          <button onClick={load} className="h-10 px-4 rounded-xl border border-white/10 text-white/70 hover:text-white hover:bg-white/5 flex items-center justify-center gap-2">
+            <RefreshCw size={15} /> Obnovit
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-6 gap-3 mb-6">

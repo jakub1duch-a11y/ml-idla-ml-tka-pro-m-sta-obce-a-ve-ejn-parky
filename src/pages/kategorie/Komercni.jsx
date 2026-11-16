@@ -13,10 +13,10 @@ import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigatio
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 
 const USE_CASES = [
-{ emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Zákazníci zůstanou déle a objednají víc. Příjemná terasa i v letních vedrech.' },
+{ emoji: '🍽️', title: 'Terasy restaurací a kaváren', desc: 'Mlžení může zpříjemnit horké letní dny. Umístění doporučíme mimo bezprostřední okolí stolů a míst k sezení.' },
 { emoji: '🛍️', title: 'Nákupní centra', desc: 'Ochlazení vstupních zón, food courtů a venkovních průchodů.' },
 { emoji: '🎪', title: 'Výstavy a showroomy', desc: 'Mlžné prvky jako součást prezentace — design i chlad.' },
-{ emoji: '🏭', title: 'Výrobní a průmyslové haly', desc: 'Ochlazení pracovišť, zvýšení produktivity a bezpečnosti práce při vysokých teplotách.' }];
+{ emoji: '🏭', title: 'Výrobní a průmyslové haly', desc: 'Možnosti technického ochlazování posoudíme podle provozu, hygienických požadavků a dostupného přívodu vody.' }];
 
 
 export default function Komercni() {
@@ -74,18 +74,32 @@ export default function Komercni() {
         </div>
       </section>
 
-      <section className="bg-slate-50 border-y border-slate-200 py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-2 md:grid-cols-3 gap-4">
-          {[
-          { val: '+34 %', label: 'Nárůst tržeb terasy' },
-          { val: '+2,4 h', label: 'Delší pobyt hosta' },
-          { val: '4–6 týdnů', label: 'Prodloužení sezóny' }].
-          map((s) =>
-          <div key={s.label} className="p-6 rounded-2xl bg-white border border-slate-200 text-center">
-              <p className="font-heading text-2xl text-slate-900 mb-1" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>{s.val}</p>
-              <p className="text-xs font-mono text-slate-400 tracking-widest uppercase">{s.label}</p>
-            </div>
-          )}
+      <section className="border-y border-[#DAE5E9] bg-[#F4F8F9] py-16" aria-labelledby="commercial-placement-title">
+        <div className="mx-auto grid max-w-7xl gap-9 px-6 lg:grid-cols-[.82fr_1.18fr] lg:items-start lg:px-10">
+          <div>
+            <p className="text-[11px] font-bold uppercase tracking-[.17em] text-[#24758A]">Návrh podle prostoru</p>
+            <h2 id="commercial-placement-title" className="mt-3 font-heading text-3xl font-semibold leading-[1.12] tracking-[-.035em] text-[#0C3042] sm:text-4xl">
+              Osvěžení, které respektuje provoz terasy.
+            </h2>
+            <p className="mt-4 max-w-lg text-sm leading-7 text-[#4B6572]">
+              Důležité je správné umístění mlžítka, proudění vzduchu, přívod vody a možnost regulace. Řešení připravíme podle fotografie, rozměrů a způsobu využití místa.
+            </p>
+          </div>
+          <div className="grid gap-0 border-t border-[#CADCE2]">
+            {[
+              ['01', 'Mimo bezprostřední posezení', 'Nízkotlaké mlžítko nedoporučujeme instalovat přímo mezi stoly a lavičky. Konkrétní odstup určíme podle prostoru a provozu.'],
+              ['02', 'Počítat s větrem', 'Mlha se může šířit po větru i několik metrů. Za různých teplot a vlhkosti nelze vždy zaručit suchý povrch.'],
+              ['03', 'Připravený provoz', 'Napojení vody, filtrace, údržba a případné intervalové řízení se navrhují podle konkrétní instalace.'],
+            ].map(([number, title, detail]) => (
+              <article key={number} className="grid gap-4 border-b border-[#CADCE2] py-5 sm:grid-cols-[38px_1fr]">
+                <span className="font-mono text-xs font-semibold text-[#24758A]">{number}</span>
+                <div>
+                  <h3 className="font-heading text-base font-semibold text-[#0C3042]">{title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-[#4B6572]">{detail}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -99,10 +113,10 @@ export default function Komercni() {
           className="max-w-7xl mx-auto px-6 lg:px-10 pb-14 w-full max-w-2xl">
             <p className="text-xs font-mono tracking-widest uppercase text-white/60 mb-4">Mlžiště pro komerční prostory</p>
             <h2 className="text-white text-3xl md:text-4xl mb-4" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>
-              Terasa, kde<br /><span style={{ fontStyle: 'italic' }}>hosté zůstávají.</span>
+              Osvěžení<br /><span style={{ fontStyle: 'italic' }}>s ohledem na prostor.</span>
             </h2>
             <p className="text-white/70 leading-relaxed font-light max-w-xl">
-              Mlžný systém na terase prodlouží sezónu o týdny a udrží příjemné mikroklima i v největším horku.
+              Umístění mlžítka navrhneme tak, aby doplnilo charakter venkovního provozu. Provozní režim přizpůsobíme skutečným podmínkám v místě.
             </p>
           </motion.div>
         </div>
@@ -110,7 +124,7 @@ export default function Komercni() {
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Produkty</p>
-        <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Vhodné modely.</h2>
+        <h2 className="text-slate-900 text-3xl mb-8" style={{ fontWeight: 700, letterSpacing: '-0.04em' }}>Katalogové modely pro inspiraci.</h2>
         {loading ?
         <div className="flex justify-center py-12"><Loader size={24} className="animate-spin text-slate-300" /></div> :
 
@@ -139,7 +153,7 @@ export default function Komercni() {
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Připravíme nabídku pro váš provoz.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace a 3D vizualizace zdarma · Odpovídáme do 24 h</p>
+            <p className="text-slate-500 text-sm mb-6">Pošlete nám fotografii terasy, základní rozměry a informaci o dostupnosti vody.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>

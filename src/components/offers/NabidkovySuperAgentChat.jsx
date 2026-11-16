@@ -3,6 +3,7 @@ import { Bot, Loader2, Send, Sparkles, RefreshCw, ChevronDown, CheckCircle2, Ale
 import { base44 } from '@/api/base44Client';
 import ReactMarkdown from 'react-markdown';
 import { OFFER_AGENT_CONFIG, buildOfferAgentSeedPrompt } from '@/lib/offer-agent-config';
+import { MlzidlaIcon } from '@/components/brand/MlzidlaLogoSvg';
 
 const AGENT_NAME = OFFER_AGENT_CONFIG.key;
 
@@ -186,10 +187,10 @@ export default function NabidkovySuperAgentChat({ inquiryId, inquiryType }) {
         <div className="flex items-center justify-between gap-4 border-b border-white/10 px-5 py-4 sm:px-7">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/15 text-cyan-300 ring-1 ring-cyan-300/30">
-              <Bot size={20} />
+              <MlzidlaIcon className="h-6 w-7" />
             </div>
             <div>
-              <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[.2em] text-cyan-300/80"><Sparkles size={12} /> Super Agent</p>
+              <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[.2em] text-cyan-300/80">MLŽIDLA.cz · Obchodní asistent</p>
               <h3 className="font-heading text-lg text-white">Asistovaná tvorba nabídky</h3>
             </div>
           </div>

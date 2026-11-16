@@ -32,7 +32,7 @@ export default function PdClosingCta({ product }) {
             Ukažte nám místo.<span className="mt-2 block text-[#87E5ED]">Navrhneme v něm mlžítko.</span>
           </h2>
           <p className="mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
-            Pošlete nám fotografii nebo situaci prostoru a uveďte, kde má ${'{' }product.name} stát. Posoudíme umístění, připojení vody, kotvení a vhodné ovládání.
+            Pošlete nám fotografii nebo situaci prostoru. Posoudíme umístění mlžítka {product.name}, připojení vody, kotvení a vhodné ovládání.
           </p>
           <div className="mt-7 grid max-w-xl gap-3 border-t border-white/20 pt-5 text-sm text-white/75 sm:grid-cols-2">
             <p className="flex items-start gap-2"><ImageIcon size={18} className="mt-0.5 shrink-0 text-[#87E5ED]" aria-hidden="true" /> Fotografie místa nebo projektový nákres</p>

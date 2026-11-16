@@ -66,6 +66,17 @@ export function createBrandOfferPacket({ product, variant, price }) {
       shaft_switchboard_required_to_define: true,
       note: 'Samostatný list Smart SUPLA včetně šachtového rozvaděče; konfiguraci a cenu ověřit.',
     },
+    crm: {
+      system: 'HubSpot',
+      portal_id: 149778217,
+      pipeline_id: '4351532258',
+      identity_source: 'Base44 inquiry/source ID',
+      match_required: true,
+      verified_deal_id: null,
+      sync_state: 'requires_authenticated_preflight',
+      send_stage_evidence: 'Gmail SENT or verified CRM email timeline',
+      offers_sent_automatically: false,
+    },
     workflow: {
       email_mode: 'draft_only',
       publish_allowed: false,

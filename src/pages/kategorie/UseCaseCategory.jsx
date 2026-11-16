@@ -1,6 +1,6 @@
 import EditorialPhotoHero from '@/components/editorial/EditorialPhotoHero';
 import React, { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { ArrowRight, TrainFront, Dumbbell, Hotel, Landmark } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
@@ -74,10 +74,11 @@ const CATEGORIES = {
 
 export default function UseCaseCategory() {
   const { categorySlug } = useParams();
-  const data = CATEGORIES[categorySlug] || CATEGORIES['dopravni-uzly'];
-  const Icon = data.icon;
+  const data = CATEGORIES[categorySlug] || null;
+  const Icon = data?.icon;
 
   useEffect(() => {
+    if (!data) return;
     setSEO({
       title: `${data.title} | MLŽIDLA.cz`,
       description: data.description,
@@ -86,6 +87,8 @@ export default function UseCaseCategory() {
       robots: 'index, follow'
     });
   }, [categorySlug, data]);
+
+  if (!data) return <Navigate to="/katalog-mlzitek" replace />;
 
   return <main className="min-h-screen bg-white">
     <EditorialPhotoHero

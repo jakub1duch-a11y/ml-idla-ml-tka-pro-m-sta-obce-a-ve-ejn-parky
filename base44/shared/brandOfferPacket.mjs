@@ -43,7 +43,17 @@ export function createBrandOfferPacket({ product, variant, price }) {
     status: blockers.length ? 'needs_review' : 'ready_for_canva_draft',
     ready_for_canva: blockers.length === 0,
     blockers,
-    brand: { name: 'MLŽIDLA.cz', supplier: 'HolmTec s.r.o.', canva_template_id: MLZIDLA_CANVA_BRAND_TEMPLATE, canva_template_url: MLZIDLA_CANVA_BRAND_TEMPLATE_URL, autofill_ready: false },
+    brand: { name: 'MLŽIDLA.cz', supplier: 'HolmTec s.r.o.', canva_template_id: MLZIDLA_CANVA_BRAND_TEMPLATE, canva_template_url: MLZIDLA_CANVA_BRAND_TEMPLATE_URL, autofill_ready: false,
+      logo: {
+        name: 'MLŽIDLA.cz',
+        source_component: 'src/components/brand/MlzidlaLogoSvg.jsx',
+        on_light: '/brand/mlzidla-logo-2026-on-light.svg',
+        on_dark: '/brand/mlzidla-logo-2026-on-dark.svg',
+        avatar: '/brand/mlzidla-mark-2026.svg',
+        canva_symbol_asset_id: 'MAHbHb5vvtw',
+        visual_review_required: true,
+        supplier_signature: 'HolmTec s.r.o.',
+      } },
     product: {
       id: String(product?.id || ''),
       slug: String(product?.slug || ''),
@@ -82,7 +92,7 @@ export function createBrandOfferPacket({ product, variant, price }) {
       publish_allowed: false,
       customer_send_allowed: false,
       human_approval_required: true,
-      required_outputs: ['produktový list Canva se skutečnou MASTER fotografií', 'produkt + cenová nabídka + varianty ovládání', 'strana vizualizace s označeným původem', 'samostatný list SUPLA', 'PDF', 'WebP', 'archiv MLŽNÝ DISK'],
+      required_outputs: ['produktový list Canva se skutečnou MASTER fotografií a původním logem MLŽIDLA.cz', 'produkt + cenová nabídka + varianty ovládání', 'strana vizualizace s označeným původem', 'samostatný list SUPLA', 'PDF', 'WebP', 'archiv MLŽNÝ DISK'],
     },
   };
 }

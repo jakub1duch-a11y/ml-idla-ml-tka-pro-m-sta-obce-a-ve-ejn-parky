@@ -116,3 +116,38 @@ Poznámka: inspirace určuje informační architekturu a fotografický přístup
 ## Agentní workflow a dostupnost
 
 Úkol designového agenta byl vytvořen jako `AdminTask 6afae188376c875975bd50ed`; jsou u něj i podřízené úkoly `6afae188376c875975bd50ee` až `6afae188376c875975bd50f2`. Běh Base Code coding session nelze spustit z aktuálního účtu (session launching isn't enabled). Pokus delegovat rešerši připojenému Base44 Superagentu byl zablokován měsíčním limitem zpráv. Stav je tedy: **agentní zadání evidované, agent nepotvrdil přijetí ani nedodal výsledek**. Tento MD audit je autorský podklad připravený v ChatGPT z kontroly zdrojů a veřejných webů.
+
+## Implementační pokračování 16. 11. 2026 — revize PR #132
+
+### Dále upravené soubory (bez publikace)
+
+| Soubor | Úprava | Kontrola |
+|---|---|---|
+| `src/pages/kategorie/UseCaseCategory.jsx` | Specifická část „Co ověřit před návrhem“ pro dopravní uzly, sportoviště, hotely a veřejné instituce; místa instalace zobrazená jako úsporný seznam; neznámý slug místo falešného dopravního obsahu přesměrovává na katalog | [KÓD], zbývá vizuální QA |
+| `src/pages/CollectionDetail.jsx` | Sloučení duplicitních čtyř přínosových karet a další sady tří vlastností do jediné věcné sekce o umístění (město / zahrada). Proces projektu a skutečné produkty zůstaly. | [KÓD], zbývá vizuální QA |
+| `src/components/kolekce/collectionData.js` | Odstraněno opakované a neověřené tvrzení „Dýchejte lépe“; zkráceny úvody městské a zahradní kolekce. | [KÓD] |
+| `src/components/kolekce/CollectionHero.jsx` | CTA nyní odpovídají městu, zahradě a zakázkové výrobě; link na katalog vede na kanonickou URL. | [KÓD] |
+| `src/components/kolekce/UseCaseExperience.jsx` | Odstraněn duplicitní slogan. | [KÓD] |
+| `src/pages/kategorie/Komercni.jsx` | Vizuální rytmus: čtyři odborné způsoby využití, provozní doporučení a fotopoint s ilustrační vizualizací brány. Zrušen opakující se nejasný tmavý videohero. | [KÓD]; vhodnost vizualizace a geometrii ještě kontroluje správce |
+| `src/pages/kategorie/UseCaseCategory.jsx` | Hotelová varianta používá relevantnější vizualizaci terasy namísto parkové fotografie. Jasně označeno jako katalogová vizualizace. | [KÓD], nikoli ověřená reference |
+| `src/components/kolekce/FeaturesBenefitsSection.jsx` | Původních šest univerzálních technických tvrzení nahrazeno čtyřmi klidnými edičními tématy. Není tvrzen společný materiál 316L, tlak 2–7 bar, rozměr kapky 50–100 μm ani garantované nesmáčení u každého výrobku. | [KÓD], technické specifikace stále v produktových datech |
+| `src/components/kolekce/CatalogAudience.jsx` | Pět konkrétních navigačních karet se skutečnými odkazy na odpovídající řešení. Odstraněna přehnaná tvrzení o bezpečnosti dětských prostor. | [KÓD] |
+| `src/pages/Kolekce.jsx` | Filtr pro typ prostoru používá databázové `Product.use_cases` namísto náhodných slov v popisu. Nevyplněný údaj nepředstírá ověřené doporučení. | [KÓD + DATA] pole `use_cases` existuje a část katalogu je jím vyplněna; zbývá UX test filtrech |
+| `src/components/kategorie/B2BPortfolioNavigation.jsx` | Na každé stránce se zobrazují 4 kurátorované související oblasti místo 13 opakujících se odkazů. | [KÓD] |
+
+### Fotografie prověřené kontaktním náhledem souborů (bez tvrzení o právním schválení)
+
+- `/media/optimized/e7593e68f_realizace-IMG_5072.webp`: vzhledově reálná zahradní instalace; již katalogově spojena s BENDY a LINEA. Na jiné modely nepřenášet.
+- `/media/optimized/6a220ebf9_Reference-mstoPolna03.webp`: vizuálně městská realizace Polná; pro segment města/obce, ne obecně pro hotely nebo sport.
+- `/media/optimized/03ba352a3_mlzitka-zahradni-hotely-restaurace.webp`: vizualizace terasy. Použita pro hotelové a gastro využití s transparentním označením **ilustrační vizualizace**, nikoli fotografie dokončené reference.
+- `/media/optimized/58e5e3931_MestskabranaGATE.webp`: vizualizace brány GATE v městské scéně. Na gastro stránce jako ilustrační fotopoint s výslovným upozorněním, že finální geometrie se ověřuje podle modelu.
+- `/media/optimized/1c63ea4bc_sportoviste-a-mlzne-hriste-mlhoviste.webp`: možná sportovní inspirace, ale zdroj je jen cca 259×194 px; **pro široké Hero nevhodné**.
+- Další 3 ze 4 podstránek sdílené šablony zatím používají parkovou ilustrační vizualizaci; cílené kvalitní obrazové podklady bude nutné schválit nebo autenticky nafotit.
+
+### Měření a otevřená rizika
+
+1. Před produkcí: otestovat přímý přístup k /kategorie/hotely-resorty, /kategorie/dopravni-uzly, /kategorie/sportoviste, /kategorie/verejne-instituce a neexistující slug; ověřit vstupní CTA a fungující katalog.
+2. Produkt `use_cases` je částečně nevyplněný. Filtr jej nezahrnuje do jednotlivých využití, ale zobrazuje v celkovém katalogu. Dodat řízené doplnění metadat po technické kontrole; nevyvozovat nasazení podle názvů produktů nebo prostředí pro generování obrázků.
+3. Ověřit foto výřezy 360 / 390 / 768 / 1280 px a umístění fotografie u hotelu; typografie a odstup bez horizontálního scrollu.
+4. `CategoryInquiryForm` nadále zapisuje skutečné kontaktní poptávky; nepřepisovat bez kontroly datového workflow. Formulář nesmí automaticky rozesílat nabídku.
+5. GitHub CI kontroluje sestavení; pro vizuální schválení je stále nutný skutečný Preview screenshot. PR je draft a nesmí být sloučen bez review.

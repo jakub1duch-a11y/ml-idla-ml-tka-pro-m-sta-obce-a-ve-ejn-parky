@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { AlertTriangle, ArrowUpRight, CheckCircle2, FileCheck2, FolderOpen, GitBranch, Layers3, Mail, RefreshCw, ShieldCheck, Table2, Workflow } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import { MlzidlaIcon } from '@/components/brand/MlzidlaLogoSvg';
 
 const SOURCES = [
   { key: 'hubspot', label: 'HubSpot', detail: 'Firemní CRM · portál 149778217', href: 'https://app-eu1.hubspot.com/contacts/149778217/objects/0-3', Icon: Layers3 },
@@ -51,7 +52,7 @@ export default function AdminCrmAgentWorkspace() {
     <div className="bg-[#102b3a] px-5 py-6 text-white sm:px-7 sm:py-7">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#85e1e9]">MLŽIDLA.cz / Agent & CRM</p>
+          <div className="flex items-center gap-3"><MlzidlaIcon className="h-11 w-12 text-[#85E1E9]" /><div><p className="text-[10px] font-bold uppercase tracking-[.2em] text-[#85e1e9]">MLŽIDLA.cz · Obchodní a produktový asistent</p><p className="mt-1 text-[11px] text-slate-300">Výrobce HolmTec s.r.o. · CRM a obchodní nabídky</p></div></div>
           <h2 id="crm-agent-title" className="mt-2 flex items-center gap-2 text-xl font-bold tracking-tight sm:text-2xl"><Workflow size={24} className="text-[#85e1e9]"/> Obchodní workflow a propojení</h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-200">Jedna poptávka, jeden obchodní případ. Ověřené fotografie a ceny, nabídka podle značky a Gmail koncept před ručním schválením.</p>
         </div>

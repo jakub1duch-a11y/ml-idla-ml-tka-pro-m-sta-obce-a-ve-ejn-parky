@@ -1,4 +1,4 @@
-import { SUPLA_OFFER } from './suplaOfferLayout.ts';
+import { buildOfferInstallationControlSummary } from './offerInstallationControl.mjs';
 export function drawOfferPriceRows(doc, c, api, title, compact = false) {
   const { header, text, image, money, ink, soft, accent, mute } = api;
   let y = header(doc, c, title, c.clientCompany || c.clientName);
@@ -34,18 +34,27 @@ export function drawOfferPriceRows(doc, c, api, title, compact = false) {
 }
 export function drawOptionalControlSummary(doc, c, api, y, compact = false) {
   const { header, text, money, ink, soft, accent, mute } = api;
-  const height = compact ? 64 : 86;
-  if (y + height > (compact ? 191 : 270)) { doc.addPage(); y = header(doc, c, 'Volitelne chytre rizeni'); }
-  y = text(doc, 'Mlzitko funguje i bez chytreho rizeni.', 14, y + 3, 182, compact ? 10 : 12, true, ink) + 3;
-  y = text(doc, 'SUPLA neni podminkou nakupu ani soucasti zakladni ceny.', 14, y, 182, 8, false, mute) + 5;
-  [false, true].forEach((shaft, i) => {
-    const x = 14 + i * 94, total = shaft ? SUPLA_OFFER.withShaft : SUPLA_OFFER.base;
-    doc.setFillColor(soft); doc.rect(x, y, 88, compact ? 30 : 40, 'F');
-    text(doc, shaft ? 'B / Se servisni sachtou' : 'A / Bez servisni sachty', x + 5, y + 7, 78, 9, true, ink);
-    text(doc, shaft ? '29 639 Kc rizeni + 18 900 Kc\noteviratelna zemni sachta' : 'Wi-Fi rizeni SUPLA, aplikace\na casove plany.', x + 5, y + 14, 78, 8, false, mute);
-    text(doc, `${money(total)} bez DPH`, x + 5, y + (compact ? 27 : 31), 78, compact ? 10 : 12, true, accent);
-  });
-  y += compact ? 35 : 45;
-  if (!compact && c.total > 0) y = text(doc, `Zaklad + A: ${money(c.total + SUPLA_OFFER.base)} | Zaklad + B: ${money(c.total + SUPLA_OFFER.withShaft)} bez DPH`, 14, y, 182, 9, true, ink) + 3;
-  return text(doc, 'Vyberte jednu alternativu. Varianty se nesctaji ani automaticky nepricitaji.', 14, y, 182, 8, false, mute) + 4;
+  const modes = buildOfferInstallationControlSummary({ product: c.product, supla: c.supla }).control_modes;
+  const neededHeight = compact ? 81 : 99;
+  if (y + neededHeight > (compact ? 190 : 265)) {
+    doc.addPage();
+    y = header(doc, c, 'Moznosti rizeni mlzeni');
+  }
+  y = text(doc, 'Intervalove mlzeni i bez mobilni aplikace.', 14, y + 4, 182, compact ? 11 : 12, true, ink) + 3;
+  y = text(doc, 'Rizeni je volitelne. V zakladni cene je jen to, co potvrzuji polozky nabidky.', 14, y, 182, 8, false, mute) + 5;
+
+  for (let i = 0; i < modes.length; i++) {
+    const mode = modes[i];
+    const x = 14 + i * 94;
+    const cardH = compact ? 42 : 48;
+    doc.setFillColor(soft); doc.rect(x, y, 88, cardH, 'F');
+    text(doc, i === 0 ? 'A / Bez mobilni aplikace' : 'B / SUPLA + aplikace', x + 5, y + 7, 78, 9, true, ink);
+    text(doc, i === 0 ? 'Lokalni casovac, cyklus mlzeni / pauza.' : 'Mobilni ovladani a casove plany.', x + 5, y + 14, 78, 8, false, mute);
+    text(doc, i === 0 ? 'Komponenty dle technickeho navrhu.' : 'Cidla a sachta jsou dalsi volby.', x + 5, y + 21, 78, 8, false, mute);
+    const priceLabel = mode.price_ex_vat === null ? 'K naceneni' : `${money(mode.price_ex_vat)} bez DPH`;
+    text(doc, priceLabel, x + 5, y + (compact ? 34 : 38), 78, compact ? 9 : 10, true, accent);
+  }
+  y += (compact ? 47 : 53);
+  y = text(doc, 'Varianty se nesctaji. Instalace a pripojeni se potvrzuji podle pripravenosti mista.', 14, y, 182, 8, false, mute) + 4;
+  return y;
 }

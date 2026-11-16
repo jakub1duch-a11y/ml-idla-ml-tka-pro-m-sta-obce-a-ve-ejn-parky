@@ -11,6 +11,7 @@ export default function CollectionHero({ collection }) {
   const reduced = useReducedMotion();
   const isCity = collection.name === 'Městská mlžítka';
   const isGarden = collection.name === 'Zahradní mlžítka';
+  const quoteLabel = isCity ? 'Posoudit městský prostor' : isGarden ? 'Navrhnout zahradní mlžítko' : collection.name === 'Autorská kolekce mlžítek' ? 'Poptat zakázkovou výrobu' : 'Poptat kolekci';
 
   return (
     <section className="hero-motion-surface relative min-h-[620px] overflow-hidden bg-primary text-primary-foreground lg:min-h-[680px]">
@@ -40,9 +41,9 @@ export default function CollectionHero({ collection }) {
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/poptavka" className="catalog-sweep inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3.5 text-sm font-bold text-accent-foreground shadow-xl transition hover:-translate-y-0.5">
-              {isCity ? 'Získat návrh a cenu' : isGarden ? 'Získat návrh a cenu' : 'Získat návrh a cenu'} <ArrowRight size={16} />
+              {quoteLabel} <ArrowRight size={16} />
             </Link>
-            <Link to={isCity || isGarden ? '/reference' : '/mlzidla-mlzitka#catalog'} className="catalog-sweep inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/[.08] px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/[.14]">
+            <Link to={isCity || isGarden ? '/reference' : '/katalog-mlzitek#catalog'} className="catalog-sweep inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/[.08] px-6 py-3.5 text-sm font-semibold text-white backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-white/[.14]">
               {isCity || isGarden ? 'Prohlédnout realizace' : 'Prohlédnout produkty'} <ArrowRight size={16} />
             </Link>
           </div>

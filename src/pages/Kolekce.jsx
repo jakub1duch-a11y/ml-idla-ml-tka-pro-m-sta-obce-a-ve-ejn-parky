@@ -25,18 +25,28 @@ const SPACE_FILTERS = [
 { value: 'school', label: 'Školy & hřiště', icon: School },
 { value: 'gastro', label: 'Gastro & hotel', icon: UtensilsCrossed }];
 
+// Category matching is deliberately based on editorially assigned Product.use_cases,
+// not free-text search in product descriptions or generative media environments.
+// Products without recorded use cases remain available through "Všechny prostory".
 const SPACE_TERMS = {
-  city: ['měst', 'náměst', 'park', 'promenád', 'veřejn', 'urban', 'brána', 'gate', 'linea', 'stébl'],
-  garden: ['zahrad', 'terasa', 'reziden', 'soukrom'],
-  sport: ['sport', 'stadion', 'hřiště', 'koupaliště'],
-  school: ['škol', 'dětsk', 'hřiště', 'školk'],
-  gastro: ['gastro', 'restaur', 'hotel', 'resort', 'terasa']
+  city: ['mest', 'namest', 'park', 'promenad', 'verejn', 'pesi'],
+  garden: ['zahrad', 'terasa', 'pergol', 'rezidenc', 'soukrom'],
+  sport: ['sport', 'stadion', 'bezeck', 'cyklist', 'rekreac', 'tribun'],
+  school: ['skol', 'skolk', 'detsk', 'hrist'],
+  gastro: ['gastro', 'restaur', 'hotel', 'resort', 'kavar', 'wellness', 'lazen'],
 };
 
-function matchesSpace(p, filter) {
+const normalizeSpaceText = (value) =>
+  String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+
+function matchesSpace(product, filter) {
   if (filter === 'all') return true;
-  const hay = `${p.name} ${p.slug} ${p.short_description || ''} ${p.description || ''}`.toLowerCase();
-  return SPACE_TERMS[filter].some((t) => hay.includes(t));
+  const assignedUses = Array.isArray(product?.use_cases)
+    ? product.use_cases.filter((item) => typeof item === 'string' && item.trim())
+    : [];
+  if (!assignedUses.length) return false;
+  const haystack = normalizeSpaceText(assignedUses.join(' '));
+  return (SPACE_TERMS[filter] || []).some((term) => haystack.includes(term));
 }
 
 export default function Kolekce() {
@@ -121,6 +131,11 @@ export default function Kolekce() {
               <LineChips familyId={family} activeLine={line} onSelect={setLine} counts={lineCounts} />
             </div>
           }
+          {space !== 'all' && (
+            <p className="mt-3 border-t border-[#D3E2E8] pt-3 text-xs leading-5 text-[#4A6471]">
+              Zobrazené modely mají toto využití uvedené v produktových podkladech. Ostatní mlžítka najdete přes filtr „Všechny prostory“.
+            </p>
+          )}
           {hasFilter &&
           <div className="mt-3 flex items-center justify-end border-t border-[#D3E2E8] pt-3">
               <button type="button" onClick={clear} className="btn-brand-text inline-flex items-center gap-1 !p-0"><X size={13} /> Zrušit filtry</button>

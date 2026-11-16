@@ -168,8 +168,6 @@ Deno.serve(async (req) => {
 
     let emailWarning = '';
     try {
-      // Owner emergency stop: confirmation remains recorded; outbound mail is paused.
-      throw new Error('email_sending_paused_by_owner');
       const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
       const raw = buildOrderConfirmationMime(updated, approvedAt, orderPdfBytes, orderPdfFilename || `potvrzeni-objednavky-${project.quote_number || projectId}.pdf`);
       const sendResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {

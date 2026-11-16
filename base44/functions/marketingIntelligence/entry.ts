@@ -504,9 +504,6 @@ function encodeMessage(to: string, subject: string, html: string) {
 }
 
 async function sendReportEmail(base44: any, html: string) {
-  // Owner emergency stop. Reporting may run; emails must not be transmitted.
-  return REPORT_RECIPIENTS.map(to => ({ to, ok:false, error:'email_sending_paused_by_owner' }));
-  /*
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
   const subject = `MLŽIDLA® — Analytics za ${reportDateLabel()}`;
   const results = [];
@@ -520,7 +517,6 @@ async function sendReportEmail(base44: any, html: string) {
     results.push({ to, ok: response.ok, id: payload.id || null, error: response.ok ? null : payload?.error?.message || `HTTP ${response.status}` });
   }
   return results;
-  */
 }
 
 export default async function(req: Request) {

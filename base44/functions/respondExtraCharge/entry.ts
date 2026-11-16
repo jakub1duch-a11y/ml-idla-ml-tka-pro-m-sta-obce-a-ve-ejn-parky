@@ -1,4 +1,3 @@
-const EMAIL_SENDING_PAUSED = true; // Owner-ordered global email pause; 2026-11-16.
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { clientChargeView } from '../../shared/clientPortal.ts';
 
@@ -8,7 +7,6 @@ const escapeHtml = (value: unknown) => String(value ?? '').replace(/[&<>"']/g, (
 const money = (value: unknown) => new Intl.NumberFormat('cs-CZ').format(Math.round(Number(value || 0)));
 
 async function sendEmail(base44: any, to: string, subject: string, html: string) {
-  if (EMAIL_SENDING_PAUSED) return;
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
     const encodedSubject = `=?UTF-8?B?${btoa(unescape(encodeURIComponent(subject)))}?=`;

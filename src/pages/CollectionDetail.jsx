@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowRight, MapPin, Ruler, Droplets } from 'lucide-react';
+import { ArrowRight, Check, Building2, ShieldCheck, Wrench, FileText, MapPin, Ruler, Droplets } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import DetailPhotoStory from '@/components/motion/DetailPhotoStory';
 import CollectionHero from '@/components/kolekce/CollectionHero';
@@ -10,16 +10,11 @@ import ContextLinks from '@/components/common/ContextLinks';
 import UseCaseExperience from '@/components/kolekce/UseCaseExperience';
 import StebloSpaceFeature from '@/components/products/StebloSpaceFeature';
 
-const CITY_PLANNING = [
-  { label: 'Pohyb v prostoru', text: 'Ponechat průchozí trasy a přístupové plochy bez kolize s mlžítkem a jeho kotvením.' },
-  { label: 'Vítr a odpařování', text: 'Proudění vzduchu může mlhu zanést i několik metrů. Dosah a případné smáčení ovlivní počasí, trysky i provoz.' },
-  { label: 'Technická příprava', text: 'Prověřit vodu, filtraci, stavební připravenost, řízení a přístup k následnému servisu.' },
-];
-
-const GARDEN_PLANNING = [
-  { label: 'Odstup od posezení', text: 'Nízkotlaká mlžítka nedoporučujeme umisťovat přímo mezi stoly a lavičky. Odstup řešíme podle konkrétního místa.' },
-  { label: 'Slunce a vítr', text: 'V horkém suchém vzduchu se mlha rychleji odpařuje, ale vítr ji může přenést na další plochy. Trvale suchý povrch nelze slíbit.' },
-  { label: 'Umístění a napojení', text: 'Zohledníme výhled do zahrady, přístup k vodě, způsob kotvení a možnosti sezónního používání.' },
+const CITY_TRUST = [
+  { icon: Building2, title: 'Český návrh a výroba', text: 'Jeden partner pro návrh, výrobu, instalaci i následný servis.' },
+  { icon: ShieldCheck, title: 'Pro veřejný provoz', text: 'Odolné nerezové provedení navržené pro dlouhodobé venkovní použití.' },
+  { icon: FileText, title: 'Podklady pro projekt', text: 'Pomůžeme s volbou modelu, umístěním, napojením a technickými podklady.' },
+  { icon: Wrench, title: 'Servis a podpora', text: 'Řešení je navržené tak, aby bylo dobře udržovatelné i po letech provozu.' },
 ];
 
 const CITY_STEPS = [
@@ -67,55 +62,36 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       {isCity && <DetailPhotoStory variant="spaces" />}
       {isCity && <StebloSpaceFeature context="city" />}
 
-      {(isCity || isGarden) ? (
-        <section aria-labelledby="collection-placement-heading" className="border-y border-[#D6E5EA] bg-white py-16 sm:py-20 lg:py-24">
-          <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-[.82fr_1.18fr] lg:gap-16 lg:px-10">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[.17em] text-[#21768B]">Umístění v prostoru</p>
-              <h2 id="collection-placement-heading" className="mt-4 max-w-xl font-heading text-3xl font-semibold leading-[1.1] tracking-[-.04em] text-[#0C2D40] sm:text-4xl">
-                {isCity ? 'Městské mlžítko začíná správným místem.' : 'Mlžení pro zahradu navrhujeme s ohledem na posezení.'}
-              </h2>
-              <p className="mt-5 max-w-lg text-base leading-7 text-[#526D78]">
-                {isCity
-                  ? 'Při výběru posuzujeme pohyb lidí, okolní plochy a dlouhodobý provoz. Vhodný model určíme až podle místa a jeho technických podmínek.'
-                  : 'Vzhled mlžítka a jeho funkce musí odpovídat zahradě. Vedle velikosti prostoru je důležitý vítr, slunce, umístění posezení a přívod vody.'}
-              </p>
-              <Link to="/poptavka" className="mt-7 inline-flex min-h-11 items-center gap-2 border-b-2 border-[#21768B] pb-1 text-sm font-semibold text-[#0C4157] hover:border-[#0C2D40] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#21768B]">
-                {isCity ? 'Posoudit veřejný prostor' : 'Posoudit zahradu podle fotografie'}
-                <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-            </div>
-            <div className="border-t border-[#CADCE2]">
-              {(isCity ? CITY_PLANNING : GARDEN_PLANNING).map(({ label, text }, index) => (
-                <div key={label} className="grid gap-4 border-b border-[#D8E6E9] py-6 sm:grid-cols-[2.75rem_1fr]">
-                  <span className="font-mono text-xs font-semibold text-[#21768B]">0{index + 1}</span>
-                  <div>
-                    <h3 className="font-heading text-xl font-semibold text-[#0C2D40]">{label}</h3>
-                    <p className="mt-2 max-w-xl text-sm leading-6 text-[#526D78]">{text}</p>
-                  </div>
-                </div>
-              ))}
-              <p className="mt-5 max-w-2xl border-l-2 border-[#8FBCC6] pl-4 text-xs leading-6 text-[#526D78]">
-                Konkrétní umístění a provozní podmínky stanovíme individuálně. Univerzální vzdálenost ani suchý povrch ve všech podmínkách nelze garantovat.
-              </p>
-            </div>
-          </div>
-        </section>
-      ) : (
-        <section className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-24">
-          <div>
-            <p className="font-mono text-sm tracking-[.18em] uppercase text-secondary">Podoba kolekce</p>
-            <h2 className="mt-4 font-heading text-3xl text-foreground lg:text-4xl">{collection.sectionHeading}</h2>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-3">
-            {collection.features.map((feature) => (
-              <div key={feature} className="border-t border-[#b9c3c8] pt-5">
-                <p className="text-base leading-7 text-foreground">{feature}</p>
+      {(isCity || isGarden) && (
+        <section className="border-b border-border bg-white">
+          <div className="mx-auto grid max-w-7xl gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {(isCity ? CITY_TRUST : GARDEN_TRUST).map(({ icon: Icon, title, text }) => (
+              <div key={title} className="bg-white p-6 lg:p-7">
+                <Icon size={22} className="text-secondary" strokeWidth={1.6} />
+                <h2 className="mt-5 font-heading text-xl text-foreground">{title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
               </div>
             ))}
           </div>
         </section>
       )}
+
+      <section className="mx-auto grid max-w-7xl gap-10 px-6 py-14 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-24">
+        <div>
+          <p className="font-mono text-sm tracking-[.18em] uppercase text-secondary">NAVRŽENO PRO VAŠE MÍSTO</p>
+          <h2 className="mt-4 font-heading text-3xl text-foreground lg:text-4xl">{collection.sectionHeading}</h2>
+          {isCity && <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">Městské mlžítko není jen produkt. Je součástí provozu náměstí, parku nebo pěší zóny, proto řešíme vzhled, techniku i budoucí údržbu jako jeden celek.</p>}
+          {isGarden && <p className="mt-5 max-w-md text-base leading-relaxed text-muted-foreground">Zahradní mlžítko má ochladit prostor a zároveň v něm působit přirozeně. Proto řešíme nejen výkon, ale i umístění, napojení, vzhled a způsob sezónního používání.</p>}
+        </div>
+        <div className="grid gap-5 sm:grid-cols-3">
+          {collection.features.map((feature) => (
+            <div key={feature} className="border-t border-[#b9c3c8] pt-5">
+              <Check size={18} className="text-secondary" />
+              <p className="mt-6 text-lg leading-relaxed text-foreground">{feature}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       {(isCity || isGarden) && (
         <section className="bg-slate-50 border-y border-border">
@@ -151,9 +127,12 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
       <CollectionProductGrid collection={collection} />
 
       {isCity && <ContextLinks eyebrow="Pro města a projektanty" title="Technika, hygiena a benefity na jednom místě." items={[
-        { path: '/ochrana-zdravi', kicker: 'Hygiena a provoz', title: 'Voda a údržba', text: 'Zdroj vody, proplach, servisní režim a souvislosti městského provozu.' },
-        { path: '/smart-ovladani', kicker: 'Správa', title: 'Časové řízení mlžení', text: 'Možnosti intervalového a podmíněného provozu podle vybavení instalace.' },
-        { path: '/udrzitelnost', kicker: 'Městské klima', title: 'Provozní souvislosti', text: 'Voda, mikroklima a dlouhodobá správa instalace.' }
+        { path: '/jak-to-funguje', kicker: 'Technologie', title: 'Jak mlžítka fungují', text: 'Princip mlžení, napojení, provozní tlak a technické řešení pro veřejný prostor.' },
+        { path: '/ochrana-zdravi', kicker: 'Hygiena a provoz', title: 'Ochrana zdraví', text: 'Zdroj vody, proplach, údržba, servisní režim a informace důležité pro městské instalace.' },
+        { path: '/vyhody', kicker: 'Přínos projektu', title: 'Výhody a benefity', text: 'Tepelný komfort, chytré řízení, životnost, servis a architektonická hodnota řešení.' },
+        { path: '/smart-ovladani', kicker: 'Správa', title: 'Chytré ovládání', text: 'Automatizace provozu podle času, teploty a podmínek v místě instalace.' },
+        { path: '/udrzitelnost', kicker: 'Městské klima', title: 'Udržitelnost', text: 'Jak navrhovat provoz s ohledem na vodu, mikroklima a dlouhodobou životnost.' },
+        { path: '/reference', kicker: 'Důvěra', title: 'Reálné realizace', text: 'Podívejte se na instalace ve městech, parcích, ZOO a dalších veřejných prostorech.' }
       ]} />}
 
       <section className="bg-[#12415e] text-primary-foreground">

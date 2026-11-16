@@ -13,7 +13,6 @@ const shortcuts = [
   { label: 'Poptávky', href: '/admin?tab=poptavky', Icon: Mail },
   { label: 'AI nabídky · přehled', href: '/admin?tab=offers', Icon: FileText },
   { label: 'HubSpot CRM · obchodní případy', href: 'https://app-eu1.hubspot.com/contacts/149778217/objects/0-3', Icon: Users, external: true },
-  { label: 'Historie e-mailů · HubSpot a Gmail', href: '/admin?tab=hubspot', Icon: Mail },
   { label: 'Lokální evidence Base44', href: '/admin?tab=crm', Icon: Users },
   { label: 'Gmail koncepty', href: 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts', Icon: Mail, external: true },
   { label: 'Canva · katalog', href: 'https://www.canva.com/design/DAHa1B5S2eg/BjtW1avef1aLLSQWNpueRg/edit', Icon: Palette, external: true },

@@ -5,15 +5,6 @@ import { createAxiosClient } from '@base44/sdk/dist/utils/axios-client';
 
 const AuthContext = createContext(null);
 
-// Network or expired login state must never hold a public page on "Načítání…" forever.
-const withDeadline = (promise, timeoutMs = 8000) => {
-  let timer;
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('initialization_timeout')), timeoutMs); }),
-  ]).finally(() => clearTimeout(timer));
-};
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,12 +35,12 @@ export const AuthProvider = ({ children }) => {
       });
       
       try {
-        const publicSettings = await withDeadline(appClient.get(`/prod/public-settings/by-id/${appParams.appId}`), 8000);
+        const publicSettings = await appClient.get(`/prod/public-settings/by-id/${appParams.appId}`);
         setAppPublicSettings(publicSettings);
         
         // If we got the app public settings successfully, check if user is authenticated
         if (appParams.token) {
-          await checkUserAuth({ publicAccessAllowed: publicSettings?.public_settings === 'public_without_login' });
+          await checkUserAuth();
         } else {
           setIsLoadingAuth(false);
           setIsAuthenticated(false);
@@ -98,11 +89,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const checkUserAuth = async ({ publicAccessAllowed = false } = {}) => {
+  const checkUserAuth = async () => {
     try {
       // Now check if the user is authenticated
       setIsLoadingAuth(true);
-      const currentUser = await withDeadline(base44.auth.me(), 8000);
+      const currentUser = await base44.auth.me();
       setUser(currentUser);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);
@@ -114,22 +105,7 @@ export const AuthProvider = ({ children }) => {
       setAuthChecked(true);
       
       // If user auth fails, it might be an expired token
-      const status = error?.status || error?.response?.status;
-      if (publicAccessAllowed) {
-        // Public content is accessible without login. An old admin session must
-        // never redirect all visitors into a login loop.
-        setAuthError(null);
-        if (status === 401 || status === 403) {
-          try {
-            window.localStorage.removeItem('base44_access_token');
-            window.localStorage.removeItem('token');
-            // Recreate the SDK without the stale token after the next load.
-            window.location.reload();
-          } catch (storageError) {
-            console.warn('Could not clear expired public session', storageError);
-          }
-        }
-      } else if (status === 401 || status === 403) {
+      if (error.status === 401 || error.status === 403) {
         setAuthError({
           type: 'auth_required',
           message: 'Authentication required'

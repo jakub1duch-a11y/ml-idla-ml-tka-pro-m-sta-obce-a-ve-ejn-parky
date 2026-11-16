@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -55,8 +55,7 @@ import Art from '@/pages/kategorie/Art';
 import Deti from '@/pages/kategorie/Deti';
 import UseCaseCategory from '@/pages/kategorie/UseCaseCategory';
 import Gdpr from '@/pages/Gdpr';
-// Admin CRM is only needed on /admin. Do not load its large dependency tree on public pages.
-const Admin = React.lazy(() => import('@/pages/admin/Admin'));
+import Admin from '@/pages/admin/Admin';
 import AdminLogin from '@/pages/admin/AdminLogin';
 import AdminLogout from '@/pages/admin/AdminLogout';
 import AdminForgotPassword from '@/pages/admin/AdminForgotPassword';
@@ -247,7 +246,7 @@ const AuthenticatedApp = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-      <Route path="/admin" element={<React.Suspense fallback={<div className="fixed inset-0 flex items-center justify-center bg-secondary"><BrandLoadingContent /></div>}><Admin /></React.Suspense>} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin-logout" element={<AdminLogout />} />
       <Route path="/admin-forgot-password" element={<AdminForgotPassword />} />

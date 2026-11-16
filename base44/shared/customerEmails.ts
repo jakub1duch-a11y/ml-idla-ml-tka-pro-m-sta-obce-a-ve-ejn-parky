@@ -1,4 +1,3 @@
-export const EMAIL_SENDING_PAUSED = true;
 // Sdílený modul pro profesionální zákaznické e-maily MLŽIDLA.cz
 // Všechny e-maily mají konzistentní HTML + plaintext, brand identity, patičku s podpisem.
 
@@ -184,8 +183,6 @@ export async function createGmailDraft(base44: any, opts: { to: string; fromEmai
 }
 
 export async function sendViaGmail(base44: any, opts: { to: string; fromEmail: string; subject: string; text: string; html: string; bcc?: string[] }): Promise<{ ok: boolean; error?: string }> {
-  // Emergency pause requested by owner on 2026-11-16. Keep draft creation available.
-  if (EMAIL_SENDING_PAUSED) return { ok: false, error: 'email_sending_paused_by_owner' };
   try {
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('gmail');
     const raw = buildMimeMessage(opts);

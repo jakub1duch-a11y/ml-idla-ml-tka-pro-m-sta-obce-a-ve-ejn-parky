@@ -1,4 +1,3 @@
-const EMAIL_SENDING_PAUSED = true; // Owner-ordered global email pause; 2026-11-16.
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 const normalizeQuote = (value: unknown) => String(value || '').trim().toUpperCase();
@@ -61,7 +60,6 @@ Deno.serve(async (req) => {
 
       await base44.asServiceRole.entities.PortalOtp.create({ email, otp_code: otpCode, expires_at: expiresAt });
 
-      if (EMAIL_SENDING_PAUSED) return Response.json({ error: 'email_sending_paused_by_owner' }, { status: 423 });
       await base44.asServiceRole.integrations.Core.SendEmail({
         to: email,
         subject: quoteNumber ? `Přístup k nabídce ${quoteNumber} | MLŽIDLA®` : 'Ověřovací kód | MLŽIDLA® Klientská sekce',

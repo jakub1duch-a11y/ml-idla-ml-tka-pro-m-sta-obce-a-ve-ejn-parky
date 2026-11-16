@@ -1,4 +1,3 @@
-const EMAIL_SENDING_PAUSED = true; // Owner-ordered global email pause; 2026-11-16.
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.31';
 
 const clean = (value: unknown, max: number) => String(value || '').trim().slice(0, max);
@@ -70,7 +69,7 @@ Deno.serve(async (req) => {
       '',
       `Admin: https://mlzidla.cz/admin`,
     ].join('\n');
-    if (!EMAIL_SENDING_PAUSED) await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
+    await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
       base44.asServiceRole.integrations.Core.SendEmail({
         to,
         subject: `Nová poptávka: ${jmeno}${body.produkt ? ' · ' + clean(body.produkt, 80) : ''}`,

@@ -34,10 +34,6 @@ export function drawSuplaOfferPages(doc, c, { header, text, image, money }) {
     y += cardH + 7;
   }
   note('Rizeni je volitelne. Neni automaticky v zakladni cene mlzitka. Vybrane varianty nelze scitat.', y + 3, 31);
-  y += 43;
-  text(doc, 'Pouziti v konkretnim prostoru', 14, y, 182, 13, true, accent);
-  y += 8;
-  text(doc, 'Vystup z trysek ovlivnuje slunce, vitr a vlhkost. Nizkotlake mlzitko nedoporucujeme instalovat primo mezi stoly nebo lavicky.', 14, y, 182, 10, false, ink);
 
   doc.addPage();
   y = header(doc, c, 'Chytra aplikace SUPLA', 'VOLITELNE RIDICI RESENI PODLE KONFIGURACE');
@@ -49,5 +45,5 @@ export function drawSuplaOfferPages(doc, c, { header, text, image, money }) {
   y += 33;
   note('Cena technologie: ' + priceLabel(smart) + '. Dalsi moduly, sachta a montaz nejsou automaticky soucasti teto polozky.', y, 33);
   y += 41;
-  text(doc, 'Vizualizace hardwaru je pouze ilustracni. Skutecne prvky a provedeni potvrdi technik pred realizaci.', 14, y, 182, 9, false, accent);
+  text(doc, 'Instalace se navrhuje podle vody, kotveni a mista. Vitr muze mlhu prenaset k posedeni; suchy povrch nelze garantovat.', 14, y, 182, 9, false, accent);
 }

@@ -96,7 +96,7 @@ export default function Mlhoviste() {
             <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">
               MLŽIDLA · architektura osvěžení
             </p>
-            <h1 className="mt-5">
+            <h1 className="mt-5 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
               Mlhoviště a mlžiště
               <br />
               pro města, parky a zahrady.
@@ -131,8 +131,7 @@ export default function Mlhoviste() {
             className="aspect-[4/3] w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.035] lg:aspect-[4/5]" />
             
             <figcaption className="px-5 py-3 text-xs leading-5 text-slate-200">
-              Inspirace pro parkový prostor. Počet a rozmístění prvků navrhujeme
-              individuálně.
+              Ilustrační fotografie pro parkový prostor. Počet, typ a rozmístění prvků ověřujeme podle konkrétního projektu.
             </figcaption>
           </figure>
         </div>

@@ -3,12 +3,18 @@
 // Never return column I (partner price), costs or margins.
 export const OFFER_CATALOG_ID = '1kyxH-ihr6YC5xnu8Ef5X4jbR81VVaJtDO1UVWK5d_S8';
 export const OFFER_CATALOG_RANGE = "'💧 Katalog produktů 2026'!A2:K1000";
+export const OFFER_PRICE_RANGES = ["'💧 Katalog produktů 2026'!A2:H1000", "'💧 Katalog produktů 2026'!J2:K1000"];
 
 export function parseCzkPrice(value) {
   if (typeof value === 'number' && Number.isFinite(value) && value >= 0) return value;
   const text = String(value ?? '').replace(/\s|\u00a0|Kč|CZK/gi, '').replace(',', '.');
   if (!/^\d+(?:\.\d{1,2})?$/.test(text)) throw new Error('Neplatná nebo chybějící veřejná cena.');
   return Number(text);
+}
+
+export function mergeCustomerCatalogRanges(publicRows, quantityRows) {
+  if (!Array.isArray(publicRows) || !Array.isArray(quantityRows)) throw new Error('Neplatná odpověď Google Sheets.');
+  return publicRows.map((row, i) => [...row.slice(0, 8), null, ...(quantityRows[i] || []).slice(0, 2)]);
 }
 
 export function buildProductOfferSheets(rows, requestedNames, { vatRate = null } = {}) {
@@ -42,7 +48,7 @@ export function buildProductOfferSheets(rows, requestedNames, { vatRate = null }
       depth_mm: row[5] ?? null,
       nozzle_count: row[6] ?? null,
       prices: quantityPrices,
-      price_source: { spreadsheet_id: OFFER_CATALOG_ID, range: OFFER_CATALOG_RANGE, columns: ['H','J','K'] },
+      price_source: { spreadsheet_id: OFFER_CATALOG_ID, ranges: OFFER_PRICE_RANGES, columns: ['H','J','K'] },
       author: 'Ing. Radek Meduna',
       company: 'HolmTec s.r.o.',
       brand: 'MLŽIDLA.cz',

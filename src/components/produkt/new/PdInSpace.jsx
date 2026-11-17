@@ -4,7 +4,7 @@ import { ArrowUpRight, Ruler } from 'lucide-react';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 // Produktově oddělené fotografie; žádná univerzální vizualizace pro všechny modely.
-const VERIFIED_SCENES = Object.freeze({
+const CURATED_SCENES = Object.freeze({
   'mlzitko-bendy': '/media/optimized/eb80e8486_IMG_1789934399993.webp',
   'linea-mlzitko': '/media/optimized/6af16b6a9_linea-rezidencni-mlzeni.webp',
   'aura-mlzitko': '/media/optimized/3bd7f70e9_MlitkoAURA-zahradnimlzidlo.webp',
@@ -17,7 +17,7 @@ export default function PdInSpace({ product }) {
   const slug = String(product?.slug || '').toLowerCase();
   const is1413 = /mrak/.test(slug) && /1413/.test(slug);
   const gallery = (product?.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url) && /\.(jpe?g|png|webp|avif)(\?|$)/i.test(url));
-  const scene = is1413 ? MRAK_1413_SCENE : VERIFIED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
+  const scene = is1413 ? MRAK_1413_SCENE : CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
   if (!scene) return null;
   const dimensions = [product?.width && `Šířka: ${product.width}`, product?.height && `Výška: ${product.height}`].filter(Boolean);
   return (

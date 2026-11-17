@@ -80,10 +80,10 @@ export default function Mlhoviste() {
   }, []);
   return (
     <div className="mist-field-page bg-white pt-24">
-      <section className="mx-auto max-w-7xl px-5 pb-14 pt-6 sm:px-8 lg:pb-20 lg:pt-12">
+      <section className="relative isolate overflow-hidden bg-slate-950 text-white"><div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(34,211,238,0.15),transparent_45%),linear-gradient(120deg,#020617,#0f2531_60%,#0c3340)]" /><div aria-hidden="true" className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.07)_1px,transparent_1px)] [background-size:52px_52px]" /><div className="relative mx-auto max-w-7xl px-5 pb-16 pt-8 sm:px-8 lg:pb-24 lg:pt-16">
         <nav
           aria-label="Drobečková navigace"
-          className="mb-8 flex flex-wrap gap-2 text-sm text-slate-600">
+          className="mb-8 flex flex-wrap gap-2 text-sm text-slate-300">
           
           <Link to="/">Úvod</Link>
           <span aria-hidden="true">/</span>
@@ -93,7 +93,7 @@ export default function Mlhoviste() {
         </nav>
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">
+            <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">
               MLŽIDLA · architektura osvěžení
             </p>
             <h1 className="mt-5">
@@ -101,7 +101,7 @@ export default function Mlhoviste() {
               <br />
               pro města, parky a zahrady.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-600">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-200">
               Promyšlené mlžné zóny pro náměstí, parky a areály. Nerezová
               mlžítka, přímé napojení na vodovod a volitelné chytré řízení SUPLA
               propojujeme v řešení pro konkrétní místo.
@@ -109,32 +109,33 @@ export default function Mlhoviste() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 to="/poptavka?produkt=Ml%C5%BEi%C5%A1t%C4%9B"
-                className="inline-flex min-h-12 items-center gap-3 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white">
+                className="inline-flex min-h-12 items-center gap-3 rounded-full bg-cyan-200 px-6 py-3 text-sm font-semibold text-slate-950 transition-transform duration-300 hover:-translate-y-1">
                 
                 Navrhnout moje mlžiště <ArrowRight size={17} />
               </Link>
               <a
                 href="#rozmisteni"
-                className="inline-flex min-h-12 items-center gap-2 px-4 py-3 text-sm font-semibold text-slate-900">
+                className="inline-flex min-h-12 items-center gap-2 px-4 py-3 text-sm font-semibold text-white hover:text-cyan-200">
                 
                 Možnosti rozmístění <ArrowRight size={17} />
               </a>
             </div>
           </div>
-          <figure className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+          <figure className="group overflow-hidden rounded-3xl border border-white/20 bg-white/10 shadow-[0_30px_100px_rgba(0,0,0,.35)]">
             <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b41c4231d_BENDY-FIELD-park-realizace.webp"
 
             alt={CATALOG_CATEGORIES[3].imageAlt}
             width="900"
             height="1000"
             fetchPriority="high"
-            className="aspect-[4/3] w-full object-cover lg:aspect-[4/5]" />
+            className="aspect-[4/3] w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.035] lg:aspect-[4/5]" />
             
-            <figcaption className="px-5 py-3 text-xs leading-5 text-slate-600">
+            <figcaption className="px-5 py-3 text-xs leading-5 text-slate-200">
               Inspirace pro parkový prostor. Počet a rozmístění prvků navrhujeme
               individuálně.
             </figcaption>
           </figure>
+        </div>
         </div>
       </section>
       <section className="border-y border-slate-200 bg-slate-50">

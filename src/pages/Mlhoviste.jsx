@@ -253,6 +253,23 @@ export default function Mlhoviste() {
           )}
         </div>
       </section>
+      <section aria-labelledby="mlhoviste-priprava" className="bg-white">
+        <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+          <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">Technické podklady</p>
+          <h2 id="mlhoviste-priprava" className="mt-4">Co potřebujeme pro návrh mlhoviště?</h2>
+          <p className="mt-4 max-w-2xl leading-7 text-slate-600">Pro první konzultaci stačí základní údaje. Technické parametry a rozsah instalace ověříme podle konkrétního místa.</p>
+          <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200">
+            <table className="w-full min-w-[560px] text-left text-sm">
+              <caption className="sr-only">Podklady pro návrh městského mlhoviště</caption>
+              <thead className="bg-slate-950 text-white"><tr><th scope="col" className="px-5 py-4">Oblast</th><th scope="col" className="px-5 py-4">Co nám pomůže upřesnit řešení</th></tr></thead>
+              <tbody className="divide-y divide-slate-200 text-slate-700">
+                {[["Prostor", "Fotografie nebo půdorys, přibližné rozměry a způsob využití"], ["Přívod vody", "Umístění přípojky; dostupný tlak, průtok a kvalita vody se ověří"], ["Podklad a kotvení", "Typ povrchu, přístup k rozvodům a případná stavební omezení"], ["Provoz a řízení", "Očekávané časy provozu a zájem o automatické ovládání"], ["Údržba", "Přístup k filtraci, odvod vody a možnost zimního odstavení"]].map(([label, description]) => <tr key={label}><th scope="row" className="px-5 py-4 font-semibold text-slate-900">{label}</th><td className="px-5 py-4 leading-6">{description}</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          <Link to="/poptavka?produkt=Ml%C5%BEi%C5%A1t%C4%9B" className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-full bg-slate-950 px-6 py-3 text-sm font-semibold text-white">Poslat podklady k návrhu <ArrowRight size={17} /></Link>
+        </div>
+      </section>
       <section className="border-y border-slate-200 bg-slate-50">
         <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
           <h2>Návrh mlhoviště: od fotografie k instalaci.</h2>
@@ -285,11 +302,9 @@ export default function Mlhoviste() {
         <h2>Co připravit před návrhem mlhoviště.</h2>
         <div className="mt-8 divide-y divide-slate-200">
           {FAQ.map(([q, a]) =>
-          <details key={q} className="py-2">
-              
-
-            
-              <p className="pb-5 text-base leading-7 text-slate-600">{a}</p>
+          <details key={q} className="group py-4">
+              <summary className="cursor-pointer list-item text-base font-semibold text-slate-900 marker:text-cyan-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-700">{q}</summary>
+              <p className="pt-4 pb-2 text-base leading-7 text-slate-600">{a}</p>
             </details>
           )}
         </div>

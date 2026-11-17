@@ -35,5 +35,15 @@ Při chybě přejít do BLOCKED s konkrétním důvodem; nesimulovat úspěch. S
 - Gmail DRAFT v původním vlákně; žádná odchozí zpráva.
 - Simulace chybějícího asset_id / ceny / exportu → BLOCKED, žádný neúplný koncept označený jako hotový.
 
+## Předání do ChatGPT Work – dokončení přímo v HubSpotu
+- Otevřít v ChatGPT Work Cloud Browser produkční HubSpot portál **149778217** přihlášený jako **meduna@holmtec.cz**. Neměnit portál 149032244.
+- Vyhledat EXISTUJÍCÍHO Customer Agenta, ověřit jeho aktuální název a přejmenovat na **Tým MLŽIDLA.cz | Radek Meduna**. Nevytvářet nového agenta.
+- V zákaznických obchodních e-mailech nastavit zobrazované jméno odesílatele **Radek Meduna**, e-mail **meduna@holmtec.cz** a ověřený podpis s originálním logem: Radek Meduna / MLŽIDLA.cz | HolmTec / meduna@holmtec.cz / https://mlzidla.cz. Nepoužívat v patičce označení Customer Agent, AI Assistant ani interní název týmu. Neuvádět neověřený telefon.
+- U přímé automatizované konverzace zachovat transparentní označení asistenta. U obchodních e-mailů, které Radek Meduna schválí, lze použít jeho běžný podpis bez technického dodatku o AI přípravě.
+- Propojit existujícího agenta s workflow Base44 → HubSpot Deal → ověřené ceny → Canva PDF → přílohy Deal → Gmail koncept; v HubSpotu ukládat koncept, pokud je podporován, jinak aktivitu s odkazem na Gmail draft.
+- Ověřit správné oprávnění a připojené účty, že žádný automatický SEND není zapnutý, že stav DRAFT neznamená SENT, a že přílohy jsou skutečně připojené.
+- Testovat na již existující poptávce pana Starého bez duplicit a bez odeslání; provést test chybějící ceny, fotografie, PDF a opakovaného spuštění.
+- V závěrečném reportu uvést konkrétní změněné nastavení, URL nebo ID agenta, testované výsledky, odkazy na vzniklé koncepty a PDF, případné blokace. Neoznačovat nasazení jako hotové bez důkazu.
+
 ## Nasazení
 Nejdříve připojení Customer Agenta a exportní API, následně test v izolovaném prostředí, kontrola oprávnění, logování, idempotence, build/CI a Preview. Produkční aktivace až po úspěšných testech a ověření správného portálu. Tento soubor je specifikace, nikoli aktivní webhook ani publikované workflow.

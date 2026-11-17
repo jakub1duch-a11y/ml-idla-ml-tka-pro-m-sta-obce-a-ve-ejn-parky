@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { BarChart3, CheckCircle2, Loader, RefreshCw, Search, Target, TrendingUp, Users, Zap } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import HubspotSalesOverview from '@/components/admin/crm/HubspotSalesOverview';
 
 const fmt = (value = 0) => Math.round(Number(value) || 0).toLocaleString('cs-CZ');
 const pct = (value = 0) => `${Number(value || 0).toFixed(1).replace('.', ',')} %`;
@@ -83,7 +84,7 @@ export default function AdminAnalytics() {
   const conversion = useMemo(() => data?.intelligence?.dbConversion || 0, [data]);
 
   if (loading) return <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-cyan/50"/></div>;
-  if (error && !data) return <div className="p-6"><div className="rounded-xl border border-red-500/20 bg-red-500/10 p-5 text-sm text-red-300">{error}</div></div>;
+  if (error && !data) return <div className="space-y-6 p-6"><HubspotSalesOverview/><div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-5 text-sm text-amber-200" role="status">GA4 a marketingová analytika se nenačetly: {error}. Obchodní přehled HubSpot je dostupný samostatně výše.</div></div>;
 
   const ga = data?.ga4 || {};
   const leads = data?.leads || {};
@@ -162,6 +163,7 @@ export default function AdminAnalytics() {
       {propertyError && <p className="mt-2 text-xs text-amber-300">{propertyError}</p>}
       {gaUnavailable && <p className="mt-2 text-xs text-amber-300">GA4 data nejsou dostupná. Nulové hodnoty nepovažujte za skutečnou návštěvnost.</p>}
     </section>
+    <HubspotSalesOverview />
     <section className="rounded-xl border border-white/10 bg-white/3 p-5" aria-label="Vývoj návštěvnosti za sedm dní">
       <div className="flex items-center justify-between gap-2"><h3 className="text-sm font-semibold text-white">Návštěvnost · posledních 7 dní</h3><span className="text-xs text-white/40">GA4 sessions</span></div>
       {trend.length ? <div className="mt-5 flex h-40 items-end gap-2" role="img" aria-label={trend.map((day) => `${day.date}: ${fmt(day.sessions)} návštěv`).join(', ')}>

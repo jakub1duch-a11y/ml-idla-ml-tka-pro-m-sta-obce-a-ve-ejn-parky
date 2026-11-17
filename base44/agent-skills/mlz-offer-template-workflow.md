@@ -72,3 +72,20 @@ Každé selhání vrátí stav `BLOCKED`, chybu a potřebný další krok. Není
 - Technika: skutečný výrobní profil, trysky, kotvení, materiál, provozní tlak.
 - Provoz: voda, elektřina, filtrace, SMART, servis a zazimování podle konkrétní konfigurace.
 - Obchod: identita příjemce, revize PDF, CRM odkaz, Drive, Gmail koncept, zákaz odeslání.
+
+
+## HubSpot a intervalové řízení bez aplikace (16. 11. 2026)
+
+**Platí pro všechny nové návrhy produktových a cenových listů, Canva prezentace i nabídkové PDF.**
+
+- **CRM:** výhradně HubSpot portál `149778217`, pipeline `4351532258`. Zdrojový identifikátor poptávky Base44 má odpovídat právě jednomu HubSpot Deal, po deduplikaci e-mailu, firmy a přesného ID. Před vytvořením nebo změnou záznamu provést `hubspotOfferCaseGateway` či `syncHubspotOfferCase` v režimu preview; zápis jen při potvrzených údajích a oprávněních. Při rozporném portálu STOP.
+- **Komunikace:** Gmail `meduna@holmtec.cz` je zdroj pravdy, zda e-mail opravdu odešel. Koncepty zůstávají ve fázi přípravy nabídky. Stage `Nabídka odeslána` jen pro ověřené SENT a propojení na správný Deal. Automaticky nic neodesílat.
+- **Výstup Canva/PDF:** produktový list s ověřenou MASTER fotografií, konkrétním použitím a umístěním, cenovou tabulkou s cenami z právě ověřené veřejné kalkulace a vizualizačním listem. Volitelné řízení zobrazit jako oddělené cenové varianty. Nikdy nedoplňovat cenu z historické šablony.
+- **Snadná instalace:** nepředstírat instalaci bez stavební přípravy. Uvést potřebný přívod vody, filtraci, kotvení, servis a podle řídicí sestavy napájení a konektivitu. Konkrétní cenu montáže až z kalkulace.
+- **Řízení A bez aplikace:** lokální kompatibilní časovač nebo řídicí jednotka pro střídání mlžení a pauz, pouze pokud je v ověřené sestavě. Není automaticky v ceně základního mlžítka.
+- **Řízení B s aplikací:** volitelná SUPLA (moduly, kompatibilní ventil, čidla podle konfigurace), cena výhradně z čerstvé kalkulace; nestanovovat na základě staré PDF hodnoty. Chybějící = `K individuálnímu nacenění`.
+- **Gastro/posezení:** nízkotlaká mlžítka neumisťovat přímo mezi stoly/lavičky. Mlha se může šířit větrem i několik metrů, suché okolí nelze zaručit za všech podmínek. Odstup není bez projektu známý.
+- **Analytika:** GA4 sleduje anonymizovanou návštěvnost a vyhodnocení stránek; HubSpot fáze a práci s obchodními případy. Bez ověřené vazby source_id / UTM nelze tvrdit atribuovanou návštěvu nebo prodej. S GA4 daty nakládat dle pravidel cookies, bez přenosu osobně identifikovatelných dat.
+- **Schválení:** Cena, MASTER fotografie, vizualizace, HubSpot ID případu, PDF i Gmail koncept musí mít stav ověření. Žádné automatické sloučení PR, nasazení ani produkční zápis CRM bez oprávnění a kontroly.
+
+Podrobná implementační specifikace: `docs/MLZIDLA_HUBSPOT_OFFER_ANALYTICS_WORKFLOW_2026-11-16.md`.

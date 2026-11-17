@@ -19,11 +19,10 @@ const MRAK_SCENES = Object.freeze({
 
 export default function PdInSpace({ product }) {
   const slug = String(product?.slug || '').toLowerCase();
-  const isWorkingMrakScene = Boolean(MRAK_SCENES[slug]);
   const gallery = (product?.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url) && /\.(jpe?g|png|webp|avif)(\?|$)/i.test(url));
   const scene = MRAK_SCENES[slug] || CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
   if (!scene) return null;
-  const dimensions = [product?.width && `Šířka: ${product.width}`, product?.height && `Výška: ${product.height}`].filter(Boolean);
+  const dimensions = MRAK_SCENES[slug] ? [] : [product?.width && `Šířka: ${product.width}`, product?.height && `Výška: ${product.height}`].filter(Boolean);
   return (
     <section aria-labelledby="product-in-space-title" className="bg-[#F3F8FA] py-14 sm:py-20">
       <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
@@ -35,7 +34,6 @@ export default function PdInSpace({ product }) {
         <div className="grid overflow-hidden rounded-2xl bg-white shadow-[0_18px_60px_rgba(13,47,79,.09)] lg:grid-cols-[1.65fr_1fr]">
           <figure className="relative min-h-[300px] bg-[#E6EFF2]">
             <img src={scene} alt={`${product.name} – prostorová vizualizace s lidmi`} loading="lazy" className="h-full w-full object-cover" />
-            <figcaption className="absolute bottom-3 left-3 rounded bg-white/90 px-3 py-1.5 text-xs text-[#24475B]">{isWorkingMrakScene ? 'Pracovní vizualizace · proporce a rozměry nejsou technicky ověřené' : 'Ukázka umístění · rozměry ověřte podle technického listu'}</figcaption>
           </figure>
           <div className="flex flex-col justify-center p-7 sm:p-10">
             <Ruler className="mb-5 text-[#087A9C]" size={29} aria-hidden="true" />

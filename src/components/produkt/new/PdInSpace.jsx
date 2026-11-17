@@ -11,13 +11,17 @@ const CURATED_SCENES = Object.freeze({
   'mlzitko-volavka': '/media/optimized/25f7cd749_volavka-rezidencnizahrady.webp',
   'teepee': '/media/optimized/06c42b5dc_Screenshot_20260920_171920.webp',
 });
-const MRAK_1413_SCENE = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1f9721ea3_a_bright_realistic_high_detail_outdoor_commercia.png';
+const MRAK_SCENES = Object.freeze({
+  'mlzny-mrak-1413': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/1f9721ea3_a_bright_realistic_high_detail_outdoor_commercia.png',
+  'mlzny-mrak-1414': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ba3159d28_a_realistic_outdoor_product_styled_scene_in_a_sunn.png',
+  'mlzny-mrak-2424': 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/cba149a91_a_bright_outdoor_park_scene_with_greenery_in_the_b.png',
+});
 
 export default function PdInSpace({ product }) {
   const slug = String(product?.slug || '').toLowerCase();
-  const is1413 = /mrak/.test(slug) && /1413/.test(slug);
+  const isWorkingMrakScene = Boolean(MRAK_SCENES[slug]);
   const gallery = (product?.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url) && /\.(jpe?g|png|webp|avif)(\?|$)/i.test(url));
-  const scene = is1413 ? MRAK_1413_SCENE : CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
+  const scene = MRAK_SCENES[slug] || CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
   if (!scene) return null;
   const dimensions = [product?.width && `Šířka: ${product.width}`, product?.height && `Výška: ${product.height}`].filter(Boolean);
   return (
@@ -31,7 +35,7 @@ export default function PdInSpace({ product }) {
         <div className="grid overflow-hidden rounded-2xl bg-white shadow-[0_18px_60px_rgba(13,47,79,.09)] lg:grid-cols-[1.65fr_1fr]">
           <figure className="relative min-h-[300px] bg-[#E6EFF2]">
             <img src={scene} alt={`${product.name} – prostorová vizualizace s lidmi`} loading="lazy" className="h-full w-full object-cover" />
-            <figcaption className="absolute bottom-3 left-3 rounded bg-white/90 px-3 py-1.5 text-xs text-[#24475B]">Ukázka umístění · rozměry ověřte podle technického listu</figcaption>
+            <figcaption className="absolute bottom-3 left-3 rounded bg-white/90 px-3 py-1.5 text-xs text-[#24475B]">{isWorkingMrakScene ? 'Pracovní vizualizace · proporce a rozměry nejsou technicky ověřené' : 'Ukázka umístění · rozměry ověřte podle technického listu'}</figcaption>
           </figure>
           <div className="flex flex-col justify-center p-7 sm:p-10">
             <Ruler className="mb-5 text-[#087A9C]" size={29} aria-hidden="true" />

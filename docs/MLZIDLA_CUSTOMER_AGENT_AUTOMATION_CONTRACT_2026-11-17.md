@@ -2,7 +2,9 @@
 Datum: 2026-11-17. Stav: připraveno k implementaci a integračnímu testu; NENÍ dokladem aktivace v HubSpotu.
 
 ## Identita a rozsah
-- Použít EXISTUJÍCÍ upravený Customer Agent v HubSpotu, nevytvářet druhého.
+- Použít EXISTUJÍCÍ upravený agent v HubSpotu, nevytvářet druhého. Požadovaný zobrazovaný název: **Tým MLŽIDLA.cz | Radek Meduna**. Původní interní označení Customer Agent nesmí být v zákaznickém podpisu, předmětu, přílohách ani záhlaví nabídky. Přejmenování v HubSpotu musí být ověřeno přímo v nastavení agenta; tato specifikace jej sama nepřejmenovává.
+- Standardní obchodní podpis pro koncepty: **Radek Meduna | Tým MLŽIDLA.cz**; **MLŽIDLA.cz – HolmTec**; **meduna@holmtec.cz**; **https://mlzidla.cz**. Telefon a přesný právní název firmy načíst ze schváleného Brand Profile, neodhadovat. Použít originální firemní logo a grafickou patičku, pokud je ověřená.
+- Neuvádět v obchodních konceptech technické názvy agentů ani interní poznámky o generování. Pokud zákazník jedná přímo s automatizovaným chatovacím agentem, nesmí být klamán, že mluví přímo s člověkem; odpovídající transparentnost zachovat.
 - Portál MLŽIDLA.cz: 149778217; před každým zápisem ověřit identitu portálu. Konfigurace jiného portálu (149032244) nesmí být použita.
 - Odesílatel Gmail: meduna@holmtec.cz; pouze DRAFT, nikdy SEND.
 - Spouštěče: nová zákaznická poptávka v Base44/Gmailu nebo aktualizace poptávky vyžadující novou revizi. Vyžadovat originální source_id a zamezit opakovanému založení.

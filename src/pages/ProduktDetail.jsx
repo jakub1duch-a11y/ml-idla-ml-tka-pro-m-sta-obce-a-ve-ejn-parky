@@ -8,6 +8,7 @@ import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
+import PdInSpace from '@/components/produkt/new/PdInSpace';
 import ProductMotionSection from '@/components/produkt/ProductMotionSection';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
@@ -74,6 +75,7 @@ export default function ProduktDetail() {
       <div id="parametry" className="scroll-mt-36"><PdSpecs product={product} /></div>
       <AvenueConfigurator product={product} />
       <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
+      <PdInSpace product={product} />
       <ProductMotionSection key={product.slug} product={product} />
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>

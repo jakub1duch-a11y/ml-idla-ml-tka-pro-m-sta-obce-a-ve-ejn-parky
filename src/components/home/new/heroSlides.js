@@ -6,8 +6,13 @@ const jicin = F + 'ff7aaa73f_realizace-IMG_4974.jpg';
 const zoo = F + '3824f85eb_1000005519.jpg';
 export const HERO_FALLBACK = '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp';
 const leaf = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/bfa8ae002_mlznymrak.jpg';
+// STÉBLO GATE — produktový hero a detailní fotografie v navazujícím snímku.
+const stebloHero = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/ddceb7fad_steblo-gate-home-hero.webp';
+const stebloDetail = 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a602e9675_file_00000000963881f4b5d4f892073ceae0.png';
 // The opening H.264 clip has its MP4 index before the picture data (fast start).
 export const HERO_SLIDES = [
+  { id: 'steblo-gate-hero', type: 'image', src: stebloHero, poster: stebloHero, label: 'STÉBLO GATE® — nerezová mlžná brána v prostoru', kind: 'Produktová vizualizace', cta: '/produkt/brana-bendy', ctaLabel: 'Prohlédnout STÉBLO GATE®' },
+  { id: 'steblo-gate-detail', type: 'image', src: stebloDetail, poster: stebloDetail, label: 'STÉBLO GATE® — detail nerezového prvku s tryskami', kind: 'Produktový detail', cta: '/produkt/brana-bendy', ctaLabel: 'Detail produktu STÉBLO GATE®' },
   { id: 'mist-photo', type: 'image', src: leaf, poster: leaf, label: 'Vodní mlha · v provozu', kind: 'Fotografie realizace' },
   { id: 'gate', type: 'video', src: F + '4d05eca71_mlzidla-gate-hero-faststart.mp4', poster: gate, label: 'GATE · mlžný průchod', kind: 'Video realizace' },
   { id: 'jicin-photo', type: 'image', src: jicin, poster: jicin, label: 'BENDY · Jičínské náměstí', kind: 'Fotografie realizace' },

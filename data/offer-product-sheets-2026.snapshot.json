@@ -1,0 +1,578 @@
+{
+  "source": "Kalkulace mlžítka 2026 / 💧 Katalog produktů 2026",
+  "spreadsheetId": "1kyxH-ihr6YC5xnu8Ef5X4jbR81VVaJtDO1UVWK5d_S8",
+  "retrievedDate": "2026-11-17",
+  "reviewRequired": true,
+  "records": [
+    {
+      "row": 3,
+      "name": "AURA 700",
+      "description": "Produkt AURA_700, s trubkou TR42x3, poloměrem 700 - 750 mm a volitelnou výškou až 2200 mm.",
+      "profile": "TR42x2",
+      "height": "2200",
+      "width": "700",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        "26 580 Kč",
+        "50550",
+        "71400"
+      ]
+    },
+    {
+      "row": 4,
+      "name": "AURA 900",
+      "description": "Produkt AURA_700, s trubkou TR42x3, poloměrem kolo 900 mm a volitelnou výškou až 2200 mm.",
+      "profile": "TR42x2",
+      "height": "2200",
+      "width": "900",
+      "depth": "",
+      "nozzles": "6",
+      "prices": [
+        "29 036 Kč",
+        "55200",
+        "78000"
+      ]
+    },
+    {
+      "row": 5,
+      "name": "BENDY_60",
+      "description": "Produkt BENDY_60, s trubkou TR60,3x3 s jedním charakteristiským obloukem R300 s volitelnou výškou, obvykle 1800 mm",
+      "profile": "TR60,3x2",
+      "height": "1800",
+      "width": "600",
+      "depth": "",
+      "nozzles": "3",
+      "prices": [
+        "21 720 Kč",
+        "41300",
+        "58350"
+      ]
+    },
+    {
+      "row": 6,
+      "name": "BENDY_76",
+      "description": "Produkt BENDY_76, s trubkou TR76x3. s ostřejším radiusem R213 a možností nechat delší rameno, výška volitrelná obvykle okolo 2000 mm",
+      "profile": "TR76x2",
+      "height": "2000",
+      "width": "600",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        "25 260 Kč",
+        "48000",
+        "67850"
+      ]
+    },
+    {
+      "row": 7,
+      "name": "BRÁNA 60_2115",
+      "description": "Brána 60_2215 s radiusem, trubkou TR60,3x2, poloměrem 250, šířkou 1500 a výškou 2100.",
+      "profile": "TR60,3x2",
+      "height": "2100",
+      "width": "1500",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "35 940 Kč",
+        "68300",
+        "96500"
+      ]
+    },
+    {
+      "row": 8,
+      "name": "BRÁNA 60_2130",
+      "description": "Brána 60_2230 s radiusem, trubkou TR60,3x2, poloměrem 250, šířkou 3000 a výškou 2100.",
+      "profile": "TR60,3x2",
+      "height": "2100",
+      "width": "3000",
+      "depth": "",
+      "nozzles": "7",
+      "prices": [
+        "45 000 Kč",
+        "85500",
+        "120850"
+      ]
+    },
+    {
+      "row": 9,
+      "name": "BRÁNA 76_2130",
+      "description": "Brána 76_2230 s radiusem, trubkou TR60,3x2, poloměrem 213, šířkou 3000 a výškou 2100.",
+      "profile": "TR76x2",
+      "height": "2100",
+      "width": "3000",
+      "depth": "",
+      "nozzles": "6",
+      "prices": [
+        "49 125 Kč",
+        "93350",
+        "131950"
+      ]
+    },
+    {
+      "row": 10,
+      "name": "BRANKA OBLOUK_42_1815",
+      "description": "Branka s obloukem 42_1815¨, s trubkou TR42x3, poloměrem 750 a výškou 1800.",
+      "profile": "TR42x3",
+      "height": "1800",
+      "width": "1500",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "29 260 Kč",
+        "55600",
+        "78600"
+      ]
+    },
+    {
+      "row": 11,
+      "name": "BRANKA RADIUS_42_1825",
+      "description": "Branka s radiusem 42_1825, trubkou TR42x3, poloměrem 235, šířkou 1500 a výškou 2200.",
+      "profile": "TR42x3",
+      "height": "1800",
+      "width": "1500",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        "26 950 Kč",
+        "51250",
+        "72400"
+      ]
+    },
+    {
+      "row": 12,
+      "name": "DUCH",
+      "description": "Produkt DUCH, s trubkou TR40x3, výškou 1300 a deseti poloměry 93.",
+      "profile": "TR40x3",
+      "height": "1300",
+      "width": "",
+      "depth": "",
+      "nozzles": "",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 13,
+      "name": "KAPR",
+      "description": "Produkt KAPR, s trubkou TR40x3, výškou 1300 a pěti poloměry 93.",
+      "profile": "TR40x3",
+      "height": "1300",
+      "width": "",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 14,
+      "name": "LINEA TR 50",
+      "description": "Produkt LINEA, s kruhovou trubkou TR50x2, výškou 2300.  Minimalistický sloup (Čistá vertikální linie z trubky ).",
+      "profile": "4HR TR 70x70x2",
+      "height": "2300",
+      "width": "50",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "18 720 Kč",
+        "35600",
+        "50300"
+      ]
+    },
+    {
+      "row": 15,
+      "name": "LINEA TR 60",
+      "description": "Produkt LINEA, s kruhovou trubkou TR60x2, výškou 2300. Minimalistický sloup (Čistá vertikální linie z trubky )",
+      "profile": "TR 60x2",
+      "height": "2300",
+      "width": "60",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "20 940 Kč",
+        "39800",
+        "56250"
+      ]
+    },
+    {
+      "row": 16,
+      "name": "LINEA TR 76",
+      "description": "Produkt LINEA, s kruhovou trubkou TR76x2, výškou 2300. Minimalistický sloup (Čistá vertikální linie z trubky )",
+      "profile": "TR 76x2",
+      "height": "2300",
+      "width": "76",
+      "depth": "",
+      "nozzles": "3",
+      "prices": [
+        "21 300 Kč",
+        "40500",
+        "57200"
+      ]
+    },
+    {
+      "row": 17,
+      "name": "LINEA JA 70",
+      "description": "Produkt LINEA 70, se čtyřhrannou trubkou TR 70x70x2, výškou 2300.  Minimalistický sloup (Čistý vertikální čtyřhran).",
+      "profile": "4HR TR 70x70x2",
+      "height": "2300",
+      "width": "70",
+      "depth": "",
+      "nozzles": "3",
+      "prices": [
+        "26 520 Kč",
+        "50400",
+        "71250"
+      ]
+    },
+    {
+      "row": 18,
+      "name": "LINEA Ce 70",
+      "description": "Produkt LINEA CE70, se čtyřhrannou trubkou TR 70x70x2, výškou 1800, šířkou 300 a úhlem 15°. Dynamická linie (Zkosení o 15°).",
+      "profile": "4HR TR 70x70x2",
+      "height": "2000",
+      "width": "300",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 19,
+      "name": "LINEA Le 70",
+      "description": "Produkt LINEA EL70, se čtyřhrannou trubkou TR 70x70x2, výškou 1600 a šířkou 400. Pravoúhlá linie (Tvar písmene L).",
+      "profile": "4HR TR 70x70x2",
+      "height": "2000",
+      "width": "400",
+      "depth": "",
+      "nozzles": "7",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 20,
+      "name": "LISTY LILIE",
+      "description": "Produkt LISTY LILIE, s trubkou TR33,7x3, výškou 1500 a šířkou 1000",
+      "profile": "TR33,7x3",
+      "height": "1500",
+      "width": "1000",
+      "depth": "",
+      "nozzles": "7",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 21,
+      "name": "LÍZÁTKO",
+      "description": "Produkt LÍZÁTKO, s trubkou TR42x3, výškou 1600 a hloubkou 700.",
+      "profile": "TR42x3",
+      "height": "1600",
+      "width": "700",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        "26 150 Kč",
+        "49700",
+        "70250"
+      ]
+    },
+    {
+      "row": 22,
+      "name": "MRAK 10R 1414",
+      "description": "Nerezové mlžítko MRAK 10R 1414 organických tvarů, 10 výrazných oblouků, s trubkou TR40x3, výškou 1400 mm, šířkou 1400 mm, 13 rádiusy a 5 tryskami.",
+      "profile": "TR40x2",
+      "height": "1400",
+      "width": "1400",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        "49 440 Kč",
+        "93950",
+        "132750"
+      ]
+    },
+    {
+      "row": 23,
+      "name": "MRAK 13R 2424",
+      "description": "Nerezové mlžítko MRAK 13R 2424 organických tvarů, 13 výrazných oblouků, s trubkou TR40x3, výškou 2400 mm, šířkou 2400 mm, 13 rádiusy a 8 tryskami.",
+      "profile": "TR40x2",
+      "height": "2400",
+      "width": "2400",
+      "depth": "",
+      "nozzles": "9",
+      "prices": [
+        "64 750 Kč",
+        "123050",
+        "173900"
+      ]
+    },
+    {
+      "row": 24,
+      "name": "MRKEV",
+      "description": "Stylizovaná MRKEV je více než jen designový prvek – je to funkční řešení pro ochlazování a orientaci. Slouží jako zajímavý orientační bod, kde se lidé rádi setkávají – \"setkáme se u mrkve\". Mlžící trysky ve vrchní části vytváří příjemné mikroklima a ochlazují kolemjdoucí v orkých dnech. Citlivě doplňuje veřejný prostor o unikátní prvek, který zlepšuje komfort a vytváří příjemné místo k pobytu.",
+      "profile": "TR42x2",
+      "height": "2000",
+      "width": "600",
+      "depth": "",
+      "nozzles": "8",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 25,
+      "name": "OSTREV",
+      "description": "Stylizovaná OSTREV je více než jen designový prvek – je to funkční řešení, které ochlazuje, orientuje a inspiruje. Slouží i jako inteligentní rozcestník, který nenásilně vede návštěvníky k zajímavým místům, zatímco vodní mlha vytváří příjemné mikroklima. Harmonicky se prolíná s veřejným prostorem a zlepšuje komfort všech, kdo se v něm pohybují.",
+      "profile": "TR60,3x2; TR42x2",
+      "height": "2200",
+      "width": "1200",
+      "depth": "",
+      "nozzles": "7",
+      "prices": [
+        "52 214 Kč",
+        "99250",
+        "140200"
+      ]
+    },
+    {
+      "row": 26,
+      "name": "PANÁK",
+      "description": "Produkt PANÁK, s trubkou TR40x3, výškou 1300 a šířkou 1000.",
+      "profile": "TR40x3",
+      "height": "1300",
+      "width": "1000",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 27,
+      "name": "PÁV",
+      "description": "Produkt PÁV, s trubkou TR40x3, výškou 1300 a šířkou 1000.",
+      "profile": "TR40x3",
+      "height": "1300",
+      "width": "1000",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 28,
+      "name": "SLOUP",
+      "description": "Pro vyplnění této buňky nemám dostatek informací, protože v tabulce chybí technická specifikace pro produkt ZAO SLOUP.",
+      "profile": "",
+      "height": "",
+      "width": "",
+      "depth": "",
+      "nozzles": "6",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 29,
+      "name": "SPIRÁLA",
+      "description": "Nerezové mlžítko Spirála je organických tvarů a estetický a plně funkční prvek veřejného prostoru, který výrazně zvyšuje komfort občanů během horkých letních dnů. Mlžítko vytváří jemnou vodní mlhu, která ochlazuje okolní vzduch bez tvorby kaluží. Mokrá plocha kolem mlžítka umožňuje účinné odpařování vody a ochlazování prostoru. Konstrukce z kvalitní nerezové oceli zajišťuje dlouhou životnost, minimální nároky na údržbu a odolnost vůči povětrnostním vlivům. Produkt SPIRÁLA.",
+      "profile": "",
+      "height": "",
+      "width": "",
+      "depth": "",
+      "nozzles": "6",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 30,
+      "name": "STÉBLO",
+      "description": "Organický tvar s dlouhým obloukem",
+      "profile": "TR50x2; 1.4301",
+      "height": "2300",
+      "width": "1200",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 31,
+      "name": "TEEPEE_50",
+      "description": "Designové nerezové mlžítko pro veřejná prostranství, parky, náměstí, odpočinkové zóny a moderní městský mobiliář...",
+      "profile": "TR50x2; 1.4301",
+      "height": "2400",
+      "width": "1600",
+      "depth": "",
+      "nozzles": "6",
+      "prices": [
+        "41 220 Kč",
+        "78350",
+        "110700"
+      ]
+    },
+    {
+      "row": 32,
+      "name": "TEEPEE_60",
+      "description": "Designové nerezové mlžítko pro veřejná prostranství, parky, náměstí, odpočinkové zóny a moderní městský mobiliář...",
+      "profile": "TR60x2; 1.4301",
+      "height": "2400",
+      "width": "1600",
+      "depth": "",
+      "nozzles": "10",
+      "prices": [
+        "54 600 Kč",
+        "103750",
+        "146650"
+      ]
+    },
+    {
+      "row": 33,
+      "name": "TOTEM",
+      "description": "Produkt TOTEM, se čtyřhrannou trubkou TR 70x70x3, výškou 2200 a šířkou 70.",
+      "profile": "4HR TR 70x70x3",
+      "height": "2200",
+      "width": "70",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 34,
+      "name": "TRIO LEAF",
+      "description": "Produkt TRIO LEAF, s trubkami TR42x3,6 a TR33,7x3, výškou 2200 a šířkou 1000.",
+      "profile": "TR42x3,6; TR33,7x3",
+      "height": "2200",
+      "width": "1000",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 35,
+      "name": "VOLAVKA Gracilis",
+      "description": "Produkt Mlžidlo VOLAVKA Gracilis, s trubkou TR42,2x2, výškou cca 1700 a šířkou 1000. VOLAVKA Gracilis\nElegantní mlžná socha, která přináší osvěžení do zahrad a odpočinkových zákoutí. VOLAVKA Gracilis propojuje jemnou siluetu volavky s příjemným ochlazením vodní mlhou. Štíhlý krk, sklopená hlava a dlouhé nohy vytvářejí lehkou nerezovou plastiku, která přirozeně doplňuje zeleň i moderní architekturu.\nSedm mlžných trysek rozmístěných na vnější straně konstrukce rozptyluje jemnou mlhu do okolního prostoru. Menší varianta se hodí do zahrad mateřských škol, areálů domovů seniorů, k terasám i do menších parků. Také mimo provoz zůstává působivým výtvarným prvkem.\n- Materiál: nerezová ocel, konstrukce z ohýbaných kruhových trubek.\n- Počet trysek: 7, s mlžením směrem ven ze sochy.\n- Kotvení: dvě patky skryté pod úrovní povrchu.\n- Volitelné ovládání: Smart SUPLA s časovými režimy a možností automatizace podle zvolených senzorů.\nMlžidlo je designový a funkční prvek určený k osvěžení prostoru. Nejedná se o herní prvek a není určeno ke šplhání ani zavěšování.\nVytvořte ve své zahradě místo pro příjemné letní osvěžení. S umístěním a výběrem ovládání vám rádi pomůžeme.",
+      "profile": "TR40x3",
+      "height": "1300",
+      "width": "1000",
+      "depth": "",
+      "nozzles": "8",
+      "prices": [
+        "67 716 Kč",
+        "128700",
+        "181850"
+      ]
+    },
+    {
+      "row": 36,
+      "name": "VOLAVKA Gigantea",
+      "description": "Produkt Mlžidlo VOLAVKA Gigantea, větší varianta s trubkou TR42,2x2 , výškou cca 2400 a šířkou 1400. Výrazná mlžná socha, která se stane dominantou parku i moderního veřejného prostoru. VOLAVKA Gigantea spojuje majestátní siluetu volavky s osvěžujícím účinkem jemné vodní mlhy. Otevřená konstrukce z ohýbaných nerezových trubek si i ve větším provedení zachovává lehkost a eleganci.\nDevět mlžných trysek rozmístěných na vnější straně konstrukce rozptyluje mlhu směrem do okolí. Větší varianta vynikne v rozlehlých zahradách, městských parcích, pobytových areálech a na otevřených plochách. Mimo provoz působí jako samostatná plastika, která dodává místu osobitý charakter.\n- Materiál: nerezová ocel, konstrukce z ohýbaných kruhových trubek.\n- Počet trysek: 9, s mlžením směrem ven ze sochy.\n- Kotvení: dvě patky skryté pod úrovní povrchu.\n- Volitelné ovládání: Smart SUPLA s časovými režimy a možností automatizace podle zvolených senzorů.\nMlžidlo je designový a funkční prvek určený k osvěžení prostoru. Nejedná se o herní prvek a není určeno ke šplhání ani zavěšování.\nDoplňte svůj prostor o výrazný designový prvek s příjemnou funkcí letního osvěžení. S návrhem umístění a ovládání vám rádi pomůžeme.",
+      "profile": "TR50x2",
+      "height": "1800",
+      "width": "1400",
+      "depth": "",
+      "nozzles": "10",
+      "prices": [
+        "78 300 Kč",
+        "148800",
+        "210250"
+      ]
+    },
+    {
+      "row": 37,
+      "name": "Y-ARMIST HR70",
+      "description": "",
+      "profile": "4HR TR 70x70x3",
+      "height": "1800",
+      "width": "70",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "26 390 Kč",
+        "50150",
+        "70900"
+      ]
+    },
+    {
+      "row": 38,
+      "name": "Y-ARMIST TR60",
+      "description": "",
+      "profile": "TR60x2",
+      "height": "1800",
+      "width": "70",
+      "depth": "",
+      "nozzles": "4",
+      "prices": [
+        "21 580 Kč",
+        "41050",
+        "57950"
+      ]
+    },
+    {
+      "row": 39,
+      "name": "ZAO SLOUP",
+      "description": "Produkt ZAO SLOUP.",
+      "profile": "",
+      "height": "",
+      "width": "",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "row": 40,
+      "name": "RYBA",
+      "description": "Stylizované nízkotlaké mlžítko ve tvaru ryby; 7 trysek; nerez; kusová výroba; cena orientační.",
+      "profile": "TR42×3,6; AISI 304 (předpoklad)",
+      "height": "1700",
+      "width": "2000",
+      "depth": "",
+      "nozzles": "5",
+      "prices": [
+        null,
+        null,
+        null
+      ]
+    }
+  ]
+}

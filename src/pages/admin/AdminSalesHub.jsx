@@ -1,17 +1,20 @@
 import React from 'react';
-import { ExternalLink, FileText, Mail, Palette, ShieldCheck, Users, ClipboardCheck, BookOpen, MessageSquareText } from 'lucide-react';
+import { ExternalLink, FileText, Mail, Palette, ShieldCheck, Users, Sparkles, ClipboardCheck, BookOpen, MessageSquareText } from 'lucide-react';
 import AdminBusinessSyncPanel from '@/components/admin/AdminBusinessSyncPanel';
 import AdminCrmAgentWorkspace from '@/components/admin/AdminCrmAgentWorkspace';
 import OfferWorkflowInbox from '@/components/admin/OfferWorkflowInbox';
 import HubspotCatalogSync from '@/components/admin/HubspotCatalogSync';
 import AdminBrandDocuments from '@/components/admin/AdminBrandDocuments';
 import AdminNewsletterCampaigns from '@/components/admin/AdminNewsletterCampaigns';
+import HubspotCrmLink from '@/components/admin/HubspotCrmLink';
 import OutreachContactQueue from '@/components/admin/OutreachContactQueue';
 
 const shortcuts = [
   { label: 'Odeslané nabídky', href: '/admin?tab=offers', Icon: FileText },
   { label: 'Poptávky', href: '/admin?tab=poptavky', Icon: Mail },
-  { label: 'AI nabídky · přehled', href: '/admin?tab=offers', Icon: FileText },
+  { label: 'Kontakty a AI oslovení', href: '/admin?tab=prospects', Icon: Users },
+  { label: 'Schvalování AI nabídek', href: '/admin?tab=approvals', Icon: Sparkles },
+
   { label: 'HubSpot CRM · obchodní případy', href: 'https://app-eu1.hubspot.com/contacts/149778217/objects/0-3', Icon: Users, external: true },
   { label: 'Lokální evidence Base44', href: '/admin?tab=crm', Icon: Users },
   { label: 'Gmail koncepty', href: 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts', Icon: Mail, external: true },
@@ -32,9 +35,11 @@ export default function AdminSalesHub() {
         <div className="mt-5 flex flex-wrap gap-2">
           {shortcuts.map(({label,href,Icon,external}) => <a key={label} href={href} target={external?'_blank':undefined} rel={external?'noopener noreferrer':undefined} className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-[#102b3a] hover:border-[#008ea5]"><Icon size={15}/>{label}</a>)}
         </div>
+        <div className="mt-4 rounded-xl border border-cyan-200 bg-cyan-50 p-4 text-sm text-slate-700"><strong>Obchodní workflow:</strong> nové kontakty lze evidovat v Kontaktech a AI oslovení; návrhy zpráv vytváří stávající Base44 funkce generateProspectMessage. Vyhledávání nových kontaktů pomocí ChatGPT/Gemini vyžaduje samostatné autorizované napojení a kontrolu zdrojů, duplicit a souhlasu s oslovením.</div>
         <p className="mt-4 flex items-center gap-2 text-xs text-slate-500"><ShieldCheck size={14}/> Cílový HubSpot portál MLŽIDLA.cz: 149778217. Každé propojení (Base44 i ChatGPT konektor) musí při běhu ověřit identitu účtu; při nesouladu musí synchronizace, import i zápisy zůstat bezpečně zablokované. Nabídky a Gmail koncepty musí projít kontrolou; Canva → Gmail není potvrzena jako automatická integrace.</p>
       </header>
       <div className="space-y-5 p-3 lg:p-6">
+        <HubspotCrmLink />
         <div className="grid gap-3 md:grid-cols-3">
           {[
             { title: 'AI nabídky a platnost', description: 'Otevřít evidované nabídky, stav odeslání a dobu do expirace.', href: '/admin?tab=offers', Icon: FileText },

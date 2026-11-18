@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Ruler } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 // Produktově oddělené fotografie; žádná univerzální vizualizace pro všechny modely.
@@ -22,7 +22,6 @@ export default function PdInSpace({ product }) {
   const gallery = (product?.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url) && /\.(jpe?g|png|webp|avif)(\?|$)/i.test(url));
   const scene = MRAK_SCENES[slug] || CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
   if (!scene) return null;
-  const dimensions = MRAK_SCENES[slug] ? [] : [product?.width && `Šířka: ${product.width}`, product?.height && `Výška: ${product.height}`].filter(Boolean);
   const fullImage = slug === 'mlzny-mrak-1414'
     ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4389816d_file_0000000004e082108545726a647c5439.png'
     : scene;
@@ -42,4 +41,3 @@ export default function PdInSpace({ product }) {
     </section>
   );
 }
-

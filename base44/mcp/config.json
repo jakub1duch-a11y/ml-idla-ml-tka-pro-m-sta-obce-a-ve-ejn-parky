@@ -1,1 +1,434 @@
-{"auth": "oauth", "login_path": "/admin-login"}
+{
+  "auth": "oauth",
+  "login_path": "/admin-login",
+  "consent_path": null,
+  "tools": {
+    "excluded_agents": [
+      "marketing_content_agent",
+      "nabidkovy_super_agent",
+      "produktovy_optimalizator",
+      "produktovy_poradce",
+      "supla_control",
+      "thumbnail_director"
+    ],
+    "entity_overrides": {
+      "AIProviderConfig": {
+        "operations": [],
+        "description": null
+      },
+      "ARSession": {
+        "operations": [],
+        "description": null
+      },
+      "AdminTask": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "AdminTaskComment": {
+        "operations": [],
+        "description": null
+      },
+      "AgentSkill": {
+        "operations": [],
+        "description": null
+      },
+      "B2BLead": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "BlogComment": {
+        "operations": [],
+        "description": null
+      },
+      "BlogPost": {
+        "operations": [],
+        "description": null
+      },
+      "BlogPostView": {
+        "operations": [],
+        "description": null
+      },
+      "BrandProfile": {
+        "operations": [],
+        "description": null
+      },
+      "BrandSystemVersion": {
+        "operations": [],
+        "description": null
+      },
+      "CRMProfile": {
+        "operations": [],
+        "description": null
+      },
+      "CallSignal": {
+        "operations": [],
+        "description": null
+      },
+      "ContactInquiry": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "CrmActivity": {
+        "operations": [],
+        "description": null
+      },
+      "CrmContact": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "CustomPage": {
+        "operations": [],
+        "description": null
+      },
+      "DatabricksConfig": {
+        "operations": [],
+        "description": null
+      },
+      "DatabricksSyncRun": {
+        "operations": [],
+        "description": null
+      },
+      "Dummy": {
+        "operations": [],
+        "description": null
+      },
+      "EmailMessage": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "HomepageHero": {
+        "operations": [],
+        "description": null
+      },
+      "InstagramPost": {
+        "operations": [],
+        "description": null
+      },
+      "LinkedInProspect": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "MarketingDataSnapshot": {
+        "operations": [],
+        "description": null
+      },
+      "MarketingPost": {
+        "operations": [],
+        "description": null
+      },
+      "MediaFile": {
+        "operations": [],
+        "description": null
+      },
+      "MeetingNote": {
+        "operations": [],
+        "description": null
+      },
+      "MisterControlPreference": {
+        "operations": [],
+        "description": null
+      },
+      "MisterDevice": {
+        "operations": [],
+        "description": null
+      },
+      "MisterDocument": {
+        "operations": [],
+        "description": null
+      },
+      "MisterTelemetry": {
+        "operations": [],
+        "description": null
+      },
+      "NewsletterCampaign": {
+        "operations": [],
+        "description": null
+      },
+      "NewsletterLead": {
+        "operations": [],
+        "description": null
+      },
+      "NoopTemp": {
+        "operations": [],
+        "description": null
+      },
+      "NotificationLog": {
+        "operations": [],
+        "description": null
+      },
+      "NozzleCalculation": {
+        "operations": [],
+        "description": null
+      },
+      "OfferAgentRun": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "OfferAsset": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "OfferLearningFeedback": {
+        "operations": [],
+        "description": null
+      },
+      "OfferMessage": {
+        "operations": [],
+        "description": null
+      },
+      "OfferPortalAction": {
+        "operations": [],
+        "description": null
+      },
+      "OfferStandard": {
+        "operations": [],
+        "description": null
+      },
+      "OfferVariant": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "PartnerApplication": {
+        "operations": [],
+        "description": null
+      },
+      "Poptavka": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "PortalAccount": {
+        "operations": [],
+        "description": null
+      },
+      "PortalOtp": {
+        "operations": [],
+        "description": null
+      },
+      "PortalSession": {
+        "operations": [],
+        "description": null
+      },
+      "Product": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "ProductCategory": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "ProductOfferProfile": {
+        "operations": [],
+        "description": null
+      },
+      "ProductionOrder": {
+        "operations": [],
+        "description": null
+      },
+      "ProjectExtraCharge": {
+        "operations": [],
+        "description": null
+      },
+      "ProjectOrder": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "ProjectPayment": {
+        "operations": [],
+        "description": null
+      },
+      "PublicWorkSummary": {
+        "operations": [],
+        "description": null
+      },
+      "PushSubscription": {
+        "operations": [],
+        "description": null
+      },
+      "Realizace": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "Review": {
+        "operations": [],
+        "description": null
+      },
+      "SalesSheetVariant": {
+        "operations": [],
+        "description": null
+      },
+      "ScrollcraftSkillMeta": {
+        "operations": [],
+        "description": null
+      },
+      "ScrollcraftSkillMeta2": {
+        "operations": [],
+        "description": null
+      },
+      "SmartControlProfile": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentAction": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentDashboardConfig": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentIntegration": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentProfile": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentQuickAction": {
+        "operations": [],
+        "description": null
+      },
+      "SuperAgentSession": {
+        "operations": [],
+        "description": null
+      },
+      "SyncRun": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "TeamMessage": {
+        "operations": [],
+        "description": null
+      },
+      "ThumbnailProject": {
+        "operations": [],
+        "description": null
+      },
+      "Tmp": {
+        "operations": [],
+        "description": null
+      },
+      "User": {
+        "operations": [],
+        "description": null
+      },
+      "VisualizationAsset": {
+        "operations": [],
+        "description": null
+      },
+      "VisualizerLead": {
+        "operations": [],
+        "description": null
+      },
+      "WebAdvisorLead": {
+        "operations": [
+          "read"
+        ],
+        "description": null
+      },
+      "WorkBriefing": {
+        "operations": [],
+        "description": null
+      },
+      "WorkLog": {
+        "operations": [],
+        "description": null
+      },
+      "_noop": {
+        "operations": [],
+        "description": null
+      },
+      "_noop_perf": {
+        "operations": [],
+        "description": null
+      },
+      "_noop_text": {
+        "operations": [],
+        "description": null
+      },
+      "_temp_noop": {
+        "operations": [],
+        "description": null
+      },
+      "dummy": {
+        "operations": [],
+        "description": null
+      },
+      "dummy2": {
+        "operations": [],
+        "description": null
+      },
+      "dummy3": {
+        "operations": [],
+        "description": null
+      },
+      "dummy4": {
+        "operations": [],
+        "description": null
+      },
+      "dummy5": {
+        "operations": [],
+        "description": null
+      },
+      "dummy6": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_ui_safety": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_unused": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_unused2": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_unused3": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_unused5": {
+        "operations": [],
+        "description": null
+      },
+      "tmp_unused6": {
+        "operations": [],
+        "description": null
+      }
+    },
+    "functions": []
+  }
+}

@@ -1,4 +1,5 @@
 ---
+name: sync-cli-skill
 description: "Synchronize the base44-cli skill with the latest CLI source code from the Base44 CLI repository"
 ---
 # Sync CLI Skill

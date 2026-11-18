@@ -9,6 +9,7 @@ const ITEMS = [
   ['varianty', 'Varianty'],
   ['galerie', 'Galerie'],
   ['vyhody', 'Výhody'],
+  ['umisteni', 'Umístění'],
   ['instalace', 'Instalace'],
   ['chytre-rizeni', 'Doplňky · SUPLA'],
   ['faq', 'Otázky'],

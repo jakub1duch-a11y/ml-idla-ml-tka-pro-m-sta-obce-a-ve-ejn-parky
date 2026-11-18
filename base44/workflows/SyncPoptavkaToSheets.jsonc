@@ -1,0 +1,40 @@
+{
+  "name": "Nová produktová poptávka → Google Sheets",
+  "description": "Zapsat novou poptávku do centrální tabulky MLŽIDLA / Poptávky a aktualizovat Klienti; unikátní ID zabraňuje dvojímu zápisu. Před aktivací ověřte obnovený Google Sheets OAuth konektor.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Poptavka",
+      "events": [
+        "create"
+      ]
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "mlzidla_sync_poptavka_to_sheets",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_inquiry": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncInquiryToSheets",
+            "args": {
+              "entity_name": "Poptavka",
+              "entity_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Zapsat poptávku do Google Sheets",
+            "description": "Poptávky + Klienti, deduplikace podle ID"
+          }
+        }
+      }
+    ]
+  }
+}

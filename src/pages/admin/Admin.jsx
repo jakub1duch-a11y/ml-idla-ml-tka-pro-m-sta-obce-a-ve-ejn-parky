@@ -26,6 +26,7 @@ import AdminTasks from './AdminTasks';
 import AdminSystemDevelopment from './AdminSystemDevelopment';
 import AdminProspects from './AdminProspects';
 import AdminCRM from './AdminCRM';
+import AdminHubSpot from './AdminHubSpot';
 import AdminTerminal from './AdminTerminal';
 import AdminIntegrations from './AdminIntegrations';
 import { Bot } from 'lucide-react';
@@ -56,6 +57,7 @@ const TABS = [
   { id: 'marketing', label: 'Marketing', icon: Megaphone },
   { id: 'prospects', label: 'Prospecting', icon: Users },
   { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
+  { id: 'hubspot', label: 'HubSpot CRM', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
   { id: 'approvals', label: 'Schvalovací centrum', icon: ClipboardCheck },
   { id: 'offers', label: 'Odeslané nabídky', icon: Send },
@@ -70,7 +72,7 @@ const TABS = [
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'prospects'] },
+  { label: 'Obchod', ids: ['approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
   { label: 'Data & systém', ids: ['analytics', 'integrations', 'chatgpt', 'notifications', 'product-analytics', 'reference-analytics'] },
 ];
@@ -150,6 +152,7 @@ export default function Admin() {
     marketing: AdminMarketing,
     prospects: AdminProspects,
     crm: AdminCRM,
+    hubspot: AdminHubSpot,
     poptavky: AdminPoptavky,
     approvals: AdminApprovals,
     offers: AdminOffers,

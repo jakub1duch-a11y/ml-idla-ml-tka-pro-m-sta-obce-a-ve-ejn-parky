@@ -1,6 +1,7 @@
 // Side-effect-free, PUBLIC-only Canva offer packet builder.
 // Intentionally never spreads Product or Sheet data into the response: both may include private pricing.
-export const MLZIDLA_CANVA_BRAND_TEMPLATE = 'EAHZTN-hiGc';
+export const MLZIDLA_CANVA_BRAND_TEMPLATE = 'EAHbBX1hTpE';
+export const MLZIDLA_CANVA_BRAND_TEMPLATE_URL = 'https://www.canva.com/brand/brand-templates/EAHbBX1hTpE';
 
 function key(value) {
   return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -40,7 +41,7 @@ export function createBrandOfferPacket({ product, variant, price }) {
     status: blockers.length ? 'needs_review' : 'ready_for_canva_draft',
     ready_for_canva: blockers.length === 0,
     blockers,
-    brand: { name: 'MLŽIDLA.cz', supplier: 'HolmTec s.r.o.', canva_template_id: MLZIDLA_CANVA_BRAND_TEMPLATE },
+    brand: { name: 'MLŽIDLA.cz', supplier: 'HolmTec s.r.o.', canva_template_id: MLZIDLA_CANVA_BRAND_TEMPLATE, canva_template_url: MLZIDLA_CANVA_BRAND_TEMPLATE_URL, autofill_ready: false },
     product: {
       id: String(product?.id || ''),
       slug: String(product?.slug || ''),

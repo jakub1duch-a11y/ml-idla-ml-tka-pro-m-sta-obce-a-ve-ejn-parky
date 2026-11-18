@@ -1,10 +1,9 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { buildClientOfferEmail, loadOfferEmailData } from '../../shared/clientOfferEmail.ts';
-import { sendViaGmail } from '../../shared/customerEmails.ts';
 
 const clean = (v: unknown, max = 2000) => String(v || '').trim().slice(0, max);
 
-// Náhled klientského e-mailu nabídky + odeslání testovacího e-mailu na Jakub1duch@gmail.com
+// Pouze bezpečný náhled: žádné odeslání testovací ani zákaznické zprávy.
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -14,7 +13,7 @@ export default async function(req) {
     const body = await req.json().catch(() => ({}));
     const projectId = clean(body.project_id || body.project_order_id);
     const sendTest = Boolean(body.test_email);
-    const testRecipient = clean(body.test_recipient) || 'jakub1duch@gmail.com';
+    if (sendTest) return Response.json({ok:false,error:'test_send_disabled_use_preview_only'}, {status:403,headers:{'Cache-Control':'no-store'}});
 
     if (!projectId) return Response.json({ error: 'missing_project_id' }, { status: 400, headers: { 'Cache-Control': 'no-store' } });
 
@@ -23,27 +22,6 @@ export default async function(req) {
 
     const { data, project } = loaded;
     const email = buildClientOfferEmail(data);
-
-    if (sendTest) {
-      const result = await sendViaGmail(base44, {
-        to: testRecipient,
-        fromEmail: 'meduna@holmtec.cz',
-        subject: `[TEST NÁHLED] ${email.subject}`,
-        text: email.text,
-        html: email.html,
-      });
-      return Response.json({
-        ok: result.ok,
-        test_email: true,
-        recipient: testRecipient,
-        subject: email.subject,
-        error: result.error,
-        project_id: projectId,
-        quote_number: project.quote_number,
-        visualizations_count: data.visualizations.length,
-        smart_control_included: data.smartControlIncluded,
-      }, { status: result.ok ? 200 : 500, headers: { 'Cache-Control': 'no-store' } });
-    }
 
     return Response.json({
       ok: true,

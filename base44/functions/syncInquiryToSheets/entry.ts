@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { ensureSheet, ensureHeaders, appendRow } from '../../shared/googleSheets.ts';
+import { assertBusinessAccount, getVerifiedGoogleAccount } from '../../shared/businessWorkflowGuard.mjs';
 
 // Tabulka na sdíleném disku MLZNY DISK
 const SPREADSHEET_ID = '1EvZ7JRpOHQoBZRG-ZJhC_x8fxm2_D8aj4pfZTv7iEto';
@@ -111,6 +112,8 @@ export default async function(req) {
     };
 
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googlesheets');
+    // Fail closed: never copy inquiry/customer PII to a sheet under a different OAuth identity.
+    assertBusinessAccount(await getVerifiedGoogleAccount(accessToken, 'googlesheets'), 'googlesheets');
     await ensureSheet(accessToken, SPREADSHEET_ID, INQUIRIES_SHEET);
     await ensureHeaders(accessToken, SPREADSHEET_ID, INQUIRIES_SHEET, INQUIRY_HEADERS);
 

@@ -90,7 +90,8 @@ export default async function(req) {
         </div>
       </div>`;
 
-    await Promise.all(TEAM_RECIPIENTS.map((to) =>
+    // Globální zákaz automatického odesílání (18. 11. 2026): pouze evidence leadu.
+    if (false) await Promise.all(TEAM_RECIPIENTS.map((to) =>
       base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)
     ));
 

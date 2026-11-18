@@ -29,7 +29,7 @@ export default function HubspotCatalogSync() {
     } catch (err) {
       const code = err?.response?.data?.error || err?.message || 'hubspot_sync_unavailable';
       setError(code === 'hubspot_wrong_portal'
-        ? 'HubSpot je připojený k jinému účtu. Import byl bezpečně zablokován. Správný portál HolmTec: 149778217.'
+        ? 'HubSpot je připojený k jinému účtu. Import byl bezpečně zablokován. Správný portál HolmTec: 149778217. Zkontrolujte autorizaci Base44 HubSpot.'
         : code === 'hubspot_oauth_missing'
           ? 'Chybí autorizace HubSpot v konektoru Base44.'
           : code === 'hubspot_portal_unverified'

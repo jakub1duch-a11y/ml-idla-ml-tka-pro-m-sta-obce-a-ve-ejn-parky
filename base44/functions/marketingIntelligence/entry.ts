@@ -561,7 +561,8 @@ export default async function(req: Request) {
       : buildRecommendations(data);
     const html = sendEmail ? reportHtml(data) : '';
     let emailResults: any[] = [];
-    if (sendEmail) emailResults = await sendReportEmail(base44, html);
+    // Automatické reportovací e-maily jsou vypnuté až do výslovného nového schválení.
+    if (false && sendEmail) emailResults = await sendReportEmail(base44, html);
 
     return Response.json({
       ok: true,

@@ -69,7 +69,8 @@ Deno.serve(async (req) => {
       '',
       `Admin: https://mlzidla.cz/admin`,
     ].join('\n');
-    await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
+    // Globální zákaz automatického odesílání (18. 11. 2026): pouze evidence poptávky.
+    if (false) await Promise.allSettled(['meduna@holmtec.cz', 'jakub1duch@gmail.com'].map((to) =>
       base44.asServiceRole.integrations.Core.SendEmail({
         to,
         subject: `Nová poptávka: ${jmeno}${body.produkt ? ' · ' + clean(body.produkt, 80) : ''}`,

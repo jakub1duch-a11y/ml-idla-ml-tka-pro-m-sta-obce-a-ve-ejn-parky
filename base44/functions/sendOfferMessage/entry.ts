@@ -74,7 +74,8 @@ export default async function(req) {
         </div>
       </div>`;
 
-    await Promise.all(TEAM_RECIPIENTS.map((to) => base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)));
+    // Globální zákaz automatického odesílání (18. 11. 2026): zpráva se uloží do portálu, email nikoli.
+    if (false) await Promise.all(TEAM_RECIPIENTS.map((to) => base44.asServiceRole.integrations.Core.SendEmail({ to, subject, body: bodyHtml }).catch(() => null)));
 
     const messages = (await base44.asServiceRole.entities.OfferMessage.filter({ project_order_id: project.id }, 'created_date', 100).catch(() => []))
       .map(clientMessageView)

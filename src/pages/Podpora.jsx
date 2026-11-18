@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail, MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
+import PolnaCaseStudy from '@/components/reviews/PolnaCaseStudy';
 
 const FAQ_SECTIONS = [
 {
@@ -180,18 +181,7 @@ export default function Podpora() {
         </motion.div>
 
         {/* Category anchors */}
-        <div className="flex flex-wrap gap-3 mt-8">
-          {FAQ_SECTIONS.map((s) => null
 
-
-
-
-
-
-
-
-          )}
-        </div>
       </div>
 
       {/* FAQ Sections */}
@@ -255,6 +245,8 @@ export default function Podpora() {
             </div>
           </div>
         </motion.section>
+
+        <PolnaCaseStudy />
 
         <ReviewsSection />
 

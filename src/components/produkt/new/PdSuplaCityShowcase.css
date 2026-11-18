@@ -1,0 +1,259 @@
+.supla-city-scene {
+  --supla-pointer-x: 50%;
+  --supla-pointer-y: 42%;
+  min-height: 685px;
+  background: #061b29;
+  color: #fff;
+  contain: layout paint;
+}
+
+.supla-city-scene__background,
+.supla-city-scene__shade,
+.supla-city-scene__haze,
+.supla-city-scene__beam,
+.supla-city-scene__droplets {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.supla-city-scene__background {
+  z-index: -5;
+  object-fit: cover;
+  object-position: 54% center;
+  opacity: .78;
+  filter: saturate(.82);
+  transition: transform .9s ease, filter .9s ease;
+}
+
+.supla-city-scene__shade {
+  z-index: -4;
+  background: linear-gradient(180deg, rgba(5,23,38,.65) 0%, rgba(6,26,41,.66) 37%, rgba(5,22,35,.96) 100%), linear-gradient(100deg, rgba(2,20,35,.1), rgba(1,20,32,.6));
+}
+
+.supla-city-scene__haze {
+  z-index: -3;
+  opacity: .65;
+  background:
+    radial-gradient(ellipse at 20% 55%, rgba(104,224,239,.28), transparent 43%),
+    radial-gradient(ellipse at 90% 28%, rgba(132,210,225,.18), transparent 50%);
+  animation: supla-city-haze 12s ease-in-out infinite alternate;
+}
+
+.supla-city-scene__beam {
+  z-index: -1;
+  opacity: .2;
+  background: radial-gradient(circle at var(--supla-pointer-x) var(--supla-pointer-y), rgba(135,241,255,.55), rgba(117,214,232,.15) 18%, transparent 44%);
+  transition: opacity .45s ease;
+}
+
+.supla-city-scene__droplets {
+  z-index: -2;
+  opacity: .32;
+  background-image:
+    radial-gradient(circle, rgba(208,249,255,.6) 0 1px, transparent 2px),
+    radial-gradient(circle, rgba(157,236,252,.35) 0 .6px, transparent 1.7px);
+  background-size: 71px 93px, 107px 131px;
+  background-position: 8px 17px, 39px 77px;
+  mask-image: linear-gradient(180deg, transparent, black 22%, black 70%, transparent);
+  animation: supla-city-mist 16s linear infinite alternate;
+}
+
+.supla-city-scene:hover .supla-city-scene__background,
+.supla-city-scene:focus-within .supla-city-scene__background { transform: scale(1.045); filter: saturate(1.02); }
+.supla-city-scene:hover .supla-city-scene__beam,
+.supla-city-scene:focus-within .supla-city-scene__beam { opacity: .75; }
+
+.supla-city-scene__heading {
+  position: absolute;
+  top: 23px;
+  right: 22px;
+  left: 22px;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.supla-city-scene__eyebrow,
+.supla-city-scene__location {
+  display: inline-flex;
+  min-height: 31px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(208,250,255,.28);
+  border-radius: 999px;
+  background: rgba(5,27,42,.64);
+  padding: 7px 11px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  color: #defaff;
+  backdrop-filter: blur(16px);
+}
+
+.supla-city-scene__location {
+  letter-spacing: .01em;
+  text-transform: none;
+  color: #fff;
+}
+
+.supla-city-scene__phone {
+  position: absolute;
+  z-index: -1;
+  top: 19%;
+  bottom: 0;
+  left: -12%;
+  width: 76%;
+  height: 78%;
+  object-fit: cover;
+  object-position: 57% 36%;
+  opacity: .86;
+  filter: drop-shadow(0 26px 35px rgba(0,0,0,.3));
+  mask-image: radial-gradient(ellipse 64% 63% at 54% 48%, #000 45%, transparent 100%);
+  transition: transform .8s ease, opacity .8s ease;
+}
+
+.supla-city-scene:hover .supla-city-scene__phone {
+  transform: translateY(-6px) rotate(-1deg);
+  opacity: .98;
+}
+
+.supla-city-scene__dashboard {
+  position: absolute;
+  z-index: 2;
+  top: 23%;
+  right: 4%;
+  width: 67%;
+  max-width: 355px;
+  border: 1px solid rgba(193,247,255,.36);
+  border-radius: 24px;
+  background: linear-gradient(145deg, rgba(6,35,52,.94), rgba(7,29,46,.87));
+  padding: 21px;
+  box-shadow: 0 30px 65px rgba(0,0,0,.3), inset 0 1px rgba(255,255,255,.08);
+  backdrop-filter: blur(20px);
+  transition: box-shadow .45s ease, border-color .45s ease, transform .6s ease;
+}
+.supla-city-scene:hover .supla-city-scene__dashboard {
+  border-color: rgba(171,242,253,.65);
+  box-shadow: 0 34px 80px rgba(0,0,0,.36), 0 0 46px rgba(30,191,211,.16);
+  transform: translateY(-3px);
+}
+
+.supla-city-scene__live-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid rgba(125,217,233,.28);
+  border-radius: 999px;
+  background: rgba(15,146,172,.15);
+  padding: 5px 9px;
+  color: #baf6ff;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.supla-city-scene__zone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid rgba(184,238,247,.18);
+  border-radius: 15px;
+  background: rgba(255,255,255,.085);
+  padding: 11px;
+}
+
+.supla-city-scene__switch {
+  position: relative;
+  display: block;
+  flex: 0 0 54px;
+  height: 32px;
+  border: 1px solid rgba(225,241,247,.32);
+  border-radius: 999px;
+  background: #42576a;
+  cursor: pointer;
+  transition: background-color .25s ease;
+}
+.supla-city-scene__switch.is-on { background: #14aac4; }
+.supla-city-scene__switch:focus-visible { outline: 3px solid #b2f8ff; outline-offset: 3px; }
+.supla-city-scene__switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 50%;
+  background: white;
+  color: #1e6175;
+  transition: transform .25s ease;
+}
+.supla-city-scene__switch.is-on .supla-city-scene__switch-thumb { transform: translateX(22px); }
+
+.supla-city-scene__metric {
+  min-width: 0;
+  border: 1px solid rgba(184,238,247,.16);
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  padding: 12px;
+}
+
+.supla-city-scene__caption {
+  position: absolute;
+  z-index: 4;
+  right: 17px;
+  bottom: 15px;
+  left: 17px;
+  border: 1px solid rgba(174,234,248,.16);
+  border-radius: 13px;
+  background: rgba(3,19,30,.83);
+  padding: 11px 13px;
+  color: rgba(238,251,255,.82);
+  font-size: 10px;
+  line-height: 1.55;
+  backdrop-filter: blur(12px);
+}
+
+@keyframes supla-city-haze {
+  from { transform: translate3d(-1.5%, 0, 0); opacity: .4; }
+  to { transform: translate3d(2%, -1.2%, 0); opacity: .7; }
+}
+@keyframes supla-city-mist {
+  from { background-position: 8px 17px, 39px 77px; }
+  to { background-position: 35px -34px, -5px 45px; }
+}
+
+@media (max-width: 639px) {
+  .supla-city-scene { min-height: 755px; }
+  .supla-city-scene__phone {
+    top: 8%; left: 15%; width: 73%; height: 55%; opacity: .7;
+    object-position: center 35%;
+  }
+  .supla-city-scene__dashboard {
+    top: 32%;
+    right: 4%;
+    left: 4%;
+    width: auto;
+    max-width: none;
+    padding: 16px;
+  }
+  .supla-city-scene__heading { top: 17px; left: 16px; right: 16px; }
+  .supla-city-scene__eyebrow, .supla-city-scene__location { font-size: 9px; padding: 6px 9px; }
+  .supla-city-scene__caption { left: 12px; right: 12px; bottom: 12px; }
+}
+@media (max-width: 390px) {
+  .supla-city-scene { min-height: 805px; }
+  .supla-city-scene__dashboard { top: 29%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .supla-city-scene *, .supla-city-scene *::before, .supla-city-scene *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

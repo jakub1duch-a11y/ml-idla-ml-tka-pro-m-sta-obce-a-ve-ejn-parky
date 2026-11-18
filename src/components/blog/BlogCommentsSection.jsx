@@ -13,6 +13,9 @@ export default function BlogCommentsSection({ postId }) {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ name: '', email: '', comment: '' });
   const [sending, setSending] = useState(false);
+  const [error, setError] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [website, setWebsite] = useState('');
 
   const loadComments = () => {
     base44.entities.BlogComment.filter({ blog_post_id: postId }, '-created_date')
@@ -25,31 +28,46 @@ export default function BlogCommentsSection({ postId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (website) return;
     setSending(true);
-    await base44.entities.BlogComment.create({ blog_post_id: postId, ...form });
-    setForm({ name: '', email: '', comment: '' });
-    setSending(false);
-    loadComments();
+    setError('');
+    try {
+      await base44.entities.BlogComment.create({
+        blog_post_id: postId,
+        name: form.name.trim().slice(0, 80),
+        email: form.email.trim().slice(0, 150),
+        comment: form.comment.trim().slice(0, 1000),
+      });
+      setForm({ name: '', email: '', comment: '' });
+      setSubmitted(true);
+      loadComments();
+    } catch {
+      setError('Komentář se nepodařilo odeslat. Zkuste to prosím znovu.');
+    } finally { setSending(false); }
   };
 
   return (
-    <div className="py-12 border-t border-slate-200">
+    <section id="blog-comments" className="scroll-mt-28 border-t border-[#D6E6EC] py-12" aria-label="Diskuze k článku">
       <h3 className="font-heading font-light text-2xl text-slate-900 tracking-tight mb-8 flex items-center gap-2.5">
         <MessageCircle size={20} className="text-slate-400" /> Komentáře {comments.length > 0 && <span className="text-slate-300">({comments.length})</span>}
       </h3>
 
-      <form onSubmit={handleSubmit} className="p-6 rounded-2xl bg-slate-50 border border-slate-200 mb-8 space-y-3">
+      <form onSubmit={handleSubmit} className="mb-8 space-y-3 rounded-2xl border border-[#CEE3EC] bg-[#F4FAFC] p-4 sm:p-6">
+        <div className="absolute -left-[9999px]" aria-hidden="true"><label htmlFor="blog-comment-website">Web</label><input id="blog-comment-website" type="text" value={website} onChange={e=>setWebsite(e.target.value)} tabIndex={-1} autoComplete="off"/></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <input type="text" required placeholder="Jméno *" value={form.name}
+          <input type="text" required maxLength={80} placeholder="Jméno *" value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:outline-none" />
-          <input type="email" placeholder="Email (nezveřejní se)" value={form.email}
+          <input type="email" maxLength={150} placeholder="E-mail (nezveřejní se)" value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:outline-none" />
         </div>
-        <textarea required rows={3} placeholder="Váš komentář... *" value={form.comment}
+        <textarea required maxLength={1000} rows={3} placeholder="Váš komentář... *" value={form.comment}
           onChange={(e) => setForm({ ...form, comment: e.target.value })}
           className="w-full px-4 py-3 rounded-xl bg-white border border-slate-200 text-sm text-slate-900 placeholder-slate-400 focus:border-slate-400 focus:outline-none resize-none" />
+        <p className="text-xs text-[#5F7684]">Komentář bude veřejný, e-mail nezobrazujeme. Pište prosím věcně a bez osobních údajů.</p>
+        {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
+        {submitted && <p role="status" className="text-sm font-semibold text-[#0C6687]">Děkujeme, komentář byl odeslán.</p>}
         <button type="submit" disabled={sending}
           className="btn-metallic-mist px-6 py-3 text-sm font-bold disabled:opacity-50">
           {sending ? 'Odesílám...' : 'Přidat komentář'}
@@ -74,6 +92,6 @@ export default function BlogCommentsSection({ postId }) {
           ))}
         </div>
       )}
-    </div>
+    </section>
   );
 }

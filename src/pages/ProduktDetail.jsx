@@ -6,6 +6,7 @@ import { trackProductView } from '@/lib/ga4';
 import { setSEO, getProductSEO } from '@/lib/seo';
 import { isArchived } from '@/lib/newMedia';
 import PdCompactHero from '@/components/produkt/new/PdCompactHero';
+import GateVariantHero from '@/components/produkt/new/GateVariantHero';
 import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
 import PdInSpace from '@/components/produkt/new/PdInSpace';
@@ -68,7 +69,7 @@ export default function ProduktDetail() {
 
   return (
     <div className="product-detail-page min-h-screen bg-background text-foreground pt-[var(--site-header-height)]">
-      <PdCompactHero product={product} />
+      {product.slug === 'mlzna-brana-gate' ? <GateVariantHero product={product} /> : <PdCompactHero product={product} />}
       <PdFamilyNav product={product} />
       <PdSectionNav product={product} />
       <PdDescription product={product} />

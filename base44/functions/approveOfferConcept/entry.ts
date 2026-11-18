@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.46';
+import { assertBusinessAccount, getVerifiedGoogleAccount } from '../../shared/businessWorkflowGuard.mjs';
 
 const clean = (value: unknown) => String(value || '').trim();
 
@@ -71,15 +72,25 @@ Deno.serve(async (req: Request) => {
 
     if (targetStatus === 'schvaleno' && !isOwner) return Response.json({ error: 'Only designated owner can approve offers' }, { status: 403 });
 
-    // ── Safety gate: odeslano requires explicit confirmation ──
+    // ODESLÁNO označíme pouze po ověření skutečného Gmail SENT, nikoli jen kliknutím.
     if (targetStatus === 'odeslano') {
-      if (!body.confirm_send) {
-        return Response.json({
-          error: 'BEZPEČNOSTNÍ BRÁNA: Odeslání nabídky vyžaduje explicitní potvrzení (confirm_send: true). AI nikdy neodesílá nabídku automaticky.',
-        }, { status: 403 });
+      const gmailId = clean(body.gmail_message_id);
+      if (!body.confirm_send || !/^[a-zA-Z0-9_-]{8,100}$/.test(gmailId)) {
+        return Response.json({ error: 'sent_requires_verified_gmail_message' }, { status: 403 });
       }
-      // The actual email sending is handled by the existing sendOfferMessage function,
-      // called separately by the salesperson. This function only updates the status.
+      const conn = await base44.asServiceRole.connectors.getConnection('gmail');
+      assertBusinessAccount(await getVerifiedGoogleAccount(conn?.accessToken,'gmail'),'gmail');
+      const resp = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/' + encodeURIComponent(gmailId) +
+        '?format=metadata&metadataHeaders=To', {
+        headers: { Authorization: 'Bearer ' + conn.accessToken },
+        signal: AbortSignal.timeout(12000), redirect: 'error',
+      });
+      if (!resp.ok) return Response.json({ error: 'gmail_sent_not_verifiable' }, { status: 409 });
+      const meta = await resp.json();
+      const recipientHeader = String((meta.payload?.headers || []).find((h: any) => String(h.name).toLowerCase() === 'to')?.value || '').toLowerCase();
+      if (!(meta.labelIds || []).includes('SENT') || !recipientHeader.includes(String(poptavka.email || '').trim().toLowerCase())) {
+        return Response.json({ error: 'gmail_message_not_sent_to_this_customer' }, { status: 409 });
+      }
     }
 
     // ── Update Poptavka ──

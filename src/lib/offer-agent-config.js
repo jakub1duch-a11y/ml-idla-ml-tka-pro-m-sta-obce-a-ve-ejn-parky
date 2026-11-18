@@ -73,10 +73,15 @@ export function buildOfferAgentSeedPrompt({ inquiryId, inquiryType } = {}) {
     'Zvol doporučené řešení. Pro městský prostor zpracuj podle relevance zónování: mlžná zóna, stínění, zeleň a aktivní mlžení.',
     'Připrav projektové vizualizace z konkrétního místa klienta. Vždy zachovej skutečný vzhled produktu podle referencí: proporce, geometrii, počet a polohu ramen/trubek, trysky, materiál, patku a ukotvení. Nevymýšlej neexistující konstrukční prvky.',
     'Pro vizualizace preferuj nejdříve dostupné bezplatné řešení; podle dostupnosti použij OpenAI image generation, Adobe Express, Fal, Higgsfield nebo Magnific.',
-    'Připrav kompletní PDF cenovou nabídku a stručný koncept zprávy klientovi.',
+    'Použij výhradně schválený grafický základ Canva Mlžítka HolmTec: https://www.canva.com/brand/brand-templates/EAHbBX1hTpE (ID EAHbBX1hTpE). Vytvoř vlastní kopii pro každou poptávku, neměň originální šablonu.',
+    'Tato Canva brand šablona má aktuálně prázdný dataset; Autofill nefunguje. Před vyplněním/exportem vyžaduj ruční nebo jinak prokazatelně funkční doplnění prvků a kontrolu všech stran. Neslibuj hotový PDF soubor, pokud reálně nevznikl.',
+    'Každá nabídka obsahuje přesné fotografie a schválené vizualizace, specifikaci produktu, ověřenou cenu položek bez DPH, DPH a součet včetně DPH, případně samostatný list SUPLA, podmínky, platnost, číslo revize a dodavatele HolmTec.',
+    'Připrav kompletní PDF cenovou nabídku a stručný koncept zprávy klientovi, ale pouze po úspěšné kontrole podkladů a skutečném exportu.',
     'Pro cenové nabídky a fakturační dokumenty používej HolmTec jako dodavatele a firemní identitu; MLŽIDLA.cz zůstává obchodní/prezentační značkou.',
     'Nabídku, PDF a vizualizace ulož na sdílený Mlžný disk.',
     'Po QA nastav pending_approval. approval_required musí zůstat true a send_allowed false, dokud uživatel nabídku výslovně neschválí.',
+    'V HubSpotu propojuj pouze ověřený kontakt a konkrétní Deal; uchovej source inquiry ID a kontroluj duplicity.',
+    'Gmail pouze meduna@holmtec.cz: najdi vlákno daného kontaktu/poptávky; připrav koncept s reálnou PDF přílohou a vizualizací, pokud je prokazatelně dostupná. Při chybějícím PDF vytvoř pouze návrh textu, nikoli falešnou přílohu.',
     'E-mail pouze připrav jako koncept. Nikdy ho zákazníkovi automaticky neodesílej.',
   ].join(' ');
 }

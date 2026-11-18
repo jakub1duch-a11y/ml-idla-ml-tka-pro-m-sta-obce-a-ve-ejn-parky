@@ -5,6 +5,7 @@ import { ArrowRight, TrainFront, Dumbbell, Hotel, Landmark } from 'lucide-react'
 import { setSEO } from '@/lib/seo';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import B2BPortfolioNavigation from '@/components/kategorie/B2BPortfolioNavigation';
+import StebloSpaceFeature from '@/components/products/StebloSpaceFeature';
 
 const CATEGORIES = {
   'dopravni-uzly': {
@@ -72,6 +73,7 @@ export default function UseCaseCategory() {
       <h2 className="font-heading text-2xl font-semibold text-slate-950">Typická místa instalace</h2>
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{data.uses.map((use) => <div key={use} className="rounded-2xl border border-slate-200 bg-white p-5 text-sm font-medium text-slate-700"><span className="mb-3 block h-1 w-8 rounded-full bg-cyan-500" />{use}</div>)}</div>
     </section>
+    {categorySlug === 'hotely-resorty' && <StebloSpaceFeature context="hotel" />}
     <AllProductsCatalog categoryTitle={data.title.toLocaleLowerCase('cs')} />
     <B2BPortfolioNavigation current={data.title} />
   </main>;

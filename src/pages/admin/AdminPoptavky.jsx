@@ -10,6 +10,7 @@ import { base44 } from '@/api/base44Client';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
 import TeamThread from '@/components/admin/team/TeamThread';
 import InquiryAiReply from '@/components/admin/InquiryAiReply';
+import OfferEmailPreview from '@/components/offers/OfferEmailPreview';
 
 const BUCKETS = {
   nove: { label: 'Nové', color: 'text-cyan border-cyan/30 bg-cyan/10', icon: AlertCircle, match: (s) => s === 'nova' || s === 'new' },
@@ -579,6 +580,13 @@ export default function AdminPoptavky() {
                             Zavolat <Phone size={11} />
                           </a> : null}
                         </div>
+
+                        {offer.orders?.[0]?.id && <OfferEmailPreview
+                          key={offer.orders[0].id}
+                          projectId={offer.orders[0].id}
+                          quoteNumber={offer.quoteNumber}
+                          clientEmail={item.email}
+                        />}
 
                         <InquiryAiReply item={item} />
 

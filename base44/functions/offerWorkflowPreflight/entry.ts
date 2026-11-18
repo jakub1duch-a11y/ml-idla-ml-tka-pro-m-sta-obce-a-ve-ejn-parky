@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
       !originalPhotosConfirmed ? 'MASTER geometrie produktu není schválena.' : '');
     if (matchingScenes.length === 0) blockers.push('Pro konkrétní produkt/poptávku zatím není schválená prostorová vizualizace; vizualizaci nelze vložit do klientské nabídky.');
     set('pricing', 'blocked', 'Cena musí být živě ověřena interní backendovou funkcí proti Kalkulaci 2026 v účtu meduna@holmtec.cz; lokální ProductOfferProfile nestačí.');
-    set('canva', 'blocked', 'Canva CP1 DAHaVqf1LRo nemá autofill dataset; chybí ověřené interní serverové propojení.');
+    set('canva', 'blocked', 'Výchozí brand šablona Mlžítka HolmTec EAHbBX1hTpE nemá vyplnitelný Autofill dataset; ruční doplnění, QA všech stran a ověřený export PDF jsou povinné.');
     set('qa', existingPdf.length ? 'needs_review' : 'blocked',
       existingPdf.length ? 'Existuje PDF, ale jeho ceny, geometrie a přílohy vyžadují QA.' : 'Neexistuje ověřený PDF export klientské nabídky.');
     set('drive', verified('mlzny_disk_offer_archive') ? 'needs_review' : 'blocked',
@@ -100,7 +100,11 @@ Deno.serve(async (req) => {
       previous_offer_run_status: latestRun?.run_status || null,
       workflow: WORKFLOW.map(([key, title]) => ({ key, title, ...(stages[key] || { status: 'blocked' }) })),
       blockers: uniq(blockers),
-      canva_template_id: 'DAHaVqf1LRo', next_step: 'Doplnit autorizované backend konektory a spustit samostatnou kontrolovanou implementaci exportu a Gmail konceptu.',
+      canva_template_id: 'EAHbBX1hTpE',
+      canva_template_url: 'https://www.canva.com/brand/brand-templates/EAHbBX1hTpE',
+      canva_autofill_ready: false,
+      email_delivery_mode: 'gmail_draft_only',
+      next_step: 'Zkopírovat vybranou brand šablonu pro konkrétní poptávku, ručně ověřit výstup PDF a poté propojit koncept s kontaktem a Dealem bez odeslání.',
     });
   } catch (error) {
     return Response.json({ error: 'Workflow preflight failed', detail: String(error?.message || error) }, { status: 500 });

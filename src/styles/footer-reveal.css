@@ -1,0 +1,54 @@
+/* MLŽIDLA: scroll-uncovered footer. No scroll handlers, transforms of page content,
+   or layout jumps; the footer remains fully interactive once it is revealed. */
+.site-footer-reveal-active {
+  isolation: isolate;
+  background: transparent;
+}
+.site-footer-reveal-active > .site-footer-page-cover {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+  background: hsl(var(--background));
+  border-radius: 0 0 24px 24px;
+  box-shadow: 0 22px 42px rgba(5, 30, 47, .19);
+}
+.site-footer-reveal-fixed {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 100%;
+}
+.site-footer-reveal-spacer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: 0;
+  pointer-events: none;
+  background: transparent;
+}
+.site-footer-normal {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.architecture-site .site-footer-page-cover {
+  min-width: 0;
+}
+.architecture-site :is(svg[aria-label="MLŽIDLA.CZ"], .site-footer-page-cover h1, .site-footer-page-cover h2) {
+  max-width: 100%;
+}
+@media (max-width: 1023px), (prefers-reduced-motion: reduce) {
+  .architecture-site > .site-footer-page-cover {
+    border-radius: 0;
+    box-shadow: none;
+  }
+}
+@media print {
+  .site-footer-reveal-fixed {
+    position: static;
+  }
+  .site-footer-reveal-spacer {
+    display: none;
+  }
+}

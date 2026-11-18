@@ -1,313 +1,145 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight, ArrowUpRight, ShieldCheck, LockKeyhole, Droplets, Gauge, ThermometerSun, ChevronDown } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { ArrowRight, ArrowUpRight, ChevronDown, Instagram, Linkedin, Youtube, MapPin, Phone, Mail, ShieldCheck, Code2 } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
-import { trackNewsletterSignup } from '@/lib/ga4';
 
-const trustItems = [
-{ icon: Droplets, label: 'Vodní mlha pro veřejný prostor', text: 'Mlžítka pro města, parky, sportoviště i rezidenční zahrady.' },
-{ icon: Gauge, label: 'Automatizace SUPLA', text: 'Scénáře podle času, teploty, počasí a provozního režimu.' },
-{ icon: ThermometerSun, label: 'Návrh podle místa', text: 'Vizualizace, doporučení produktu a technické podklady na vyžádání.' }];
+const sections = [
+  { title: 'Produkty', links: [
+    ['Městská mlžítka', '/mestske-mlzitka'],
+    ['Mlžiště a mlhoviště', '/mlhoviste'],
+    ['Zahradní mlžítka', '/zahradni-mlzitka'],
+    ['Zakázková výroba', '/zakazkova-mlzitka'],
+    ['Katalog mlžítek', '/katalog-mlzitek'],
+  ] },
+  { title: 'Řešení', links: [
+    ['Automatizace', '/smart-ovladani'],
+    ['Jak funguje mlžení', '/jak-to-funguje'],
+    ['Kalkulačka projektu', '/kalkulacka'],
+    ['Poptat projekt', '/poptavka'],
+  ] },
+  { title: 'Inspirace', links: [
+    ['Realizace', '/reference'],
+    ['Města a obce', '/mlzitka-pro-mesta-obce'],
+    ['Parky a hřiště', '/kategorie/parky-hriste'],
+    ['Blog a novinky', '/blog'],
+  ] },
+  { title: 'Podpora a firma', links: [
+    ['Ke stažení', '/ke-stazeni'],
+    ['Servis a údržba', '/servis-udrzba'],
+    ['Časté dotazy', '/faq'],
+    ['O nás', '/o-nas'],
+    ['Kontakt', '/kontakt'],
+    ['Partnerství', '/partnerstvi'],
+  ] },
+];
 
-
-const columns = [
-{
-  title: 'Produkty',
-  links: [
-  ['Městská mlžítka', '/mestske-mlzitka'],
-  ['Mlžiště a mlhoviště', '/mlhoviste'],
-  ['Zahradní mlžítka', '/zahradni-mlzitka'],
-  ['Zakázková výroba', '/zakazkova-mlzitka'],
-  ['Kompletní katalog', '/katalog-mlzitek']]
-
-},
-{
-  title: 'Řešení',
-  links: [
-  ['Automatizace', '/smart-ovladani'],
-  ['Jak funguje mlžení', '/jak-to-funguje'],
-  ['Návrh ochlazovací zóny', '/poptavka'],
-  ['Kalkulačka projektu', '/kalkulacka']]
-
-},
-{
-  title: 'Inspirace',
-  links: [
-  ['Reference', '/reference'],
-  ['Města a obce', '/mlzitka-pro-mesta-obce'],
-  ['Parky a hřiště', '/kategorie/parky-hriste'],
-  ['Blog & novinky', '/blog']]
-
-},
-{
-  title: 'Podpora & firma',
-  links: [
-  ['Ke stažení', '/ke-stazeni'],
-  ['Servis a údržba', '/servis-udrzba'],
-  ['Časté dotazy', '/faq'],
-  ['O nás', '/o-nas'],
-  ['Kontakt', '/kontakt'],
-  ['Spolupráce a partnerství', '/partnerstvi']]
-
-}];
-
+const social = [
+  { href: 'https://www.instagram.com/mlzidla/', label: 'Instagram MLŽIDLA', icon: Instagram },
+  { href: 'https://www.linkedin.com/company/holmtec/', label: 'LinkedIn HolmTec', icon: Linkedin },
+  { href: 'https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA', label: 'YouTube MLŽIDLA', icon: Youtube },
+];
 
 export default function Footer() {
-  const [email, setEmail] = useState('');
-  const [subscribed, setSubscribed] = useState(false);
   const [openColumn, setOpenColumn] = useState(null);
-
-  const subscribe = async (event) => {
-    event.preventDefault();
-    await base44.entities.NewsletterLead.create({ email, source: 'footer' });
-    trackNewsletterSignup('footer');
-    setSubscribed(true);
-  };
+  const reducedMotion = useReducedMotion();
 
   return (
-    <footer className="relative overflow-hidden bg-[#071A2F] text-primary-foreground">
-      <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-cyan/10 blur-3xl" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-hydro/10 blur-3xl" aria-hidden="true" />
-      <div className="relative mx-auto max-w-[1500px] px-6 pt-16 lg:px-8 lg:pt-20">
-        <div className="grid gap-12 border-b border-white/10 pb-14 lg:grid-cols-[1.15fr_2fr] lg:gap-16">
-          <div className="max-w-md">
-            <Link to="/" className="inline-flex" aria-label="MLŽIDLA.cz — domů">
-              <Logo size="lg" variant="full" />
+    <footer id="site-footer" className="relative isolate overflow-hidden bg-[#071A2F] text-white">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_12%_20%,rgba(4,119,171,.14),transparent_47%)]" />
+      <div className="relative mx-auto max-w-[1500px] px-5 pb-7 pt-14 sm:px-8 lg:px-12 lg:pt-16">
+        <div className="grid gap-12 border-b border-white/15 pb-12 xl:grid-cols-[minmax(260px,.95fr)_minmax(0,1.75fr)] xl:gap-20">
+          <div className="min-w-0">
+            <Link to="/" className="inline-flex max-w-full" aria-label="MLŽIDLA.cz — úvodní stránka">
+              <Logo size="lg" variant="full" className="max-w-full" />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-6 text-white/72">
-              Nízkotlaká mlžítka pro města, veřejná prostranství, sportoviště i zahrady. Propojujeme nerezový design, vodní mlhu a automatizaci SUPLA do řešení navrženého pro konkrétní prostor.
+            <p className="mt-5 max-w-[430px] text-sm leading-7 text-white/75">
+              Nerezová mlžítka pro města, veřejná prostranství, sportoviště i zahrady.
+              Návrh, výroba a automatizace pro konkrétní prostor.
             </p>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                to="/poptavka"
-                className="group inline-flex min-h-11 items-center gap-2 rounded-full bg-cyan px-5 py-3 text-sm font-semibold text-slate-950 transition-transform duration-300 hover:-translate-y-0.5">
-                
-                Poptat projekt
-                <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Link to="/poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#04B9ED] px-5 py-3 text-sm font-bold text-[#07131D] transition hover:bg-[#62D6F4]">
+                Poptat projekt <ArrowRight size={16} aria-hidden="true" />
               </Link>
-              <Link
-                to="/reference"
-                className="inline-flex min-h-11 items-center rounded-full border border-white/18 px-5 py-3 text-sm font-semibold text-white/85 transition-colors hover:border-white/35 hover:text-white">
-                
+              <Link to="/reference" className="inline-flex min-h-11 items-center rounded-full border border-white/40 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
                 Prohlédnout realizace
               </Link>
             </div>
-
-            <div className="mt-7 grid gap-3 text-sm text-white/72 sm:grid-cols-3 lg:grid-cols-1">
-              
-
-
-              
-              
-
-
-              
-              
-
-
-              
-            </div>
-
-            <div className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-
-              
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              
-            </div>
-
-            <div className="flex items-center mt-0 gap-4">
-              <a href="https://www.instagram.com/mlzidla/" target="_blank" rel="noreferrer" aria-label="Instagram MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Instagram size={18} /></a>
-              <a href="https://www.linkedin.com/company/holmtec/" target="_blank" rel="noreferrer" aria-label="LinkedIn HolmTec" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Linkedin size={18} /></a>
-              <a href="https://www.youtube.com/channel/UCeoTnyULIx5fW-71fhkG1uA" target="_blank" rel="noreferrer" aria-label="YouTube MLŽIDLA" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[.035] text-white/62 transition hover:-translate-y-0.5 hover:border-cyan/45 hover:text-cyan"><Youtube size={18} /></a>
+            <div className="mt-7 flex gap-3">
+              {social.map(({ href, label, icon: Icon }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-white/[.04] text-white transition hover:border-[#30C8EE] hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#30C8EE]">
+                  <Icon size={18} aria-hidden="true" />
+                </a>
+              ))}
             </div>
           </div>
 
-          <nav aria-label="Navigace v patičce" className="grid gap-x-7 md:grid-cols-4 md:gap-y-10">
-            {columns.map((column, columnIndex) => {
-              const isOpen = openColumn === columnIndex;
+          <nav aria-label="Navigace v patičce" className="grid min-w-0 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+            {sections.map((section, index) => {
+              const isOpen = openColumn === index;
               return (
-                <motion.div
-                  key={column.title}
-                  initial={{ opacity: 0, y: 14 }}
+                <motion.div key={section.title}
+                  initial={reducedMotion ? false : { opacity: 0, y: 18 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.42, delay: columnIndex * 0.05 }}
-                  className="border-t border-white/10 py-1 md:pt-">
-                  
-                  <button
-                    type="button"
-                    onClick={() => setOpenColumn(isOpen ? null : columnIndex)}
-                    className="flex w-full items-center justify-between py-4 text-left md:pointer-events-none md:py-0"
-                    aria-expanded={isOpen}>
-                    
-                    <span className="font-mono text-[10px] uppercase tracking-[.18em] text-cyan">{column.title}</span>
-                    <ChevronDown size={16} className={`text-white/55 transition-transform duration-300 md:hidden ${isOpen ? 'rotate-180' : ''}`} />
+                  viewport={{ once: true, amount: 0.12 }}
+                  transition={{ duration: 0.5, delay: reducedMotion ? 0 : index * 0.05 }}
+                  className="min-w-0 border-t border-white/15 md:border-t-0">
+                  <button type="button" onClick={() => setOpenColumn(isOpen ? null : index)}
+                    aria-expanded={isOpen} aria-controls={`footer-links-${index}`}
+                    className="flex min-h-12 w-full items-center justify-between py-3 text-left md:pointer-events-none md:min-h-0 md:py-1">
+                    <span className="text-sm font-bold tracking-[.02em] text-white">{section.title}</span>
+                    <ChevronDown size={17} aria-hidden="true" className={`text-white/70 transition-transform md:hidden ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
-                  <motion.div
-                    initial={false}
-                    animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden md:!h-auto md:!opacity-100">
-                    
-                    <div className="space-y-3.5 pb-5 md:pb-0 md:pt-5">
-                      {column.links.map(([label, to]) =>
-                      <Link
-                        key={label}
-                        to={to}
-                        className="group flex w-fit items-center gap-1.5 text-sm leading-5 text-white/72 transition-colors hover:text-white">
-                        
-                          <span className="relative after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-cyan after:transition-all after:duration-300 group-hover:after:w-full normal-case">{label}</span>
-                          <ArrowUpRight size={12} className="translate-y-0.5 opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0 group-hover:opacity-60" />
-                        </Link>
-                      )}
-                    </div>
-                  </motion.div>
-                </motion.div>);
-
+                  <div id={`footer-links-${index}`} className={`${isOpen ? 'block' : 'hidden'} pb-5 md:block md:pb-0 md:pt-4`}>
+                    <ul className="space-y-3">
+                      {section.links.map(([label, path]) => (
+                        <li key={path}><Link to={path}
+                          className="group inline-flex min-h-7 items-center gap-1.5 text-[13px] leading-6 text-white/75 transition-colors hover:text-[#67D7F4]">
+                          {label}<ArrowUpRight size={13} aria-hidden="true" className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100" />
+                        </Link></li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              );
             })}
           </nav>
         </div>
 
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-        <div className="flex flex-col gap-5 py-7 text-xs text-white/58 sm:flex-row sm:items-center sm:justify-between">
-          <div className="max-w-3xl">
-            <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
-            
-            <p className="mt-1 text-white/52">Horní Staré Město 698, 541 02 Trutnov · IČ 27486893 · DIČ CZ27486893</p>
-            <p className="mt-1 text-white/58"><a href="mailto:obchod1@holmtec.cz" className="transition-colors hover:text-white">obchod1@holmtec.cz</a> · <a href="tel:+420774700390" className="transition-colors hover:text-white">+420 774 700 390</a></p>
-            
-
-            
+        <div className="grid gap-7 border-b border-white/15 py-8 text-sm md:grid-cols-[1.2fr_1fr_1fr] md:gap-8">
+          <div className="flex min-w-0 items-start gap-3">
+            <MapPin className="mt-1 shrink-0 text-[#61D7F0]" size={19} aria-hidden="true" />
+            <address className="not-italic leading-6 text-white/78"><strong className="block text-white">HolmTec s.r.o.</strong>
+              Horní Staré Město 698, 541 02 Trutnov<br />IČ 27486893 · DIČ CZ27486893
+            </address>
           </div>
+          <a href="mailto:obchod1@holmtec.cz" className="flex min-w-0 items-start gap-3 text-white/85 hover:text-white">
+            <Mail className="mt-1 shrink-0 text-[#61D7F0]" size={19} aria-hidden="true" />
+            <span className="min-w-0 break-all">obchod1@holmtec.cz</span>
+          </a>
+          <a href="tel:+420774700390" className="flex items-start gap-3 text-white/85 hover:text-white">
+            <Phone className="mt-1 shrink-0 text-[#61D7F0]" size={19} aria-hidden="true" />
+            <span>+420 774 700 390</span>
+          </a>
+        </div>
 
-          <div className="flex flex-col items-start gap-3 sm:items-end">
-            <div
-              className="inline-flex items-center gap-2 rounded-full border bg-white/[.00 px-3 py-1.5 text-left border-white/4"
-              aria-label="Zabezpečené připojení a kontrola odkazu"
-              title="Kontrola odkazu pomocí Bitdefender Link Checker. Nejde o certifikaci ani partnerství.">
-              
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-emerald-300/20 text-emerald-200">
-                <ShieldCheck size={13} strokeWidth={1.9} />
-              </span>
-              <span className="flex min-w-0 items-center gap-1.5">
-                <LockKeyhole size={11} className="shrink-0 text-white/62" aria-hidden="true" />
-                <span className="text-[10px] font-semibold tracking-[.02em] text-white/82">Zabezpečené připojení</span>
-                
-              </span>
-            </div>
-
-            <div className="flex flex-wrap gap-x-5 gap-y-2">
-              <Link to="/obchodni-podminky" className="transition-colors hover:text-white/75">Obchodní podmínky</Link>
-              <Link to="/gdpr" className="transition-colors hover:text-white/75">GDPR</Link>
-              <Link to="/ke-stazeni" className="transition-colors hover:text-white/75">Ke stažení</Link>
-              <Link to="/podpora" className="transition-colors hover:text-white/75">Podpora</Link>
-              <Link to="/partnerstvi" className="transition-colors hover:text-white/75">Partnerství</Link>
-            </div>
+        <div className="flex flex-col gap-5 pt-6 text-xs text-white/75 lg:flex-row lg:items-center lg:justify-between">
+          <p>© {new Date().getFullYear()} MLŽIDLA® / HolmTec s.r.o.</p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link to="/obchodni-podminky" className="hover:text-white">Obchodní podmínky</Link>
+            <Link to="/gdpr" className="hover:text-white">GDPR</Link>
+            <span className="inline-flex items-center gap-1.5 text-white/75" title="Informace o připojení; nejedná se o certifikaci">
+              <ShieldCheck size={15} className="text-[#66D8E8]" aria-hidden="true" /> Zabezpečené připojení
+            </span>
           </div>
+          <span className="inline-flex flex-wrap items-center gap-1.5 text-white/75">
+            <Code2 size={14} className="text-[#50D2F0]" aria-hidden="true" />
+            Created with <span role="img" aria-label="modré srdce">💙</span> powered by
+            <a href="https://holmtec.cz" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#67D7F4]">HolmTec s.r.o.</a>
+          </span>
         </div>
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 72, filter: 'blur(12px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, amount: 0.25 }}
-        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-        className="pointer-events-none relative border-t border-white/[.06] px-3 pb-2 pt-6 sm:px-6 lg:px-8"
-        aria-hidden="true">
-        
-        <div className="mx-auto max-w-[1600px] overflow-hidden">
-          <div className="flex select-none items-end justify-center whitespace-nowrap font-heading text-[18vw] font-extrabold leading-[0.72] tracking-[-0.075em] text-white/[.055] sm:text-[15vw] lg:text-[12vw]">
-            <span className="text-cyan/[.12]">MLŽ</span><span>IDLA</span><sup className="ml-1 self-start pt-[1.8vw] text-[2.2vw] tracking-normal text-white/[.09]">®</sup>
-          </div>
-        </div>
-      </motion.div>
-    </footer>);
-
+    </footer>
+  );
 }

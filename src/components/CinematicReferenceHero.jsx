@@ -181,13 +181,12 @@ export default function CinematicReferenceHero({
           <ArrowLeft size={16} aria-hidden="true" /> Všechny realizace
         </Link>
 
-        <motion.div
-          style={{ opacity: headlineOpacity }}
-          initial={reducedMotion ? false : { opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.85, ease: 'easeOut' }}
-          className="max-w-[900px] pb-8"
-        >
+        <motion.div style={{ opacity: headlineOpacity }} className="max-w-[900px] pb-8">
+          <motion.div
+            initial={reducedMotion ? false : { opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: 'easeOut' }}
+          >
           <p className="mb-4 text-[11px] font-semibold uppercase tracking-[.23em] text-cyan-200 sm:text-xs">
             MLŽIDLA® / REFERENCE / BY HOLMTEC
           </p>
@@ -202,6 +201,7 @@ export default function CinematicReferenceHero({
               Technický podklad · nejde o fotografii realizace
             </span>
           )}
+          </motion.div>
         </motion.div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/25 pt-4 text-xs sm:text-sm">

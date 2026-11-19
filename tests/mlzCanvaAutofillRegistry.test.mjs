@@ -8,6 +8,7 @@ import {
   resolvePublicMlzLinePrice,
   makeMultiModelCanvaData,
   makeOutreachCanvaData,
+  inspectRenderedMlzCanvaSummary,
 } from '../src/lib/mlz-canva-autofill-registry.js';
 
 test('three target audiences use editable A4 Canva designs, never customer send', () => {
@@ -96,4 +97,41 @@ test('dataset validation detects incorrect Canva field types without inventing a
   assert.equal(validateMlzCanvaDataset('product_photos',observed).valid,true);
   observed.environment_image={type:'text'};
   assert.equal(validateMlzCanvaDataset('product_photos',observed).valid,false);
+});
+
+test('Canva DUO rendered text catches old unfillable static text and price', () => {
+  const result = inspectRenderedMlzCanvaSummary({
+    renderedText: [
+      'INTERNÍ TEST · AURA 700',
+      'KATALOG / LINEA TR 60',
+      '26 580 Kč bez DPH',
+      'INTERNÍ TEST · LINEA TR 60',
+      'KATALOG / BENDY_60',
+      '20 940 Kč bez DPH',
+      '17 900 Kč',
+      'bez DPH',
+      'OD',
+    ].join('\n'),
+    expectedProducts: [
+      {productName:'AURA 700',productVariant:'AURA 700',priceVerified:true,unitPriceExVatCzk:26580,lineTotalExVatCzk:26580},
+      {productName:'LINEA TR 60',productVariant:'LINEA TR 60',priceVerified:true,unitPriceExVatCzk:20940,lineTotalExVatCzk:20940},
+    ],
+  });
+  assert.equal(result.safeForCustomer,false);
+  assert.ok(result.blockers.some(x=>x.includes('17 900')));
+  assert.ok(result.blockers.some(x=>x.includes('BENDY_60')));
+  assert.ok(result.blockers.some(x=>x.includes('OD')));
+});
+
+test('even clean rendered data requires a visual/PDF human QA sign-off', () => {
+  const result=inspectRenderedMlzCanvaSummary({
+    renderedText:'AURA 700\n26 580 Kč\n26 580 Kč bez DPH',
+    expectedProducts:[{
+      productName:'AURA 700',productVariant:'AURA 700',
+      unitPriceExVatCzk:26580,lineTotalExVatCzk:26580,priceVerified:true,
+    }],
+  });
+  assert.equal(result.blockers.length,0);
+  assert.equal(result.safeForCustomer,false);
+  assert.equal(result.reviewRequired,true);
 });

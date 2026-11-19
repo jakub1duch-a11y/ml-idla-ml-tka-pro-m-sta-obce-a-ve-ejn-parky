@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useReducedMotion } from 'framer-motion';
 
-const spiralVideo = '/media/optimized/ae9faa0a3_video-mlitkospiralavakci.webm';
+const spiralVideo = '/media/optimized/db-9938e69714-df874507a_mlzidlospiralavakci-video.webm';
 const anchorImage = '/media/optimized/20aa9f5f9_09_Vizualizace_Mlzna_spirala_skryta_patka.webp';
 
 export default function SpiralEditorialSections({ product }) {
@@ -53,7 +53,7 @@ export default function SpiralEditorialSections({ product }) {
               </video>
             )}
             <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 text-sm text-slate-200">
-              <span>SPIRÁLA · video produktu v provozu</span>
+              <span>SPIRÁLA · alternativní produktový záznam</span>
               {!videoFailed && <button type="button" onClick={toggleVideo} aria-pressed={playing} className="rounded-full border border-white/40 px-4 py-2 text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">{playing ? 'Pozastavit video' : 'Přehrát video'}</button>}
             </div>
           </div>

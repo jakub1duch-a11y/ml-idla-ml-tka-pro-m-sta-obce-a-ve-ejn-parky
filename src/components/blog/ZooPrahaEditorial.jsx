@@ -23,6 +23,7 @@ function ZooVideo({ poster }) {
   const [paused, setPaused] = useState(false);
   const [muted, setMuted] = useState(true);
   const [activated, setActivated] = useState(false);
+  const [manualPlay, setManualPlay] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
   const [error, setError] = useState(false);
   const [saveData] = useState(() => Boolean(navigator.connection?.saveData));
@@ -36,13 +37,13 @@ function ZooVideo({ poster }) {
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !activated || error) return;
-    if (!visible || !tabVisible || paused || reducedMotion || saveData) { video.pause(); return; }
+    if (!visible || !tabVisible || paused || ((reducedMotion || saveData) && !manualPlay)) { video.pause(); return; }
     video.play().catch(() => setPaused(true));
-  }, [activated, error, visible, tabVisible, paused, reducedMotion, saveData]);
+  }, [activated, error, visible, tabVisible, paused, reducedMotion, saveData, manualPlay]);
   const togglePlay = () => {
     const video = videoRef.current;
     if (!video) return;
-    if (video.paused) { video.play().then(() => setPaused(false)).catch(() => setPaused(true)); }
+    if (video.paused) { setManualPlay(true); video.play().then(() => setPaused(false)).catch(() => setPaused(true)); }
     else { video.pause(); setPaused(true); }
   };
   const toggleSound = () => {
@@ -59,7 +60,7 @@ function ZooVideo({ poster }) {
       <div><p className="font-semibold">Mlžné sochy v pohybu</p><p className="mt-1 text-xs text-white/65">Skutečné záběry z návštěvnického areálu</p></div>
       {!error && <div className="flex shrink-0 gap-2">
         <button type="button" onClick={togglePlay} aria-label={videoRef.current?.paused ? 'Přehrát video' : 'Pozastavit video'} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/40 bg-black/45 backdrop-blur">
-          {paused || reducedMotion ? <Play size={18} /> : <Pause size={18} />}
+          {paused || ((reducedMotion || saveData) && !manualPlay) ? <Play size={18} /> : <Pause size={18} />}
         </button>
         <button type="button" onClick={toggleSound} aria-label={muted ? 'Zapnout zvuk' : 'Vypnout zvuk'} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/40 bg-black/45 backdrop-blur">
           {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}

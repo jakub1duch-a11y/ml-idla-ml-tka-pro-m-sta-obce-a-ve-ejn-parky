@@ -11,6 +11,7 @@ import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions'
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
 import PdInSpace from '@/components/produkt/new/PdInSpace';
 import ProductMotionSection from '@/components/produkt/ProductMotionSection';
+import SpiralEditorialSections from '@/components/produkt/SpiralEditorialSections';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
@@ -77,6 +78,7 @@ export default function ProduktDetail() {
       <AvenueConfigurator product={product} />
       <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
       <PdInSpace product={product} />
+      {product.slug === 'mlzna-spirála' && <SpiralEditorialSections product={product} />}
       <ProductMotionSection key={product.slug} product={product} />
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>

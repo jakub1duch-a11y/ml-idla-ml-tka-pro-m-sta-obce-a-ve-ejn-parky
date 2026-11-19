@@ -54,6 +54,10 @@ function formatDate(dateStr: string): string {
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const caller = await base44.auth.me().catch(() => null);
+    if (caller?.role !== 'admin') {
+      return Response.json({ error: 'Forbidden' }, { status: 403, headers: { 'Cache-Control': 'no-store' } });
+    }
     const body = await req.json().catch(() => ({}));
 
     const inquiryId = clean(body.inquiry_id || body.entity_id || body?.event?.entity_id || body?.data?.id, 100);

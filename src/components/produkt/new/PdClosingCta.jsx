@@ -1,67 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { VIDEO_ASSETS } from '@/lib/newMedia';
 
 export default function PdClosingCta({ product }) {
-  const [showBar, setShowBar] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setShowBar(window.scrollY > 600);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
   return (
-    <>
-      <section className="relative overflow-hidden py-20 lg:py-32 bg-[#0a1628]/[0.7]">
-        <video
-          src={VIDEO_ASSETS.loopSquare.src}
-          poster={VIDEO_ASSETS.loopSquare.poster}
-          className="absolute inset-0 h-full w-full object-cover opacity-0"
-          autoPlay muted loop playsInline preload="metadata" />
-        
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/85 to-[#0A1628]/70" />
-        <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
-          <p className="font-mono uppercase tracking-[.18em] text-base text-[hsl(var(--background))]">Projektová konzultace</p>
-          <h2 className="mt-4 font-heading text-3xl font-bold leading-tight tracking-[-.02em] text-white lg:text-5xl">
-            Získejte návrh řešení a cenovou nabídku
-          </h2>
-          
-
-          
-          <p className="mt-5 font-medium text-base text-[hsl(var(--ring))]">Stačí poslat fotografii, adresu nebo projektovou situaci.</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              to={`/poptavka?produkt=${product.slug}`}
-              className="btn-brand-primary-dark">
-              
-              Získat návrh a cenu <ArrowRight size={16} />
-            </Link>
-            <Link
-              to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`}
-              className="btn-brand-outline-dark">
-              
-              Vizualizovat v mém prostoru
-            </Link>
-          </div>
+    <section className="relative overflow-hidden bg-gradient-to-br from-[#effcf5] via-white to-[#e6faf4] py-16 sm:py-20 lg:py-24" aria-labelledby="project-consultation-title">
+      <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-7 lg:px-10">
+        <p className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-emerald-800"><span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />Projektová konzultace</p>
+        <h2 id="project-consultation-title" className="mt-5 font-heading text-3xl font-bold leading-tight tracking-tight text-[#0A2342] sm:text-4xl lg:text-5xl">Představte si {product.name} ve vašem prostoru.</h2>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-600">Pošlete fotografii místa nebo projektovou situaci. Navrhneme vhodné provedení, připojení a ovládání a připravíme cenovou nabídku.</p>
+        <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+          <Link to={`/poptavka?produkt=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-900/10 transition hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-emerald-700">Získat návrh a cenu <ArrowRight size={17} aria-hidden="true" /></Link>
+          <Link to={`/ai-vizualizace?produkt=${encodeURIComponent(product.name)}&slug=${encodeURIComponent(product.slug)}`} className="inline-flex min-h-12 items-center justify-center rounded-xl border border-emerald-200 bg-white px-6 py-4 text-sm font-semibold text-[#0A2342] hover:bg-emerald-50">Vizualizovat v mém prostoru</Link>
         </div>
-      </section>
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-      
-    </>);
-
+      </div>
+    </section>
+  );
 }

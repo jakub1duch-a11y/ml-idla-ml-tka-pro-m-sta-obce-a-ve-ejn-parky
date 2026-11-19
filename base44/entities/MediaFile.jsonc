@@ -29,6 +29,23 @@
     "sort_order": {
       "type": "number",
       "description": "Po\u0159ad\u00ed m\u00e9dia v r\u00e1mci produktu / skupiny"
+    },
+    "visualization_source_id": {
+      "type": "string",
+      "description": "ID schv\u00e1len\u00e9 vizualizace v administraci."
+    },
+    "visualization_environment": {
+      "type": "string",
+      "description": "Ve\u0159ejn\u00fd typ prost\u0159ed\u00ed schv\u00e1len\u00e9 vizualizace."
+    },
+    "visualization_configuration": {
+      "type": "string",
+      "description": "Ve\u0159ejn\u00e1 konfigurace produktu."
+    },
+    "visualization_is_primary": {
+      "type": "boolean",
+      "default": false,
+      "description": "Prim\u00e1rn\u00ed schv\u00e1len\u00e1 vizualizace."
     }
   },
   "required": [

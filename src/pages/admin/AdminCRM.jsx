@@ -9,6 +9,7 @@ import CrmPipelineBoard from '@/components/admin/crm/CrmPipelineBoard';
 import CrmClientDirectory from '@/components/admin/crm/CrmClientDirectory';
 import CrmRevenueChart from '@/components/admin/crm/CrmRevenueChart';
 import CrmActivityFeed from '@/components/admin/crm/CrmActivityFeed';
+import EmailSyncPanel from '@/components/admin/EmailSyncPanel';
 
 const money = (v) => new Intl.NumberFormat('cs-CZ').format(Number(v || 0));
 
@@ -220,6 +221,8 @@ export default function AdminCRM() {
           })}
         </div>
       </div>
+
+      <EmailSyncPanel onComplete={() => window.location.reload()} />
 
       {/* Overview */}
       {view === 'overview' && (

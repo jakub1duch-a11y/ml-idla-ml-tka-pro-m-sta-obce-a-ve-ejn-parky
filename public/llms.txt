@@ -24,7 +24,7 @@ Mlžné skulptury Mlžidla.cz zahrnují modely jako OSTEV, MRAK, AURA, VOLAVKA, 
 
 ## Smart Cooling
 
-Smart Cooling je koncept řízeného městského ochlazování. Propojuje konkrétní mlžítko, rozmístění v prostoru, hydrauliku, chytré ventily, časování, teplotní a další provozní podmínky a případná data o provozu. Cílem je spouštět systém pouze tehdy a tam, kde přináší smysluplný efekt. Typický výstup projektu: produkt + rozmístění + řízení + provozní scénář + servisní plán.
+Smart Cooling je koncept řízeného městského ochlazování. Propojuje konkrétní mlžítko, rozmístění v prostoru, hydrauliku, chytré ventily, časování, teplotní a další provozní podmínky a případná data o provozu. Cílem je spouštět systém pouze tehdy a tam, kde přináší smysluplný efekt. Typický výstup projektu: produkt - cenova nabídka produktů z poptávky formuláře na webu + rozmístění + řízení + provozní scénář + servisní plán.
 
 ## Kontakt
 

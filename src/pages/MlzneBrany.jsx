@@ -33,7 +33,7 @@ export default function MlzneBrany() {
     return () => {active = false;};
   }, [attempt]);
   useEffect(() => {
-    setSEO({ title: 'Mlžné brány pro města, parky a veřejný prostor', description: 'Designové mlžné brány a oblouky pro náměstí, parky, sportoviště a areály. Prohlédněte si modely a řešte rozměry, napojení vody, řízení i instalaci.', keywords: 'mlžné brány, mlžná brána, mlžné oblouky, ochlazovací brána, mlžítka pro města', canonicalPath: '/mlzne-brany' });
+    setSEO({ title: 'Mlžné brány a mlžící brány na míru | MLŽIDLA.cz', description: 'Nerezové mlžné a mlžící brány pro města, sportoviště i akce. Česká výroba HolmTec, výběr variant, kotvení, voda a ovládání. Poptat návrh a cenu.', keywords: 'mlžné brány, mlžná brána, mlžné oblouky, ochlazovací brána, mlžítka pro města', canonicalPath: '/mlzne-brany' });
   }, []);
 
   return <main className="gate-page opacity-100">

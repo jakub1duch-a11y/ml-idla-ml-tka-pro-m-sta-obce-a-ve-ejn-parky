@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-11-17",
+  "count": 38,
+  "products": [
+    {
+      "name": "AURA 700",
+      "file": "03-aura-700.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "AURA 900",
+      "file": "04-aura-900.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BENDY_60",
+      "file": "05-bendy-60.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BENDY_76",
+      "file": "06-bendy-76.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BRÁNA 60_2115",
+      "file": "07-brana-60-2115.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BRÁNA 60_2130",
+      "file": "08-brana-60-2130.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BRÁNA 76_2130",
+      "file": "09-brana-76-2130.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BRANKA OBLOUK_42_1815",
+      "file": "10-branka-oblouk-42-1815.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "BRANKA RADIUS_42_1825",
+      "file": "11-branka-radius-42-1825.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "DUCH",
+      "file": "12-duch.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "KAPR",
+      "file": "13-kapr.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA TR 50",
+      "file": "14-linea-tr-50.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA TR 60",
+      "file": "15-linea-tr-60.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA TR 76",
+      "file": "16-linea-tr-76.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA JA 70",
+      "file": "17-linea-ja-70.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA Ce 70",
+      "file": "18-linea-ce-70.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LINEA Le 70",
+      "file": "19-linea-le-70.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LISTY LILIE",
+      "file": "20-listy-lilie.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "LÍZÁTKO",
+      "file": "21-lizatko.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "MRAK 10R 1414",
+      "file": "22-mrak-10r-1414.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "MRAK 13R 2424",
+      "file": "23-mrak-13r-2424.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "MRKEV",
+      "file": "24-mrkev.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "OSTREV",
+      "file": "25-ostrev.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "PANÁK",
+      "file": "26-panak.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "PÁV",
+      "file": "27-pav.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "SLOUP",
+      "file": "28-sloup.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "SPIRÁLA",
+      "file": "29-spirala.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "STÉBLO",
+      "file": "30-steblo.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "TEEPEE_50",
+      "file": "31-teepee-50.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "TEEPEE_60",
+      "file": "32-teepee-60.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "TOTEM",
+      "file": "33-totem.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "TRIO LEAF",
+      "file": "34-trio-leaf.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "VOLAVKA Gracilis",
+      "file": "35-volavka-gracilis.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "VOLAVKA Gigantea",
+      "file": "36-volavka-gigantea.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "Y-ARMIST HR70",
+      "file": "37-y-armist-hr70.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "Y-ARMIST TR60",
+      "file": "38-y-armist-tr60.html",
+      "pricesVerified": true,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "ZAO SLOUP",
+      "file": "39-zao-sloup.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    },
+    {
+      "name": "RYBA",
+      "file": "40-ryba.html",
+      "pricesVerified": false,
+      "masterImageVerified": false,
+      "status": "NEEDS_REVIEW"
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Download, ExternalLink, FileText, Loader2, RefreshCw } from 'lucide-react';
 import KalkulatorRadekChat from '@/components/offers/KalkulatorRadekChat';
+import OfferTemplateRegistryPanel from '@/components/offers/OfferTemplateRegistryPanel';
+import { MLZ_BRAND } from '@/lib/mlz-brand-offer-templates';
 
 const money = (value) => new Intl.NumberFormat('cs-CZ').format(Number(value || 0));
 
@@ -20,7 +22,7 @@ function DocumentPreview({ content, finalTotal, validUntil, quoteNumber, clientL
       <div className="h-1.5 bg-cyan-400" />
       <div className="flex items-end justify-between gap-3 border-b border-slate-100 px-5 py-4">
         <div>
-          <div className="text-base font-extrabold tracking-wide text-[#0d2d38]">MLŽIDLA® <span className="text-[10px] font-semibold text-slate-400">by HolmTec</span></div>
+          <img src={MLZ_BRAND.logoMaster} alt="MLŽIDLA – oficiální logo" className="h-auto w-36 object-contain" />
           <div className="mt-1 text-[9px] uppercase tracking-[.16em] text-cyan-700">Projektový návrh · cenová nabídka</div>
         </div>
         <div className="text-right text-[9px] uppercase tracking-[.12em] text-slate-400">Architektonické mlžení</div>
@@ -54,7 +56,7 @@ function DocumentPreview({ content, finalTotal, validUntil, quoteNumber, clientL
         <div className="mt-4 rounded-xl border border-cyan-200 bg-cyan-50/60 p-3">
           <p className="text-[9px] uppercase tracking-[.14em] text-cyan-700">Investice</p>
           <p className="mt-1 text-lg font-bold text-[#0d2d38]">{finalTotal > 0 ? `${money(finalTotal)} Kč` : 'dle konfigurace'}</p>
-          <p className="text-[10px] text-slate-500">bez DPH · s DPH {money(Math.round(finalTotal * 1.21))} Kč</p>
+          <p className="text-[10px] text-slate-500">{finalTotal > 0 ? `bez DPH · s DPH ${money(Math.round(finalTotal * 1.21))} Kč (orientační náhled)` : 'Kalkulace a sazba DPH čekají na ověření.'}</p>
           <p className="mt-1 text-[10px] text-slate-400">Nabídka {quoteNumber || '—'} · platnost do {validUntil}</p>
         </div>
 
@@ -131,8 +133,9 @@ export default function OfferDocumentEditor({ prepared, selected, selectedProduc
 
   return (
     <div className="mt-6 rounded-2xl border border-cyan-300 bg-cyan-50/40 p-5 sm:p-6">
+      <OfferTemplateRegistryPanel prepared={prepared} selected={selected} selectedProduct={selectedProduct} />
       <div className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-        <strong>Nabídka je připravená ke kontrole.</strong> Texty i cenu můžete ručně doladit v editoru vlevo; po úpravě klikněte na „Přegenerovat PDF“. Klientovi se odešle až po vašem schválení dole.
+        <strong>Pracovní návrh nabídky.</strong> Před exportem ověřte produktovou geometrii, zdroj ceny, DPH, logo na každé straně a schválené vizualizace. Texty a cenu lze připravit v editoru; odeslání klientovi vyžaduje samostatné schválení.
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">

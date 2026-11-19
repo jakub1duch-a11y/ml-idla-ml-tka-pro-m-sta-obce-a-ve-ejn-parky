@@ -1,4 +1,5 @@
 import React, { Suspense, lazy, useEffect } from 'react';
+import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
@@ -13,7 +14,6 @@ const HomeTechnology = lazy(() => import('@/components/home/new/HomeEditorialSec
 const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
 const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
-const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
 
 export default function Home() {
@@ -38,8 +38,8 @@ export default function Home() {
           <HomeTechnology />
           <ReferencesStrip />
           <HomeHolmTec />
-          <CooperationSteps />
           <HomeInquiryForm />
+          <HomeFaqTeaser />
         </Suspense>
         <MobileStickyBar />
       </MotionConfig>

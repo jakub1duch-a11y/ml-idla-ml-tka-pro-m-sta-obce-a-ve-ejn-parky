@@ -19,6 +19,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const checkAppState = async () => {
+    const withDeadline = (promise, ms) => {
+      let id;
+      const t = new Promise((_, r) => { id = setTimeout(() => r(new Error('timeout')), ms); });
+      return Promise.race([promise, t]).finally(() => clearTimeout(id));
+    };
+
     try {
       setIsLoadingPublicSettings(true);
       setAuthError(null);
@@ -35,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       });
       
       try {
-        const publicSettings = await appClient.get(`/prod/public-settings/by-id/${appParams.appId}`);
+        const publicSettings = await withDeadline(appClient.get(`/prod/public-settings/by-id/${appParams.appId}`), 10000);
         setAppPublicSettings(publicSettings);
         
         // If we got the app public settings successfully, check if user is authenticated
@@ -90,10 +96,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const checkUserAuth = async () => {
+    const withDeadline = (promise, ms) => {
+      let id;
+      const t = new Promise((_, r) => { id = setTimeout(() => r(new Error('timeout')), ms); });
+      return Promise.race([promise, t]).finally(() => clearTimeout(id));
+    };
     try {
       // Now check if the user is authenticated
       setIsLoadingAuth(true);
-      const currentUser = await base44.auth.me();
+      const currentUser = await withDeadline(base44.auth.me(), 10000);
       setUser(currentUser);
       setIsAuthenticated(true);
       setIsLoadingAuth(false);

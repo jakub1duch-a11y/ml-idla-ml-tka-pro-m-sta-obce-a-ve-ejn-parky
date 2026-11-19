@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Snowflake, Wind, Droplets, ShieldCheck, ArrowRight, BookOpen } from 'lucide-react';
+import { Snowflake, Wind, ShieldCheck, ArrowRight, BookOpen } from 'lucide-react';
 import { setSEO } from '@/lib/seo';
 import ReactMarkdown from 'react-markdown';
 import gallery from '../../content/blog/zazimovani-fotografie.md?raw';

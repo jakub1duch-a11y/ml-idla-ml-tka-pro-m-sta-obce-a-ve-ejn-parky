@@ -403,51 +403,6 @@ html.lenis { scroll-behavior: auto; }
 }
 .btn-inquiry-pulse:hover { transform: translateY(-2px); filter: brightness(1.08); }
 
-/* Subtle global photo watermark — public website only. */
-.mlz-photo-watermark-host {
-  position: relative !important;
-}
-.mlz-photo-watermark {
-  position: absolute;
-  right: clamp(8px, 1.2vw, 18px);
-  bottom: clamp(8px, 1.2vw, 16px);
-  z-index: 25;
-  display: inline-flex;
-  align-items: flex-end;
-  gap: clamp(5px, .5vw, 8px);
-  pointer-events: none;
-  user-select: none;
-  white-space: nowrap;
-  opacity: .28;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,.28));
-}
-.mlz-photo-watermark-logo {
-  display: block;
-  width: clamp(48px, 5.5vw, 86px);
-  height: auto;
-  max-height: 24px;
-  object-fit: contain;
-  opacity: .82;
-}
-.mlz-photo-watermark-label {
-  font-family: var(--font-body);
-  font-size: clamp(7px, .52vw, 9px);
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: .08em;
-  color: rgba(255,255,255,.9);
-  text-shadow: 0 1px 2px rgba(0,0,0,.3);
-}
-@media (max-width: 640px) {
-  .mlz-photo-watermark {
-    right: 8px;
-    bottom: 8px;
-    font-size: 8px;
-    letter-spacing: .055em;
-    opacity: .68;
-  }
-}
-
 @keyframes inquiry-pulse {
   0% { box-shadow: 0 0 0 0 hsl(var(--accent) / .55); }
   70% { box-shadow: 0 0 0 11px hsl(var(--accent) / 0); }

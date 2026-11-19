@@ -4,8 +4,20 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ArrowRight, Wrench, Droplets, Package, Phone, Mail, MessageCircle, Sparkles, ShieldCheck } from 'lucide-react';
 import ReviewsSection from '@/components/reviews/ReviewsSection';
+import PolnaCaseStudy from '@/components/reviews/PolnaCaseStudy';
 
 const FAQ_SECTIONS = [
+{
+  id: 'vyroba',
+  icon: Package,
+  title: 'Česká výroba mlžítek a mlžných prvků',
+  items: [
+    { q: 'Kdo vyrábí mlžítka MLŽIDLA.cz?', a: 'Za značkou MLŽIDLA.cz stojí česká firma HolmTec s výrobním zázemím v Trutnově. Vyrábíme nerezové konstrukce mlžítek a mlžných prvků a připravujeme jejich technické řešení podle konkrétního projektu.' },
+    { q: 'Vyrábíte mlžítka a mlžné prvky v České republice?', a: 'Ano, nerezové konstrukce mlžítek vyrábíme v Trutnově. Jednotlivé součásti, například trysky nebo ovládací technika, mohou pocházet od specializovaných dodavatelů.' },
+    { q: 'Lze objednat mlžítko nebo mlžnou sochu na míru?', a: 'Ano. Podle prostoru navrhneme tvar, rozměry, kotvení, napojení vody a vhodný způsob řízení. Před výrobou ověřujeme technické možnosti konkrétního návrhu.' },
+  ],
+},
+
 {
   id: 'instalace',
   icon: Package,
@@ -38,6 +50,10 @@ const FAQ_SECTIONS = [
   icon: Wrench,
   title: 'Údržba a servis mlžidel',
   items: [
+  {
+    q: 'Jak předcházet vodnímu kameni v tryskách?',
+    a: 'Mechanická filtrace zachycuje částice, zatímco změkčovač omezuje tvrdost vody. Vhodnost úpravy posuzujeme podle zdroje vody, tvrdosti a konkrétní instalace. Podrobnosti najdete na stránce Úprava vody.'
+  },
   {
     q: 'Jak často je potřeba mlžítka servisovat?',
     a: 'Doporučujeme základní kontrolu minimálně jednou ročně, ideálně před hlavní sezónou. Servis zahrnuje kontrolu a čištění trysek, filtrů, přívodu vody, ventilů a případného chytrého řízení. U veřejných instalací lze nastavit pravidelný servisní režim.'
@@ -165,22 +181,12 @@ export default function Podpora() {
         </motion.div>
 
         {/* Category anchors */}
-        <div className="flex flex-wrap gap-3 mt-8">
-          {FAQ_SECTIONS.map((s) => null
 
-
-
-
-
-
-
-
-          )}
-        </div>
       </div>
 
       {/* FAQ Sections */}
       <div className="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-16">
+        <div className="mx-auto mb-8 max-w-5xl rounded-2xl border border-cyan-900/15 bg-[#eef8fb] p-6"><h2 className="text-xl font-semibold">Úprava vody a ochrana trysek</h2><p className="mt-2 text-slate-600">Filtrace a změkčování vody pomáhají omezit zanášení nízkotlakých mlžítek.</p><Link to="/uprava-vody" className="mt-3 inline-block font-semibold text-[#0b4860] underline underline-offset-4">Přejít na průvodce úpravou vody →</Link></div>
         {FAQ_SECTIONS.map((section, si) =>
         <motion.section
           key={section.id}
@@ -239,6 +245,8 @@ export default function Podpora() {
             </div>
           </div>
         </motion.section>
+
+        <PolnaCaseStudy />
 
         <ReviewsSection />
 

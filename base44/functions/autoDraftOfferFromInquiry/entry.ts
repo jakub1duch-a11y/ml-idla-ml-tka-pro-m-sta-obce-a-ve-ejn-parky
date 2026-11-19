@@ -1,5 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
-import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findSmartControlPricing, validatedCatalogFallback } from '../../shared/pricingSheet.ts';
+import { CUSTOM_COST_KEYS, estimateCustomConceptPricing, findPricingForProduct, findVolumePricing, findSmartControlPricing } from '../../shared/pricingSheet.ts';
 
 const AUDIENCES = ['city_public', 'residential', 'wellness_hospitality', 'architecture_design', 'custom'];
 
@@ -182,39 +182,21 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
     } else {
       pricing = await findPricingForProduct(base44, product, inquiry.zprava || '');
       const sheetUnitPrice = pricing.matched ? Number(pricing.offer_price_ex_vat || 0) : 0;
-      let offerProfile: any = null;
-      try {
-        const profiles = await base44.asServiceRole.entities.ProductOfferProfile.filter({ product_id: product.id });
-        offerProfile = profiles?.[0] || null;
-      } catch (_) {}
-      const profileUnitPrice = offerProfile?.offer_ready && ['ready', 'conditional'].includes(String(offerProfile?.pricing_status || ''))
-        ? Number(offerProfile?.unit_price_ex_vat || 0)
-        : 0;
-      const catalogFallbackPrice = validatedCatalogFallback(product);
-      unitPrice = sheetUnitPrice || profileUnitPrice || catalogFallbackPrice;
-      pricingSource = sheetUnitPrice > 0
-        ? 'mlzny_disk'
-        : profileUnitPrice > 0
-          ? (offerProfile?.pricing_mode === 'component_sum' ? 'component_sum' : offerProfile?.pricing_mode === 'per_module' ? 'per_module' : 'catalog')
-          : catalogFallbackPrice > 0 ? 'catalog' : 'manual_required';
-      if (!sheetUnitPrice && profileUnitPrice > 0) {
-        pricing = {
-          matched: true,
-          sheet_key: offerProfile?.pricing_key || '',
-          sheet_spec: offerProfile?.price_note || '',
-          offer_price_ex_vat: profileUnitPrice,
-          source: offerProfile?.pricing_source || 'ProductOfferProfile',
-          note: offerProfile?.pricing_status === 'conditional' ? 'Cena je podmíněná potvrzením rozsahu projektu.' : '',
-        };
-      }
+      // Ceník produktu je pouze živý sešit Kalkulace mlžítka 2026.
+      // Staré ProductOfferProfile a Product.price_from se jako fallback nesmějí použít.
+      unitPrice = sheetUnitPrice;
+      pricingSource = sheetUnitPrice > 0 ? 'mlzny_disk' : 'manual_required';
     }
+
+    // Souhrnné ceny 2/3 ks jsou v aktuálním katalogu; nikdy nepoužívat staré cenové kopie.
+    const volumePricing = !customMode && unitPrice > 0 ? await findVolumePricing(base44, pricing.sheet_key) : {};
 
     // ── FÁZE 3: Načtení cen smart řízení SUPLA z tabulky Kalkulace 2026 ──
     const smartPricing = await findSmartControlPricing(base44);
     const smartControlPrice = Number(smartPricing.complete_supla_ex_vat) || 0;
     const smartControlPriceIncVat = Number(smartPricing.complete_supla_inc_vat) || 0;
     // Odhad technologie vodní mlhy (redukční ventil, filtr, přívod) — orientační sazba
-    const techBoxPrice = 8000; // orientační cena bez DPH pro redukční ventil + filtr + hadice + fitinky
+    const techBoxPrice = 0; // příslušenství bez samostatné ověřené položky v kalkulaci nelze automaticky nacenit
 
     const isBendy = !customMode && /bendy/i.test(`${product.name || ''} ${product.slug || ''}`);
     const sourcePhoto = (earlyAssets || []).find((item) => item.asset_type === 'source_photo' && item.file_url)
@@ -266,7 +248,12 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
         ? `BENDY PRODUCT LOCK: zachovej čistý reálný výrobek podle referencí. Jedna štíhlá broušená nerezová trubka, rovný svislý dřík a jediný plynulý horní oblouk. U každého samostatného BENDY zobraz maximálně 2 malé reálné kovové trysky, pouze pokud jejich poloha odpovídá referenčním fotografiím skutečného produktu. Pokud je poloha trysek na referenci čitelná, kopíruj ji přesně. Nevymýšlej další trysky. Jemná mlha musí vycházet fyzicky pouze z otvorů těchto trysek a ve směru jejich skutečné orientace; žádná mlha nesmí vznikat z povrchu trubky, spojů, patky ani z volného prostoru. Žádné výhonky, větve, hadice, kabely, boční trubky, přídavná ramena, dekorace ani sekundární konstrukce.`
         : `PRODUCT LOCK: zachovej siluetu, proporce, materiál a konstrukční charakter skutečného produktu podle referenčních obrázků. Produkt kreativně nepřepracovávej. Zachovej počet nosných trubek/profilů, typ ohybů, spoje, patku nebo kotvení a skutečné umístění trysek. Nevytvářej hybrid více různých výrobků.`;
 
-    const requestedQuantity = Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
+    // The confirmed quantity from the website configurator is authoritative.
+    // Do not let an LLM reinterpret a structured multi-unit request.
+    const structuredQuantity = inquiryType === 'poptavka' && sourceRecord?.request_type === 'multi_unit_avenue'
+      && Number.isInteger(Number(sourceRecord.quantity)) && Number(sourceRecord.quantity) >= 2 && Number(sourceRecord.quantity) <= 20
+      ? Number(sourceRecord.quantity) : null;
+    const requestedQuantity = structuredQuantity ?? Math.max(1, Math.min(100, Number(analysis?.requested_quantity || 1)));
     const requestedVariants = Array.isArray(analysis?.requested_variants) ? analysis.requested_variants.map(clean).filter(Boolean).slice(0, 4) : [];
     const requestedQuantities = Array.isArray(analysis?.requested_quantities)
       ? analysis.requested_quantities.map((value) => Math.max(1, Math.min(100, Number(value || 1)))).filter((value, index, all) => all.indexOf(value) === index).slice(0, 4)
@@ -280,7 +267,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
       const match = label.match(/(\d+)\s*(?:ks|kus|kusy|kusů)?/i);
       return match ? Math.max(1, Math.min(100, Number(match[1]))) : null;
     }).filter(Boolean) as number[];
-    const allRequestedQuantities = [...requestedQuantities, ...quantityVariantsFromLabels]
+    const allRequestedQuantities = [...(structuredQuantity ? [structuredQuantity] : requestedQuantities), ...(structuredQuantity ? [] : quantityVariantsFromLabels)]
       .filter((value, index, all) => all.indexOf(value) === index);
     const variantLabels = requestedVariants.length
       ? requestedVariants
@@ -296,7 +283,9 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
             items.push({ ...line, quantity: Number(line.quantity || 0) * quantity, total: Number(line.total || 0) * quantity, source: customPricing.source });
           }
         } else {
-          items.push({ label: product.name, quantity, unit: 'ks', unit_price: unitPrice, total: unitPrice * quantity, source: pricingSource === 'mlzny_disk' ? pricing.source : 'Product.price_from' });
+          const total = !customMode && (quantity === 2 || quantity === 3) && Number(volumePricing[quantity]) > 0
+            ? Number(volumePricing[quantity]) : unitPrice * quantity;
+          items.push({ label: product.name, quantity, unit: 'ks', unit_price: total / quantity, total, source: pricing.source });
         }
       }
       // 2. Smart řízení SUPLA (chytrý ventil + vodoměr + senzory)
@@ -304,7 +293,7 @@ Pravidla návrhu mlžítka: minimalistické, čisté, reálně vyrobitelné. Pro
         items.push({ label: 'Smart řízení SUPLA (chytrý ventil PEVEKO + vodoměr LIW-01 + senzor THW-01)', quantity: 1, unit: 'set', unit_price: smartControlPrice, total: smartControlPrice, source: smartPricing.source });
       }
       // 3. Technologie vodní mlhy (redukční ventil + filtr + hadice + fitinky)
-      items.push({ label: 'Technologie vodní mlhy (redukční ventil, filtr 5μm, hadice, fitinky)', quantity: 1, unit: 'set', unit_price: techBoxPrice, total: techBoxPrice, source: 'odhad' });
+      if (techBoxPrice > 0) items.push({ label: 'Technologie vodní mlhy (redukční ventil, filtr 5μm, hadice, fitinky)', quantity: 1, unit: 'set', unit_price: techBoxPrice, total: techBoxPrice, source: 'ověřená cena' });
       return items;
     };
     const calcVariantTotal = (quantity: number) => {

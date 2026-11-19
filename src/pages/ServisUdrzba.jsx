@@ -1,3 +1,4 @@
+import EditorialPhotoHero from '@/components/editorial/EditorialPhotoHero';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Check, ClipboardCheck, Droplets, Gauge, Headphones, ShieldCheck, Snowflake, Wrench } from 'lucide-react';
@@ -41,6 +42,7 @@ export default function ServisUdrzba() {
 
   return (
     <main className="min-h-screen bg-white pt-20 text-slate-900">
+      <EditorialPhotoHero eyebrow="Servis a údržba · HolmTec" title="Péče o mlžení v každé sezóně" description="Kontrola trysek, filtrace, provozních parametrů a zazimování. Servisní plán podle konkrétní instalace." image="/media/optimized/6a220ebf9_Reference-mstoPolna03.webp" imageAlt="Mlžítko v městském prostoru" credit="Fotografie z katalogu MLŽIDLA.cz" cta="Poptat servis" href="/kontakt" />
       <section className="border-b border-slate-200 bg-[#f7f8f6] py-20 lg:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10">
           <div className="max-w-4xl">
@@ -122,6 +124,7 @@ export default function ServisUdrzba() {
           <Link to="/kontakt" className="btn-metallic-mist mt-8 inline-flex min-h-12 items-center justify-center gap-2 px-8 py-3.5 text-sm font-bold">Domluvit servis <ArrowRight size={16}/></Link>
         </div>
       </section>
+      <section className="mx-auto max-w-7xl px-5 pb-16"><div className="rounded-3xl bg-[#eef8fb] p-8"><h2 className="text-2xl font-semibold">Filtrace a změkčování vody</h2><p className="mt-3 max-w-3xl text-slate-600">Při údržbě kontrolujeme také kvalitu vstupní vody a možné zanášení trysek vodním kamenem.</p><Link to="/uprava-vody" className="mt-4 inline-block font-semibold text-[#0b4860] underline underline-offset-4">Více o úpravě vody →</Link></div></section>
     </main>
   );
 }

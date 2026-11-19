@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X, Droplets } from '
 import { base44 } from '@/api/base44Client';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { responsiveProductSrcSet } from '@/lib/responsiveProductMedia';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import './PdVisualGalleryCompact.css';
 
@@ -115,7 +116,7 @@ function GalleryImage({ item, index, productName, onOpen, onFailed }) {
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
       {!shown && !failed && !VIDEO_RE.test(item.url) && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} srcSet={responsiveProductSrcSet(src)} sizes="(max-width: 900px) 100vw, 75vw" width={1200} height={900} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );
@@ -143,14 +144,28 @@ export default function PdVisualGalleryCompact({ product }) {
     setActiveIndex(0);
     setLightbox(null);
     setAutoPlay(!reduced);
-    Promise.all([
-      base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160).catch(() => []),
-      base44.entities.VisualizationAsset.filter({ product_slug: product.slug, approval_status: 'approved', approved_for_presentation: true }, '-updated_date', 100).catch(() => []),
-    ]).then(([media, visuals]) => {
-      if (!active) return;
-      setMediaFiles((media || []).filter((item) => item?.file_url && isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)));
-      setApprovedVisuals((visuals || []).filter((item) => item?.image_url && isImage(item.thumbnail_url || item.image_url) && isProductMediaAllowed(product, item.thumbnail_url || item.image_url, item.title, item.product_name)));
-    }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
+    // Public gallery reads only the safe MediaFile mirror from Marketing → Vizualizace produktů.
+    // VisualizationAsset itself is admin-only and must never be requested by public visitors.
+    base44.entities.MediaFile.filter({ product_slug: product.slug }, '-sort_order', 160)
+      .then((media) => {
+        if (!active) return;
+        const publicMedia = (media || []).filter((item) =>
+          item?.product_slug === product.slug && item?.file_url &&
+          isProductMediaAllowed(product, item.file_url, item.file_name, item.media_group)
+        );
+        setMediaFiles(publicMedia);
+        setApprovedVisuals(publicMedia.filter((item) => item.media_role === 'render' && isImage(item.file_url))
+          .map((item) => ({
+            image_url: item.file_url,
+            thumbnail_url: item.file_url,
+            title: item.file_name || `${product.name} — vizualizace v prostoru`,
+            product_slug: item.product_slug,
+            product_name: product.name,
+            environment: item.visualization_environment || '',
+            configuration: item.visualization_configuration || '',
+            is_primary_for_variant: Boolean(item.visualization_is_primary),
+          })));
+      }).catch(() => { if (active) { setMediaFiles([]); setApprovedVisuals([]); } });
     return () => { active = false; };
   }, [product.slug, reduced]);
 
@@ -210,18 +225,33 @@ export default function PdVisualGalleryCompact({ product }) {
       }))
     ].filter(Boolean);
 
-    const approved = approvedVisuals.map((item) => ({
+    const approved = [...approvedVisuals]
+      .sort((a, b) => Number(Boolean(b.is_primary_for_variant)) - Number(Boolean(a.is_primary_for_variant)))
+      .map((item) => ({
       url: item.thumbnail_url || item.image_url,
       title: item.title || (product.name + ' — pohled v prostoru'),
       caption: [item.environment_label || item.space_name || item.environment, item.configuration].filter(Boolean).join(' · ') || 'Umístění produktu v prostoru',
-      badge: 'V prostoru',
+      badge: 'Vizualizace',
       fit: 'cover',
-      alt: product.name + ' — pohled v prostoru'
+      alt: product.name + ' — schválená vizualizace v prostoru'
     }));
 
     const primaryProductItems = productItems.slice(0, 2);
-    const additionalProductItems = productItems.slice(2);
-    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
+    // Product proposal for Polná/Peklo: show among the first gallery images,
+    // distinctly labelled as visualization, never as installed GATE.
+    const pekloProposalUrl = product.slug === 'mlzna-brana-gate'
+      ? (product.gallery_urls || []).find((url) => url.includes('MLZIDLA_Polna_Peklo_GATE_vizualizace_16x9.webp'))
+      : null;
+    const additionalProductItems = productItems.slice(2).filter((item) => item.url !== pekloProposalUrl);
+    const pekloProposal = pekloProposalUrl && isProductMediaAllowed(product, pekloProposalUrl) ? [{
+      url: pekloProposalUrl,
+      title: 'BRÁNA GATE — Polná, rybník Peklo',
+      caption: 'Vizualizace návrhu umístění. Nejde o fotografii hotové instalace.',
+      badge: 'Vizualizace návrhu',
+      fit: 'cover',
+      alt: 'Vizualizace návrhu mlžné brány GATE pro rybník Peklo v Polné, nikoli hotová realizace'
+    }] : [];
+    return dedupe([...primaryProductItems, ...pekloProposal, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
       .filter((item) => !failedUrls.includes(item.url))
       .slice(0, 12);
   }, [mediaFiles, approvedVisuals, product, failedUrls]);

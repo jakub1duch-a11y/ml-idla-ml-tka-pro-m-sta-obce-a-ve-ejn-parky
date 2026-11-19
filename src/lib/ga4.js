@@ -62,6 +62,13 @@ function installGlobalListeners() {
     const value = consentEvent.detail?.value || 'essential';
     updateGoogleConsent(value);
     updateMetaConsent(value);
+    if (value === 'accepted') {
+      // Initial route tracking may have run before consent was granted.
+      // Record the current page only after analytics becomes available.
+      void initGoogleAnalytics().then((ready) => {
+        if (ready) trackPageView(`${window.location.pathname}${window.location.search}`, document.title);
+      });
+    }
   });
 
   const startedForms = new WeakSet();
@@ -163,6 +170,23 @@ function installGlobalListeners() {
       page_path: window.location.pathname,
     });
   }, { capture: true });
+  const videoMilestones = new WeakMap();
+  document.addEventListener('timeupdate', (event) => {
+    const video = event.target;
+    if (!(video instanceof HTMLVideoElement) || !Number.isFinite(video.duration) || video.duration <= 0) return;
+    const progress = Math.floor((video.currentTime / video.duration) * 100);
+    let milestones = videoMilestones.get(video);
+    if (!milestones) { milestones = new Set(); videoMilestones.set(video, milestones); }
+    for (const milestone of [25, 50, 75]) {
+      if (progress < milestone || milestones.has(milestone)) continue;
+      milestones.add(milestone);
+      void emit('video_progress', {
+        video_src: (video.currentSrc || video.getAttribute('src') || '').split('/').pop()?.split('?')[0] || 'video',
+        video_percent: milestone,
+        page_path: window.location.pathname,
+      });
+    }
+  }, { capture: true });
   document.addEventListener('ended', (event) => {
     const video = event.target;
     if (!(video instanceof HTMLVideoElement)) return;
@@ -216,6 +240,11 @@ function loadScript(id) {
 
 export function initGoogleAnalytics() {
   if (typeof window === 'undefined') return Promise.resolve(false);
+  // Do not request analytics configuration or load third-party scripts before consent.
+  if (localStorage.getItem(CONSENT_STORAGE_KEY) !== 'accepted') {
+    installGlobalListeners();
+    return Promise.resolve(false);
+  }
   if (initPromise) return initPromise;
 
   initPromise = (async () => {

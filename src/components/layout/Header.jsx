@@ -124,7 +124,7 @@ export default function Header() {
         <div className="mx-auto flex h-[var(--site-header-height)] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
 
           {/* Logo */}
-          <Link to={homePath} className="flex items-center opacity-100 gap-2.5 shrink-2">
+          <Link to={homePath} className="flex min-w-0 shrink-0 items-center gap-2.5 opacity-100">
             <Logo size="sm" />
           </Link>
 

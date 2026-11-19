@@ -37,7 +37,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
       <div className="text-center py-6">
         <CheckCircle size={26} className="text-slate-900 mx-auto mb-3" />
         <p className="text-slate-900 font-medium">Děkujeme za poptávku!</p>
-        <p className="text-slate-500 text-sm mt-1">Ozveme se vám do 24 hodin.</p>
+        <p className="text-slate-500 text-sm mt-1">Poptávku jsme přijali. Ozveme se vám s dalším postupem.</p>
       </div>);
 
   }

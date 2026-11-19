@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { jsPDF } from 'npm:jspdf@4.2.1';
+import { findPricingForProduct } from '../../shared/pricingSheet.ts';
 import { clean, pt, fetchImageAsBase64, buildReference, formatDate, PDF_COLORS, INSTALLATION_LABELS, WATER_LABELS, SURFACE_LABELS, SUPLA_VERIFIED_FEATURES, SUPLA_CONDITIONAL_FEATURES, SUPLA_NOT_SUPPORTED, SUPLA_TECH_PREREQUISITES, SUPLA_NETWORK_NOTE, SITUATIONAL_PLAN_DISCLAIMER, SITUATIONAL_PLAN_ITEMS, buildChecklist, buildProductReasons } from '../../shared/pdfHelpers.ts';
 
 const { INK, CYAN, CYAN_DARK, TEXT_MUTED, TEXT_BODY, PANEL_BG } = PDF_COLORS;
@@ -439,18 +440,20 @@ export default async function(req: Request): Promise<Response> {
         y += 5.5;
       });
 
-      // Orientační cena
-      if (product.price_from && Number(product.price_from) > 0) {
-        y += 4;
-        doc.setFillColor(PANEL_BG);
-        doc.rect(M, y, W - 2 * M, 12, 'F');
-        doc.setFontSize(9);
-        doc.setTextColor(CYAN_DARK);
-        doc.setFont('helvetica', 'bold');
-        doc.text(pt('Orientacni cena od:'), M + 5, y + 8);
-        doc.setTextColor(INK);
-        doc.text(`${Number(product.price_from).toLocaleString('cs-CZ')} Kc bez DPH`, W - M - 5, y + 8, { align: 'right' });
-      }
+      // Orientační cena jen z ověřeného živého kusovníku 2026, nikoliv z Product.price_from.
+      const verifiedProductPrice = await findPricingForProduct(base44, product);
+      y += 4;
+      doc.setFillColor(PANEL_BG);
+      doc.rect(M, y, W - 2 * M, 12, 'F');
+      doc.setFontSize(9);
+      doc.setTextColor(CYAN_DARK);
+      doc.setFont('helvetica', 'bold');
+      doc.text(pt('Orientační cena:'), M + 5, y + 8);
+      doc.setTextColor(INK);
+      doc.text(verifiedProductPrice.matched
+        ? `${verifiedProductPrice.offer_price_ex_vat.toLocaleString('cs-CZ')} Kc bez DPH`
+        : 'K individualnimu naceneni', W - M - 5, y + 8, { align: 'right' });
+      // Neoznačovat staré katalogové ceny za aktuální.
     }
 
     // ════════ STRANA: VIZUÁLNÍ NÁVRH ════════

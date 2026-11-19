@@ -94,6 +94,9 @@ export function isProductMediaAllowed(product, ...mediaIdentity) {
   const allowlistEntry = Object.entries(SHARED_MEDIA_ALLOWLIST).find(([name]) => normalizedAssetText(name).replace(/ /g, '-') === sharedKey);
   if (allowlistEntry) return allowlistEntry[1].includes(slug);
   const text = normalizedAssetText(...mediaIdentity);
+  // LINEA AVENUE uses only LINEA posts; reject media explicitly labelled as BENDY
+  // or another LINEA variant. Unlabelled media still require editorial review.
+  if (slug === 'linea-avenue' && /\b(bendy|linea c|linea ce|linea gate|linea q)\b/.test(text)) return false;
   const targetTags = PRODUCT_MEDIA_TAGS[slug] || MEDIA_IDENTITY_TOKENS.filter((token) =>
     new RegExp('\\b' + token + '\\b').test(normalizedAssetText(product?.name, slug))
   );

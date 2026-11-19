@@ -42,6 +42,29 @@ export async function publishInstagramVideo(accessToken, videoUrl, caption) {
   return readJson(publishResponse);
 }
 
+export async function publishInstagramStory(accessToken, mediaUrl, isVideo = false) {
+  // Stories require an Instagram Business account with content publishing permissions.
+  // Artwork must be exported as vertical 9:16 media (e.g. Canva 1080x1920 JPEG/MP4).
+  const account = await getInstagramIdentity(accessToken);
+  const containerResponse = await fetch(graphUrl + '/' + account.id + '/media', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      media_type: 'STORIES',
+      ...(isVideo ? { video_url: mediaUrl } : { image_url: mediaUrl }),
+      access_token: accessToken,
+    }),
+  });
+  const container = await readJson(containerResponse);
+  await waitForContainer(accessToken, container.id);
+  const publishResponse = await fetch(graphUrl + '/' + account.id + '/media_publish', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ creation_id: container.id, access_token: accessToken }),
+  });
+  return readJson(publishResponse);
+}
+
 export async function publishInstagramImage(accessToken, imageUrl, caption) {
   const account = await getInstagramIdentity(accessToken);
   const containerResponse = await fetch(`${graphUrl}/${account.id}/media`, {

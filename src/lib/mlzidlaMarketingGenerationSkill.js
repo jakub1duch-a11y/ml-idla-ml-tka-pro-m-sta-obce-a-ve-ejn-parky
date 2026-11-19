@@ -99,6 +99,9 @@ export function buildMarketingVisualizationPrompt({
   })
   const validation = validateProductForVisualization(product)
   const referenceReady = validation.ok && getMarketingReferences(product).length > 0
+  if (!referenceReady) {
+    throw new Error(`Produktová vizualizace zablokována: chybí jednoznačně ověřený MASTER v administraci MLŽIDLA.cz / MLŽNÉM DISKU. ${validation.errors.join(' ')} Doplňte schválený zdroj před generováním.`)
+  }
 
   return [
     'MLŽIDLA MARKETING GENERATION SKILL',
@@ -110,7 +113,7 @@ export function buildMarketingVisualizationPrompt({
     extraScene ? `SCENE NOTES: ${extraScene}` : '',
     guard.prompt,
     referenceReady
-      ? `REFERENCE STATUS: VERIFIED. Use the exact Google Drive MASTER source (${validation.driveSource?.folderId || 'unknown'}) and approved product reference as the primary visual truth.`
+      ? `REFERENCE STATUS: VERIFIED. Use ${validation.driveSource?.folderId ? `the exact Google Drive MASTER source (${validation.driveSource.folderId}) and` : 'the exact Base44 Admin-approved MASTER asset and'} the approved product reference as the primary visual truth. Never substitute a similar product.`
       : `REFERENCE STATUS: STOP. ${validation.errors.join(' ')} Do not generate, substitute or approximate the product.`,
     'MARKETING OUTPUT: image/video only, no text, logo, watermark, badge, invented claim, price, location or performance metric inside the visual.',
     'HONESTY LABEL: If this is a proposal or generated space, describe it outside the image as “Ilustrační vizualizace – přesné řešení se ověřuje podle skutečného prostoru”.',

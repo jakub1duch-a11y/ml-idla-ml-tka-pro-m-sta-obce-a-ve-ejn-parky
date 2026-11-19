@@ -6,11 +6,13 @@ const ITEMS = [
   ['prehled', 'Přehled'],
   ['popis', 'Popis produktu'],
   ['parametry', 'Technické parametry'],
+  ['varianty', 'Varianty'],
   ['galerie', 'Galerie'],
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
+  ['chytre-rizeni', 'Doplňky · SUPLA'],
+  ['faq', 'Otázky'],
   ['reference', 'Reference'],
-  ['varianty', 'Varianty'],
 ];
 
 export default function PdSectionNav({ product }) {

@@ -51,7 +51,7 @@ export default function ParkyHriste() {
               Mlžítka pro parky,<br /><span style={{ fontStyle: 'italic' }}>zeleň a místa setkávání.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Nerezová mlžítka a mlžné prvky pro parkové cesty, pobytové zóny a městskou zeleň. Tvar, umístění, bezpečnost a provoz navrhujeme podle konkrétního prostoru. Mlžítka nejsou herní prvky.
+              Nerezová mlžítka a mlžné prvky pro parkové cesty, pobytové zóny a městskou zeleň. Nabízíme prémiové nerezové provedení, antivandal konstrukční řešení a odolné kotvení podle místa. Součástí návrhu může být filtrace a hygienická úprava vody. Mlžítka nejsou herní prvky.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -86,7 +86,7 @@ export default function ParkyHriste() {
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="mb-8 p-6 rounded-2xl bg-slate-50 border border-slate-200">
           <p className="text-slate-900 font-medium text-sm mb-2">Bezpečnost a provoz</p>
-          <p className="text-slate-600 text-sm leading-relaxed">Mlžítka nejsou herní prvky a nesplňují ČSN EN 1176. U každého projektu posuzujeme riziko mokrých povrchů, hygienu vody, provozní dohled a vhodné umístění. Materiál a parametry ověřujeme podle konkrétního produktu.</p>
+          <p className="text-slate-600 text-sm leading-relaxed">Pro veřejně přístupná místa nabízíme antivandal konstrukční provedení a kotvení navržené podle podkladu a zatížení. Používáme ověřené nerezové materiály podle specifikace výrobku. K dispozici je filtrace a úprava vody podle rozboru a provozního režimu. Posuzujeme také mokré povrchy a údržbu. Mlžítka nejsou herní prvky a nesplňují ČSN EN 1176.</p>
         </div>
 
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Doporučené produkty</p>

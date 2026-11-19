@@ -22,9 +22,9 @@ const USE_CASES = [
 ];
 
 const SAFETY = [
-  'Materiál a povrch podle konkrétního produktu a technického listu',
-  'Posouzení rizika mokrých povrchů a uklouznutí v místě instalace',
-  'Kontrola kvality vody a hygienického provozního režimu',
+  'Prémiové nerezové materiály s ověřenou specifikací podle konkrétního výrobku',
+  'Odolné antivandal konstrukční řešení a kotvení navržené podle podkladu a místa',
+  'Možnost filtrace, úpravy vody a nastavení hygienického provozního režimu',
   'Mlžítko není herní prvek a nesplňuje ČSN EN 1176',
 ];
 
@@ -58,7 +58,7 @@ export default function Deti() {
               Mlžítka pro školky a školy<br /><span style={{ fontStyle: 'italic' }}>do venkovních prostor.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Navrhujeme nerezová mlžítka a mlžné prvky pro mateřské školy, školní zahrady a pobytové zóny. Řešíme umístění, napojení vody, řízení provozu i údržbu. Mlžítka nejsou herními prvky; bezpečnost a hygienu posuzujeme podle konkrétní instalace.
+              Navrhujeme nerezová mlžítka a mlžné prvky pro mateřské školy, školní zahrady a pobytové zóny. Nabízíme odolné antivandal konstrukční řešení, kotvení podle místa a ověřené nerezové materiály. Vodu umíme filtrovat a upravovat podle její kvality; provozní hygienu stanovíme pro konkrétní instalaci. Mlžítka nejsou herními prvky.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -168,7 +168,7 @@ export default function Deti() {
         <div className="divide-y divide-slate-200 border-y border-slate-200">
           {[
             ['Co je potřeba připravit před instalací?', 'Prověříme přívod vody, vhodné umístění, kotvení, odvodnění okolí a přístup pro servis. Konkrétní řešení závisí na zvoleném modelu a místě.'],
-            ['Jak se řeší hygiena a bezpečnost?', 'Je potřeba stanovit provozní režim, kontrolu kvality vody a dohled nad prostorem. Mlžítko není herní prvek a nesplňuje ČSN EN 1176.'],
+            ['Jak se řeší hygiena a bezpečnost?', 'Nabízíme filtraci a úpravu vody podle rozboru a provozních podmínek, včetně návrhu údržby a hygienického režimu. Konstrukci a kotvení lze řešit v odolném antivandal provedení. Mlžítko není herní prvek a nesplňuje ČSN EN 1176.'],
             ['Jak probíhá údržba a zazimování?', 'Rozsah údržby závisí na filtraci, kvalitě vody a provozu. Před mrazy je nutné systém odstavit a zazimovat podle pokynů pro konkrétní instalaci.'],
             ['Lze mlžení automaticky ovládat?', 'Podle konfigurace lze doplnit časové řízení nebo chytré ovládání SUPLA. Vhodné nastavení stanovíme s provozovatelem školy.']
           ].map(([question, answer]) => <details key={question} className="py-5 group"><summary className="cursor-pointer font-semibold text-slate-900">{question}</summary><p className="mt-3 text-slate-600 leading-relaxed max-w-3xl">{answer}</p></details>)}

@@ -47,5 +47,8 @@ jobs:
       - name: Check framework compatibility
         run: npm run framework:check
 
+      - name: Verify cross-CRM read-only mapping safety
+        run: node --test tests/crmPipedriveHubSpotReview.test.mjs
+
       - name: Build optimized website
         run: npm run build

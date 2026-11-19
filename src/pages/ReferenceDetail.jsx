@@ -108,20 +108,6 @@ export default function ReferenceDetail({ fixedId }) {
  {(isZoo || isJicin || isMrak1414) && <ReferenceMediaStory project={project} images={allImages} videos={videos} isZoo={isZoo} onOpenPhoto={(url) => { const index = allImages.indexOf(url); if (index >= 0) setLightbox(index); }} />}
  {isPolna && <PolnaMrkevStory project={project} />}
  <VideoSlider videos={videos.filter((v) => !/\.(mp4|webm|mov|ogg)(\?|$)/i.test(v))} />
- {false && referenceId === '6a450e035aef0b45b2a8728f' && (
-   <section aria-label="Zdroj reportáže o mlžítku MRKEV" className="border-b border-[#D1E6EF] bg-[#F0F8FC]">
-     <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-sm text-[#34596C] lg:flex-row lg:items-center lg:justify-between lg:px-10">
-       <div>
-         <p className="font-semibold text-[#062B42]">MRKEV přináší osvěžení do centra Polné</p>
-         <p className="mt-1 max-w-3xl leading-6">Videoreportáž o zakázkové mlžné soše MRKEV ve veřejném prostoru města Polná. Zdroj reportáže: i-vysočina.cz; archivní video ze sdíleného projektového disku HolmTec.</p>
-       </div>
-       <a href="https://i-vysocina.cz/" target="_blank" rel="noopener noreferrer"
-         className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-full border border-[#9CCBDB] bg-white px-5 py-3 font-semibold text-[#0C4D6C] hover:border-[#007DA9]">
-         Zdroj: i-vysočina.cz <ArrowRight size={15} aria-hidden="true" />
-       </a>
-     </div>
-   </section>
- )}
  {referenceId === POLNA_ID && (project.gallery_urls || []).some(isPekloGateProposal) && (
    <section id="polna-peklo-gate" aria-labelledby="polna-peklo-gate-title" className="border-y border-[#CEE4EC] bg-[#F2F9FC]">
      <div className="mx-auto grid max-w-7xl items-center gap-7 px-5 py-12 sm:px-8 lg:grid-cols-[minmax(0,.78fr)_minmax(0,1.22fr)] lg:gap-10 lg:px-10 lg:py-20">

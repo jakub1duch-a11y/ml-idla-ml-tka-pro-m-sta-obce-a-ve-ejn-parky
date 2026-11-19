@@ -443,28 +443,36 @@ export function getBlogPostSEO(post) {
 
 export function getReferenceSEO(project) {
   const isBendyJicin = project.id === '6a71d1ff57598752eed27bfb';
+  const isPolnaMrkev = project.id === '6a450e035aef0b45b2a8728f';
   const isBendyLineaGarden = project.id === '6a9fdf2f153be3ee13d70207';
   const title = isBendyJicin
     ? 'Mlžítko BENDY v Jičíně – realizace na Valdštejnově náměstí'
     : isBendyLineaGarden
       ? 'BENDY + LINEA v rodinné zahradě – nízkotlaké mlžení'
-      : project.name;
+      : isPolnaMrkev
+        ? 'Mlžítko MRKEV na Husově náměstí v Polné – reference'
+        : project.name;
   const description = isBendyJicin
     ? 'Prohlédněte si mlžítko BENDY na Valdštejnově náměstí v Jičíně. Fotografie náměstí, videa mlžení a příběh realizace nerezového mlžítka pro město.'
     : isBendyLineaGarden
       ? 'Reálná realizace nízkotlakého mlžícího prostoru BENDY + LINEA v rodinné zahradě. Nerezová mlžítka, lokální ochlazení a monitoring provozu.'
-      : project.description;
+      : isPolnaMrkev
+        ? 'Zakázkové nerezové mlžítko MRKEV na Husově náměstí v Polné. Fotografie realizace a videoreportáž i-vysočina.cz ukazují městskou mlžnou sochu v provozu.'
+        : project.description;
   const canonicalPath = isBendyJicin
     ? '/reference/bendy-jicinske-namesti'
     : isBendyLineaGarden
       ? '/reference/bendy-linea-rodinna-zahrada'
-      : `/reference/${project.id}`;
+      : isPolnaMrkev
+        ? '/reference/mesto-polna-mlzitko-mrkev'
+        : `/reference/${project.id}`;
   return {
     title,
     description,
     keywords: isBendyJicin
       ? 'BENDY Jičín, mlžítko Jičín, Valdštejnovo náměstí, městské mlžítko, ochlazení náměstí, MLŽIDLA.cz'
-      : isBendyLineaGarden ? 'BENDY, LINEA, zahradní mlžítko, nízkotlaké mlžení, mlžení zahrady, ochlazení zahrady, MLŽIDLA.cz' : undefined,
+      : isBendyLineaGarden ? 'BENDY, LINEA, zahradní mlžítko, nízkotlaké mlžení, mlžení zahrady, ochlazení zahrady, MLŽIDLA.cz'
+      : isPolnaMrkev ? 'mlžítko MRKEV Polná, Husovo náměstí, mlžítka na míru, městská mlžítka, mlžné sochy, MLŽIDLA.cz' : undefined,
     image: project.image_url,
     canonicalPath,
     type: 'article',
@@ -476,7 +484,7 @@ export function getReferenceSEO(project) {
       description,
       image: project.image_url,
       mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
-      ...(project.location ? { contentLocation: { '@type': 'Place', name: project.location } } : {}),
+      ...(isPolnaMrkev ? { contentLocation: { '@type': 'Place', name: 'Husovo náměstí, Polná', address: { '@type': 'PostalAddress', streetAddress: 'Husovo náměstí', postalCode: '588 13', addressLocality: 'Polná', addressCountry: 'CZ' } } } : project.location ? { contentLocation: { '@type': 'Place', name: project.location } } : {}),
       ...(project.product_used ? { about: { '@type': 'Product', name: project.product_used } } : {}),
       ...(project.client ? { mentions: { '@type': 'Organization', name: project.client } } : {}),
       author: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },

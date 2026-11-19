@@ -485,6 +485,7 @@ export function getReferenceSEO(project) {
       image: project.image_url,
       mainEntityOfPage: `${BASE_URL}${canonicalPath}`,
       ...(isPolnaMrkev ? { contentLocation: { '@type': 'Place', name: 'Husovo náměstí, Polná', address: { '@type': 'PostalAddress', streetAddress: 'Husovo náměstí', postalCode: '588 13', addressLocality: 'Polná', addressCountry: 'CZ' } } } : project.location ? { contentLocation: { '@type': 'Place', name: project.location } } : {}),
+      ...(isPolnaMrkev ? { video: { '@type': 'VideoObject', name: 'MRKEV přináší osvěžení do centra Polné – i-vysočina.cz', description: 'Reportáž o nerezovém mlžítku MRKEV na Husově náměstí ve městě Polná.', thumbnailUrl: project.image_url, contentUrl: 'https://media.base44.com/videos/public/6a3ee88c10959cd3588c4d68/6ca807ca4_MLZIDLA_Polna_MRKEV_reportaz_720p_web.mp4', duration: 'PT1M40S', inLanguage: 'cs', isPartOf: { '@id': `${BASE_URL}${canonicalPath}#realizace` } } } : {}),
       ...(project.product_used ? { about: { '@type': 'Product', name: project.product_used } } : {}),
       ...(project.client ? { mentions: { '@type': 'Organization', name: project.client } } : {}),
       author: { '@type': 'Organization', name: 'HolmTec s.r.o.', url: 'https://holmtec.cz' },

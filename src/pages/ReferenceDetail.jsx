@@ -9,6 +9,7 @@ import SiteButton from '@/components/ui/SiteButton';
 import GalleryLightbox from '@/components/GalleryLightbox';
 import CinematicReferenceHero from '@/components/CinematicReferenceHero';
 import ReferenceMediaStory from '@/components/premium/ReferenceMediaStory';
+import PolnaMrkevStory, { POLNA_REPORT_VIDEO } from '@/components/premium/PolnaMrkevStory';
 
 const CATEGORY_LABELS = { mestsky: 'Městský prostor', event: 'Event', soukromy: 'Soukromý', prumyslovy: 'Průmyslový' };
 const ZOO_ID = '6a42491409abbf575447aaeb';
@@ -60,17 +61,24 @@ export default function ReferenceDetail({ fixedId }) {
   if (notFound || !project) return <div className="min-h-screen flex items-center justify-center"><Link to="/reference">← Zpět na reference</Link></div>;
   const isZoo = referenceId === ZOO_ID;
   const isJicin = referenceId === JICIN_ID;
+  const isPolna = referenceId === POLNA_ID;
   const isMrak1414 = referenceId === '6a72947ef1579cba611a2f6b';
-  const allImages = [...new Set([project.image_url, ...(project.gallery_urls || [])].filter(Boolean).filter((u) => !isVideoFile(u)))];
+  // Jičín: galerijní soubor IMG_4974.jpg je ze zahrady, nikoli z náměstí.
+  // V detailu ponecháváme jen ověřenou městskou fotografii a videa Jičín.
+  const allImages = isJicin
+    ? [project.image_url].filter(Boolean)
+    : [...new Set([project.image_url, ...(project.gallery_urls || [])].filter(Boolean).filter((u) => !isVideoFile(u)))];
   const contentImage = allImages[1] || allImages[0];
   const heroText = getShortHeroText(project, isZoo);
   const videos = isJicin
     ? JICIN_VIDEOS
-    : [project.video_url, ...(project.gallery_urls || []).filter(isVideoFile)].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+    : isPolna
+      ? [POLNA_REPORT_VIDEO]
+      : [project.video_url, ...(project.gallery_urls || []).filter(isVideoFile)].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
   const zooCopy = 'Pro Zoologickou zahradu hl. m. Prahy jsme realizovali šest nerezových mlžících soch jako funkční prvek pro ochlazení návštěvníků během horkých letních dnů. Biomorfní tvary inspirované větvením korálů vznikly jako součást širšího architektonického a krajinářského řešení. Systém byl navržen s důrazem na intenzivní veřejný provoz, odolnost, automatizaci a přirozené začlenění do prostředí areálu.';
   const stats = [
     { label: 'Rok realizace', value: project.year },
-    { label: 'Lokalita', value: isZoo ? 'ZOO Praha · Troja' : project.location },
+    { label: 'Lokalita', value: isZoo ? 'ZOO Praha · Troja' : isPolna ? 'Husovo náměstí · Polná' : project.location },
     { label: 'Kategorie', value: CATEGORY_LABELS[project.category] || project.category },
     { label: 'Klient', value: project.client },
   ].filter((item) => item.value);
@@ -81,15 +89,15 @@ export default function ReferenceDetail({ fixedId }) {
    videos={videos}
    description={heroText}
    isTechnicalVisual={isTechnicalVisual}
-   title={isMrak1414 ? 'Rodinná soukromá zahrada – Mlžítko MRAK 1414' : undefined}
-   badge={isMrak1414 ? 'Mlžítko MRAK 1414' : undefined}
+   title={isJicin ? 'Mlžítko BENDY na Valdštejnově náměstí v Jičíně' : isMrak1414 ? 'Rodinná soukromá zahrada – Mlžítko MRAK 1414' : undefined}
+   badge={isJicin ? 'Městské mlžítko BENDY' : isMrak1414 ? 'Mlžítko MRAK 1414' : undefined}
  />
  <section className="border-b border-slate-200 bg-white"><div className="max-w-7xl mx-auto px-6 lg:px-10 grid grid-cols-2 lg:grid-cols-4">{stats.map(({ label, value }) => <div key={label} className="py-7 lg:py-9 border-r border-slate-200 last:border-r-0 px-4 first:pl-0"><p className="font-mono text-[10px] tracking-widest uppercase text-slate-400">{label}</p><p className="mt-2 font-heading text-lg text-slate-950">{value}</p></div>)}</div></section>
- <section id="reference-story" className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><div className="grid lg:grid-cols-[1fr_.9fr] gap-12 lg:gap-20 items-start"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-4">O projektu</p><h2 className="font-heading text-3xl lg:text-5xl text-slate-950 mb-7">{isZoo ? 'Ochlazení, které musí fungovat v reálném veřejném provozu.' : 'Řešení navržené pro konkrétní místo.'}</h2><p className="text-lg leading-relaxed text-slate-600">{isZoo ? zooCopy : project.description}</p><div className="mt-9 grid sm:grid-cols-3 gap-3">{[
+ <section id="reference-story" className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><div className="grid lg:grid-cols-[1fr_.9fr] gap-12 lg:gap-20 items-start"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-4">O projektu</p><h2 className="font-heading text-3xl lg:text-5xl text-slate-950 mb-7">{isZoo ? 'Ochlazení, které musí fungovat v reálném veřejném provozu.' : isJicin ? 'Nerezové mlžítko BENDY pro historické náměstí v Jičíně.' : 'Řešení navržené pro konkrétní místo.'}</h2><p className="text-lg leading-relaxed text-slate-600">{isZoo ? zooCopy : isJicin ? 'Na Valdštejnově náměstí v Jičíně je instalováno nerezové mlžítko BENDY. Zakřivený tvar doplňuje historické prostředí a jemná vodní mlha přináší osvěžení v horkých dnech. Na stránce představujeme městskou realizaci, fotografii z náměstí a video mlžítka v provozu. Zahradní instalace BENDY jsou vedené jako samostatné reference.' : project.description}</p><div className="mt-9 grid sm:grid-cols-3 gap-3">{[
   { Icon: ShieldCheck, title: 'Odolnost', description: project.category === 'soukromy' ? 'Nerezové provedení pro dlouhou životnost' : 'Nerezové provedení pro každodenní provoz' },
   { Icon: Droplets, title: 'Komfort', description: 'Jemná vodní mlha pro příjemnější mikroklima' },
   { Icon: Wrench, title: 'Provoz', description: 'Řešení navržené s ohledem na údržbu a servis' },
-].map(({ Icon, title, description }) => <div key={title} className="border border-slate-200 p-5"><Icon size={20} className="text-teal-700" /><h3 className="mt-4 font-semibold">{title}</h3><p className="mt-2 text-sm text-slate-500 leading-relaxed">{description}</p></div>)}</div></div>{contentImage && <button onClick={() => setLightbox(Math.max(0, allImages.indexOf(contentImage)))} className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-slate-100"><img src={contentImage} alt={isZoo ? 'Mlžítka v ZOO Praha' : `${project.name} – fotografie realizace`} className="w-full h-full object-cover transition duration-700 group-hover:scale-105" /><span className="absolute bottom-4 right-4 bg-white/90 p-3 rounded-full"><ZoomIn size={18} /></span></button>}</div></section>
+].map(({ Icon, title, description }) => <div key={title} className="border border-slate-200 p-5"><Icon size={20} className="text-teal-700" /><h3 className="mt-4 font-semibold">{title}</h3><p className="mt-2 text-sm text-slate-500 leading-relaxed">{description}</p></div>)}</div></div>{contentImage && <button onClick={() => setLightbox(Math.max(0, allImages.indexOf(contentImage)))} className="group relative overflow-hidden rounded-2xl aspect-[4/5] bg-slate-100"><img src={contentImage} alt={isZoo ? 'Mlžítka v ZOO Praha' : isJicin ? 'Nerezové mlžítko BENDY na Valdštejnově náměstí v Jičíně' : `${project.name} – fotografie realizace`} className="w-full h-full object-cover transition duration-700 group-hover:scale-105" /><span className="absolute bottom-4 right-4 bg-white/90 p-3 rounded-full"><ZoomIn size={18} /></span></button>}</div></section>
  <section className="bg-slate-50 border-y border-slate-200"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20 grid lg:grid-cols-2 gap-12"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">{isZoo ? 'Veřejný prostor' : isJicin ? 'Jičín · skutečná realizace' : 'Návrh a realizace'}</p><h2 className="font-heading text-3xl lg:text-4xl">{isZoo ? 'Reference, která prověřuje řešení každý den.' : isJicin ? 'BENDY jako nenápadný ochlazovací prvek historického náměstí.' : 'Od návrhu k funkčnímu ochlazení prostoru.'}</h2></div><p className="text-lg leading-relaxed text-slate-600">{isZoo ? 'Zoologická zahrada je prostředí s vysokou návštěvností, dětmi, rodinami a dlouhými pěšími trasami. Právě zde je důležitá kombinace spolehlivosti, bezpečného provozu, snadné údržby a skutečného komfortu pro návštěvníka.' : isJicin ? 'Prohlédněte si náhled projektu, fotografie a videa mlžítka BENDY na Valdštejnově náměstí v Jičíně.' : `Každou realizaci řešíme podle charakteru místa, očekávaného provozu a způsobu instalace. U projektu ${project.name} jsme spojili čisté nerezové provedení s funkčním rozmístěním mlžicích prvků tak, aby výsledné řešení přirozeně zapadlo do prostoru a bylo dlouhodobě snadno provozovatelné.`}</p></div></section>
  {isZoo && <section className="max-w-7xl mx-auto px-6 lg:px-10 py-14 lg:py-20" data-analytics-section="zoo-project-team"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Projektový tým</p><h2 className="font-heading text-3xl lg:text-4xl text-slate-950 mb-8">Spolupráce designu, projekce, krajiny a výroby.</h2><div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">{[
    ['Koncept a design', 'SKULL studio · Matěj Hájek, Pavel Krajčík'],
@@ -98,21 +106,8 @@ export default function ReferenceDetail({ fixedId }) {
    ['Výroba mlžného systému', 'HolmTec s.r.o.'],
  ].map(([label, value]) => <div key={label} className="border border-slate-200 rounded-xl p-5 bg-white"><p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">{label}</p><p className="mt-3 text-sm font-semibold text-slate-900 leading-relaxed">{value}</p></div>)}</div></section>}
  {(isZoo || isJicin || isMrak1414) && <ReferenceMediaStory project={project} images={allImages} videos={videos} isZoo={isZoo} onOpenPhoto={(url) => { const index = allImages.indexOf(url); if (index >= 0) setLightbox(index); }} />}
+ {isPolna && <PolnaMrkevStory project={project} />}
  <VideoSlider videos={videos.filter((v) => !/\.(mp4|webm|mov|ogg)(\?|$)/i.test(v))} />
- {referenceId === '6a450e035aef0b45b2a8728f' && (
-   <section aria-label="Zdroj reportáže o mlžítku MRKEV" className="border-b border-[#D1E6EF] bg-[#F0F8FC]">
-     <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-sm text-[#34596C] lg:flex-row lg:items-center lg:justify-between lg:px-10">
-       <div>
-         <p className="font-semibold text-[#062B42]">MRKEV přináší osvěžení do centra Polné</p>
-         <p className="mt-1 max-w-3xl leading-6">Videoreportáž o zakázkové mlžné soše MRKEV ve veřejném prostoru města Polná. Zdroj reportáže: i-vysočina.cz; archivní video ze sdíleného projektového disku HolmTec.</p>
-       </div>
-       <a href="https://i-vysocina.cz/" target="_blank" rel="noopener noreferrer"
-         className="inline-flex min-h-11 shrink-0 items-center gap-2 self-start rounded-full border border-[#9CCBDB] bg-white px-5 py-3 font-semibold text-[#0C4D6C] hover:border-[#007DA9]">
-         Zdroj: i-vysočina.cz <ArrowRight size={15} aria-hidden="true" />
-       </a>
-     </div>
-   </section>
- )}
  {referenceId === POLNA_ID && (project.gallery_urls || []).some(isPekloGateProposal) && (
    <section id="polna-peklo-gate" aria-labelledby="polna-peklo-gate-title" className="border-y border-[#CEE4EC] bg-[#F2F9FC]">
      <div className="mx-auto grid max-w-7xl items-center gap-7 px-5 py-12 sm:px-8 lg:grid-cols-[minmax(0,.78fr)_minmax(0,1.22fr)] lg:gap-10 lg:px-10 lg:py-20">
@@ -137,7 +132,7 @@ export default function ReferenceDetail({ fixedId }) {
      </div>
    </section>
  )}
- {allImages.length > 1 && <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Fotogalerie</p><h2 className="font-heading text-3xl lg:text-5xl mb-10">{isZoo ? 'Mlžítka v areálu ZOO Praha' : referenceId === POLNA_ID ? 'Fotografie realizace a návrhy dalších prvků' : 'Fotografie z realizace'}</h2><div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[170px] md:auto-rows-[220px]">{allImages.slice(0, 16).map((img, i) => <motion.button key={img} onClick={() => setLightbox(i)} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className={`group relative overflow-hidden rounded-xl bg-slate-100 ${i === 0 ? 'col-span-2 row-span-2' : i === 5 ? 'col-span-2' : ''}`}><img src={img} alt={isPekloGateProposal(img) ? 'Vizualizace návrhu GATE pro rybník Peklo v Polné — nejde o hotovou instalaci' : isZoo ? `ZOO Praha – realizace mlžítek ${i + 1}` : `${project.name}${project.location ? ` – ${project.location}` : ''} – fotografie realizace ${i + 1}`} loading="lazy" className="w-full h-full object-cover transition duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />{isPekloGateProposal(img) && <span className="absolute bottom-2 left-2 right-2 rounded-lg bg-[#062C44]/95 px-3 py-2 text-left text-xs font-semibold text-white shadow-lg">Návrh GATE · rybník Peklo (vizualizace)</span>}</motion.button>)}</div></section>}
+ {allImages.length > 1 && <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24"><p className="font-mono text-[11px] tracking-[.18em] uppercase text-teal-700 mb-3">Fotogalerie</p><h2 className="font-heading text-3xl lg:text-5xl mb-10">{isZoo ? 'Mlžítka v areálu ZOO Praha' : isJicin ? 'BENDY v Jičíně – fotografie a video mlžítka' : referenceId === POLNA_ID ? 'Fotografie realizace a návrhy dalších prvků' : 'Fotografie z realizace'}</h2><div className="grid grid-cols-2 md:grid-cols-4 gap-3 auto-rows-[170px] md:auto-rows-[220px]">{allImages.slice(0, 16).map((img, i) => <motion.button key={img} onClick={() => setLightbox(i)} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className={`group relative overflow-hidden rounded-xl bg-slate-100 ${i === 0 ? 'col-span-2 row-span-2' : i === 5 ? 'col-span-2' : ''}`}><img src={img} alt={isPekloGateProposal(img) ? 'Vizualizace návrhu GATE pro rybník Peklo v Polné — nejde o hotovou instalaci' : isZoo ? `ZOO Praha – realizace mlžítek ${i + 1}` : `${project.name}${project.location ? ` – ${project.location}` : ''} – fotografie realizace ${i + 1}`} loading="lazy" className="w-full h-full object-cover transition duration-500 group-hover:scale-105" /><div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition" />{isPekloGateProposal(img) && <span className="absolute bottom-2 left-2 right-2 rounded-lg bg-[#062C44]/95 px-3 py-2 text-left text-xs font-semibold text-white shadow-lg">Návrh GATE · rybník Peklo (vizualizace)</span>}</motion.button>)}</div></section>}
  <section className="bg-[#061f2b] py-16 text-white lg:py-24" aria-label="Inspirace pro podobný projekt"><div className="mx-auto max-w-7xl px-6 lg:px-10"><p className="text-xs font-semibold uppercase tracking-[.22em] text-cyan-200">INSPIRACE PRO VAŠE MÍSTO</p><h2 className="mt-4 max-w-3xl font-heading text-3xl sm:text-5xl">Co říkáte na tuto realizaci?</h2><p className="mt-5 max-w-2xl leading-7 text-white/70">Zaujala vás instalace? Doporučte ji někomu, kdo plánuje úpravu zahrady, parku nebo veřejného prostoru. Pro svůj projekt můžete poptat podobné řešení.</p><div className="mt-8 flex flex-wrap gap-3"><Link to={`/poptavka?reference=${encodeURIComponent(referenceId)}`} className="inline-flex min-h-12 items-center rounded-full bg-white px-7 py-3 font-semibold text-[#061f2b] hover:bg-cyan-100">Poptat podobné řešení <ArrowRight className="ml-3" size={18}/></Link><button type="button" onClick={()=>{if(navigator.share)navigator.share({title:project.name,url:window.location.href}).catch(()=>{});else navigator.clipboard?.writeText(window.location.href).catch(()=>{});}} className="min-h-12 rounded-full border border-white/35 px-7 py-3 font-semibold">Doporučit známému</button></div></div></section>
  {project.source_url && <section className="border-y border-slate-200 bg-white"><div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"><div><p className="font-mono text-[10px] uppercase tracking-[.16em] text-slate-400">Zdroj projektu</p><p className="mt-1 text-sm text-slate-600">Reference je založena na ověřených podkladech ze sdíleného projektového archivu.</p></div><a href={project.source_url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-300 px-5 text-sm font-semibold text-slate-800 hover:bg-slate-50">Otevřít projektový podklad <ArrowRight size={15} /></a></div></section>}
  <section className="bg-[#062d3b] py-16 lg:py-20"><div className="max-w-7xl mx-auto px-6 lg:px-10 grid lg:grid-cols-[1fr_auto] gap-8 items-end"><div><p className="font-mono text-[11px] tracking-[.18em] uppercase text-cyan mb-4">Podobný projekt</p><h2 className="font-heading text-4xl lg:text-5xl text-white max-w-3xl">Navrhneme mlžítka pro váš veřejný prostor, park nebo návštěvnický areál.</h2><p className="mt-5 text-white/60 max-w-xl">Od prvního návrhu přes technické řešení až po výrobu, instalaci a servis.</p></div><div className="flex flex-wrap gap-3"><SiteButton to="/poptavka">Poptat řešení <ArrowRight size={18} /></SiteButton><SiteButton to="/mestske-mlzitka" variant="secondary" className="text-white">Městská mlžítka</SiteButton></div></div></section>

@@ -173,10 +173,10 @@ export default function ReferenceMediaStory({ project, images = [], videos = [],
     }
     return [{
       eyebrow: 'Záběry z realizace',
-      title: 'Podívejte se na projekt v pohybu.',
+      title: project.id === '6a71d1ff57598752eed27bfb' ? 'BENDY v Jičíně: vodní mlha na náměstí.' : 'Podívejte se na projekt v pohybu.',
       description: 'Skutečná fotografie zachycuje podobu instalace. Smyčka doplňuje krátký pohled na mlžítko v prostoru.',
       photo: images[1] || images[0],
-      photoAlt: `${project.name} – skutečná fotografie realizace`,
+      photoAlt: project.id === '6a71d1ff57598752eed27bfb' ? 'Nerezové mlžítko BENDY na Valdštejnově náměstí v Jičíně' : `${project.name} – skutečná fotografie realizace`,
       photoLabel: project.location || 'Fotografie realizace',
       video: nativeVideos[0],
     }];

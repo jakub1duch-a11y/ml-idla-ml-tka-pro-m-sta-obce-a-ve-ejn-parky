@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 const stories = {
@@ -31,15 +31,26 @@ const stories = {
 export default function SpaceScrollStory({ variant = 'schools' }) {
   const data = stories[variant] || stories.schools;
   const ref = useRef(null);
+  const videoRef = useRef(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || reduced || !ref.current) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }, { threshold: 0.1 });
+    observer.observe(ref.current);
+    return () => { observer.disconnect(); video.pause(); };
+  }, [reduced]);
   return (
     <section ref={ref} aria-label={data.heading} className="relative bg-[#071c28] text-white lg:h-[260vh]">
       <div className="relative isolate overflow-hidden lg:sticky lg:top-0 lg:h-screen lg:min-h-[620px]">
         <motion.div className="absolute inset-0" style={reduced ? {} : { scale }}>
           <img src={data.poster} alt="" loading="lazy" className="h-full w-full object-cover" />
-          <video aria-hidden="true" muted loop playsInline preload="none" autoPlay={!reduced} poster={data.poster} className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden">
+          <video ref={videoRef} aria-hidden="true" muted loop playsInline preload="none" poster={data.poster} className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden">
             <source src={data.video} type="video/webm" />
           </video>
         </motion.div>

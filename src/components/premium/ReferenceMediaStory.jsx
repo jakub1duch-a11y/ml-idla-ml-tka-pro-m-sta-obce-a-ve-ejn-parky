@@ -14,9 +14,10 @@ function BackgroundLoop({ src, poster, label }) {
   const [paused, setPaused] = useState(false);
   const [explicitPlay, setExplicitPlay] = useState(false);
   const [broken, setBroken] = useState(false);
+  const [saveData] = useState(() => typeof navigator !== 'undefined' && Boolean(navigator.connection?.saveData));
   const [activated, setActivated] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
-  const shouldPlay = Boolean(activated && inView && tabVisible && !paused && (!reducedMotion || explicitPlay) && !broken);
+  const shouldPlay = Boolean(activated && inView && tabVisible && !paused && (!reducedMotion || explicitPlay) && (!saveData || explicitPlay) && !broken);
 
   useEffect(() => { if (inView) setActivated(true); }, [inView]);
   useEffect(() => {
@@ -75,7 +76,7 @@ function BackgroundLoop({ src, poster, label }) {
   );
 }
 
-function StoryChapter({ scene, index, total, openPhoto }) {
+function StoryChapter({ scene, index, total, openPhoto, projectName }) {
   const reducedMotion = useReducedMotion();
   const imageFirst = index % 2 === 1;
   return (
@@ -104,7 +105,7 @@ function StoryChapter({ scene, index, total, openPhoto }) {
         <div className="grid min-h-[420px] gap-3 md:grid-cols-12 md:gap-4">
           {scene.video && (
             <div className={`relative h-[340px] overflow-hidden rounded-[20px] md:col-span-7 md:h-[520px] ${imageFirst ? 'md:order-2' : ''}`}>
-              <BackgroundLoop src={scene.video} poster={scene.photo} label={`ZOO Praha – ${scene.title}`} />
+              <BackgroundLoop src={scene.video} poster={scene.photo} label={`${projectName} – ${scene.title}`} />
             </div>
           )}
           <div className={`group relative h-[360px] overflow-hidden rounded-[20px] bg-[#305360] md:col-span-5 md:h-[520px] ${imageFirst ? 'md:order-1' : ''}`}>
@@ -209,7 +210,7 @@ export default function ReferenceMediaStory({ project, images = [], videos = [],
         </nav>
       </div>
       {scenes.map((scene, index) => (
-        <StoryChapter key={scene.eyebrow} scene={scene} index={index} total={scenes.length} openPhoto={openPhoto} />
+        <StoryChapter key={scene.eyebrow} scene={scene} index={index} total={scenes.length} openPhoto={openPhoto} projectName={project.name} />
       ))}
     </section>
   );

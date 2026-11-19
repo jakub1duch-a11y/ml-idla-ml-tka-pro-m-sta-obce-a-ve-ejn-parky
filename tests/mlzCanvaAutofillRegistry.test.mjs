@@ -118,7 +118,8 @@ test('Canva DUO rendered text catches old unfillable static text and price', () 
     ],
   });
   assert.equal(result.safeForCustomer,false);
-  assert.ok(result.blockers.some(x=>x.includes('17 900')));
+  assert.ok(result.recognizedPricesCzk.includes(17900));
+  assert.ok(result.blockers.some(x=>x.includes('17900')));
   assert.ok(result.blockers.some(x=>x.includes('BENDY_60')));
   assert.ok(result.blockers.some(x=>x.includes('OD')));
 });

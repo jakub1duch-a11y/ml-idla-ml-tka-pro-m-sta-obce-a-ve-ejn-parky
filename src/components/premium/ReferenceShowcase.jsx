@@ -35,7 +35,9 @@ const descriptionPlainText = (text) => String(text || '').replace(/<[^>]*>/g, ' 
 function ProjectCard({ project }) {
   const videoRef = useRef(null);
   const [hovered, setHovered] = useState(false);
-  const gallery = Array.isArray(project.gallery_urls) ? project.gallery_urls : [];
+  const gallery = project.id === '6a71d1ff57598752eed27bfb'
+    ? [] // Chybně přiřazená zahradní fotografie v CMS, nevykreslovat u Jičína.
+    : Array.isArray(project.gallery_urls) ? project.gallery_urls : [];
   const clip = [project.video_url, ...gallery].find((url) => NATIVE_VIDEO.test(String(url || '')));
   const cover = project.image_url;
   const mediaCount = gallery.filter((url) => /\.(png|jpe?g|webp|avif|gif)(\?|$)/i.test(String(url || ''))).length + (cover ? 1 : 0);
@@ -67,7 +69,7 @@ function ProjectCard({ project }) {
           {cover && (
             <img
               src={cover}
-              alt={'Mlžítko ' + (project.product_used || project.name) + ' – ' + (project.location || 'fotografie realizace')}
+              alt={project.id === '6a71d1ff57598752eed27bfb' ? 'Nerezové mlžítko BENDY na Valdštejnově náměstí v Jičíně' : 'Realizace mlžítek: ' + project.name + (project.location ? ' – ' + project.location : '')}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.045]"
@@ -77,7 +79,7 @@ function ProjectCard({ project }) {
             <video
               ref={videoRef}
               src={clip}
-              autoPlay
+              autoPlay={false}
               muted
               loop
               playsInline

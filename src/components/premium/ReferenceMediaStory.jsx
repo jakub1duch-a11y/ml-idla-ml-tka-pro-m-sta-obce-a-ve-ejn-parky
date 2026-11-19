@@ -14,9 +14,11 @@ function BackgroundLoop({ src, poster, label }) {
   const [paused, setPaused] = useState(false);
   const [explicitPlay, setExplicitPlay] = useState(false);
   const [broken, setBroken] = useState(false);
+  const [activated, setActivated] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
   const shouldPlay = Boolean(inView && tabVisible && !paused && (!reducedMotion || explicitPlay) && !broken);
 
+  useEffect(() => { if (inView) setActivated(true); }, [inView]);
   useEffect(() => {
     const update = () => setTabVisible(!document.hidden);
     document.addEventListener('visibilitychange', update);
@@ -36,7 +38,7 @@ function BackgroundLoop({ src, poster, label }) {
       {!broken && (
         <video
           ref={videoRef}
-          src={inView || explicitPlay ? src : undefined}
+          src={activated || explicitPlay ? src : undefined}
           muted
           autoPlay={false}
           loop
@@ -101,11 +103,11 @@ function StoryChapter({ scene, index, total, openPhoto }) {
 
         <div className="grid min-h-[420px] gap-3 md:grid-cols-12 md:gap-4">
           {scene.video && (
-            <div className={`relative overflow-hidden rounded-[20px] md:col-span-7 md:min-h-[520px] ${imageFirst ? 'md:order-2' : ''}`}>
+            <div className={`relative h-[340px] overflow-hidden rounded-[20px] md:col-span-7 md:h-[520px] ${imageFirst ? 'md:order-2' : ''}`}>
               <BackgroundLoop src={scene.video} poster={scene.photo} label={`ZOO Praha – ${scene.title}`} />
             </div>
           )}
-          <div className={`group relative min-h-[300px] overflow-hidden rounded-[20px] bg-[#305360] md:col-span-5 md:min-h-[520px] ${imageFirst ? 'md:order-1' : ''}`}>
+          <div className={`group relative h-[360px] overflow-hidden rounded-[20px] bg-[#305360] md:col-span-5 md:h-[520px] ${imageFirst ? 'md:order-1' : ''}`}>
             <img
               src={scene.photo}
               alt={scene.photoAlt}
@@ -160,7 +162,7 @@ export default function ReferenceMediaStory({ project, images = [], videos = [],
         {
           eyebrow: 'Detail a provedení',
           title: 'Tvar, nerez a jemná vodní mlha.',
-          description: 'V detailu vyniká povrch, geometrie i propojení mlžných soch s okolní zelení. Fotografii lze otevřít ve vysokém rozlišení.',
+          description: 'V detailu vyniká povrch, geometrie i propojení mlžných soch s okolní zelení. Fotografii lze otevřít ve větším zobrazení.',
           photo: findImage(images, '1KjpfDDreK-VBO6by0J4McwzafWG78Kud', 3),
           photoAlt: 'ZOO Praha – detail instalovaných nerezových mlžných soch',
           photoLabel: 'Detail realizace a okolního prostoru',

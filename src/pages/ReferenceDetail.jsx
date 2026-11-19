@@ -97,7 +97,7 @@ export default function ReferenceDetail({ fixedId }) {
    ['Zahradní realizace', 'Zahrady Ing. Jana Švejkovského'],
    ['Výroba mlžného systému', 'HolmTec s.r.o.'],
  ].map(([label, value]) => <div key={label} className="border border-slate-200 rounded-xl p-5 bg-white"><p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">{label}</p><p className="mt-3 text-sm font-semibold text-slate-900 leading-relaxed">{value}</p></div>)}</div></section>}
- <ReferenceMediaStory project={project} images={allImages} videos={videos} isZoo={isZoo} onOpenPhoto={(url) => { const index = allImages.indexOf(url); if (index >= 0) setLightbox(index); }} />
+ {(isZoo || isJicin || isMrak1414) && <ReferenceMediaStory project={project} images={allImages} videos={videos} isZoo={isZoo} onOpenPhoto={(url) => { const index = allImages.indexOf(url); if (index >= 0) setLightbox(index); }} />}
  <VideoSlider videos={videos.filter((v) => !/\.(mp4|webm|mov|ogg)(\?|$)/i.test(v))} />
  {referenceId === '6a450e035aef0b45b2a8728f' && (
    <section aria-label="Zdroj reportáže o mlžítku MRKEV" className="border-b border-[#D1E6EF] bg-[#F0F8FC]">

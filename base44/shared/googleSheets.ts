@@ -53,6 +53,30 @@ export async function appendRow(accessToken, spreadsheetId, sheetName, width, ro
 }
 
 /**
+ * Zapíše nabídku pod stabilním klíčem: existující řádek aktualizuje,
+ * novou nabídku přidá. Opakovaný export nevytváří další řádek.
+ */
+export async function upsertRowByKey(accessToken, spreadsheetId, sheetName, width, row, keyColumn, keyValue) {
+  if (!keyValue) throw new Error('Missing Sheets row key');
+  const keyRange = `${sheetName}!${keyColumn}2:${keyColumn}`;
+  const read = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(keyRange)}`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
+  if (!read.ok) throw new Error(`Read ${keyRange} failed: ${await read.text()}`);
+  const data = await read.json();
+  const index = (data.values || []).findIndex((entry) => String(entry?.[0] || '') === String(keyValue));
+  if (index < 0) return appendRow(accessToken, spreadsheetId, sheetName, width, row);
+  const lastCol = String.fromCharCode(64 + width);
+  const range = `${sheetName}!A${index + 2}:${lastCol}${index + 2}`;
+  const write = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${encodeURIComponent(range)}?valueInputOption=RAW`, {
+    method: 'PUT',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ values: [row] }),
+  });
+  if (!write.ok) throw new Error(`Update ${range} failed: ${await write.text()}`);
+}
+
+/**
  * Get a set of existing values in a specific column (deduplication check).
  */
 export async function getExistingColumnValues(accessToken, spreadsheetId, sheetName, col) {

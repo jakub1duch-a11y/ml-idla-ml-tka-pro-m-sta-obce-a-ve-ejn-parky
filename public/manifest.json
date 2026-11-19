@@ -2,7 +2,7 @@
   "name": "MLŽIDLA.cz — chytré mlžení",
   "short_name": "MLŽIDLA.cz",
   "description": "Mlžítka a mlžné systémy pro města, veřejné prostory, zahrady a terasy.",
-  "start_url": "/",
+  "start_url": "/aplikace",
   "scope": "/",
   "display": "standalone",
   "orientation": "any",

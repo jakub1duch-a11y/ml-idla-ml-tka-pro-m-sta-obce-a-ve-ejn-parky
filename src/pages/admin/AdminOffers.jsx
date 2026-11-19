@@ -245,6 +245,7 @@ export default function AdminOffers() {
                     <p className="text-lg font-semibold text-white">{money(o.total_price)}</p>
                     <div className="flex flex-wrap lg:justify-end gap-2">
                       {o.quote_pdf_url && <a href={o.quote_pdf_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FileText size={13} /> PDF <ExternalLink size={11} /></a>}
+                      {o.quote_drive_file_url && o.quote_drive_file_url !== o.quote_pdf_url && <a href={o.quote_drive_file_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FileText size={13} /> Archiv PDF <ExternalLink size={11} /></a>}
                       {o.drive_case_folder_url && <a href={o.drive_case_folder_url} target="_blank" rel="noreferrer" className="h-9 px-3 rounded-lg border border-white/10 text-xs text-white/60 hover:text-white flex items-center gap-1.5"><FolderOpen size={13} /> Disk <ExternalLink size={11} /></a>}
                       {o.client_email && <a href={`mailto:${o.client_email}?subject=Re: Nabídka ${o.quote_number || ''}`} className="h-9 px-3 rounded-lg bg-cyan text-[#08232b] text-xs font-bold flex items-center gap-1.5"><Mail size={13} /> Kontaktovat</a>}
                     </div>
@@ -257,6 +258,7 @@ export default function AdminOffers() {
                       <h4 className="font-semibold text-sm text-white">Dokumenty a Canva ({linked.length})</h4>
                       {linked.length ? linked.map(f => <a key={f.id} href={f.file_url} target="_blank" rel="noopener noreferrer" className="block text-xs text-cyan hover:underline">{f.title || f.file_name || f.asset_type || 'Soubor'} ↗</a>) : <p className="text-xs text-white/40">K nabídce nejsou přiřazeny soubory v evidenci OfferAsset.</p>}
                       {o.quote_pdf_url && <a className="block text-xs text-cyan" target="_blank" rel="noopener noreferrer" href={o.quote_pdf_url}>Otevřít cenovou nabídku PDF ↗</a>}
+                      {o.quote_drive_file_url && o.quote_drive_file_url !== o.quote_pdf_url && <a className="block text-xs text-cyan" target="_blank" rel="noopener noreferrer" href={o.quote_drive_file_url}>Otevřít archivní PDF na Mlžném disku ↗</a>}
                       {!!o.presentation_url && <a href={o.presentation_url} target="_blank" rel="noopener noreferrer" className="block text-xs text-cyan">Prezentace na Google Workspace ↗</a>}
                       {!!o.presentation_pdf_url && <a href={o.presentation_pdf_url} target="_blank" rel="noopener noreferrer" className="block text-xs text-cyan">PDF prezentace ↗</a>}
                       {canva.length > 0 && <p className="text-xs text-emerald-300">{canva.length} Canva designů přiřazeno</p>}

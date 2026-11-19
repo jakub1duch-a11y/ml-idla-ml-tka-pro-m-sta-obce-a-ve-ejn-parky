@@ -8,7 +8,7 @@ import { fetchImageAsBase64 } from '../../shared/pdfHelpers.ts';
 import { SUPLA_OFFER } from '../../shared/suplaOfferLayout.ts';
 import { SUPLA_VISUALS } from '../../shared/suplaOfferVisuals.ts';
 import { prepareOfferRevision } from '../../shared/offerRevision.ts';
-import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { ensureOfferCaseFolders, upsertBytes } from '../../shared/offerDrive.ts';
 
 export default async function(req) {
   try {
@@ -58,7 +58,7 @@ export default async function(req) {
     if (body.preview_only) return Response.json({ ok: true, page_count: doc.getNumberOfPages(), product_total: ctx.total, supla_without_shaft: SUPLA_OFFER.base, supla_with_shaft: SUPLA_OFFER.withShaft, scene_count: scenes.length, filename });
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
     const folders = await ensureOfferCaseFolders(accessToken, { quoteNumber: quoteNum, clientName: order.client_company || order.client_name, issuedAt: order.issued_at });
-    const uploaded = await uploadBytes(accessToken, folders.offerFolderId, bytes, filename, 'application/pdf');
+    const uploaded = await upsertBytes(accessToken, folders.offerFolderId, bytes, filename, 'application/pdf');
     const up = { file_url: uploaded.url };
     if (!reused) await base44.asServiceRole.entities.OfferAsset.bulkCreate(scenes.map(s => ({
       inquiry_id: order.inquiry_id, inquiry_type: order.inquiry_type, project_order_id: order.id,
@@ -71,7 +71,7 @@ export default async function(req) {
       const variant = { inquiry_id: order.inquiry_id, inquiry_type: order.inquiry_type, project_order_id: order.id, product_id: order.product_id, product_slug: order.product_slug, product_name: ctx.productName, label: `${ctx.productName} — zakladni dodavka, SUPLA volitelne`, quantity: revision.quantity, unit_price: revision.unitPrice, total_price: ctx.total, recommended: true, sort_order: 1, price_status: revision.pricing.matched ? 'catalog' : 'manual_required', visualization_url: scenes[0]?.url };
       if (items[0]) await sr.OfferVariant.update(items[0].id, variant); else await sr.OfferVariant.create(variant);
     }
-    if (!alternative1414) await sr.ProjectOrder.update(order.id, { quote_pdf_url: up.file_url, drive_case_folder_id: folders.caseFolderId, drive_case_folder_url: `https://drive.google.com/drive/folders/${folders.caseFolderId}`, ...(revision ? { total_price: ctx.total, smart_control_included: false } : {}) });
+    if (!alternative1414) await sr.ProjectOrder.update(order.id, { quote_pdf_url: up.file_url, quote_drive_file_url: up.file_url, drive_case_folder_id: folders.caseFolderId, drive_case_folder_url: `https://drive.google.com/drive/folders/${folders.caseFolderId}`, ...(revision ? { total_price: ctx.total, smart_control_included: false } : {}) });
     return Response.json({ ok: true, project_order_id: order.id, quote_number: quoteNum, pdf_url: up.file_url, filename, ...(body.return_pdf_base64 === false ? {} : { pdf_base64: toBase64(bytes) }), pages: scenes.map(({ img, ...scene }) => scene), page_count: doc.getNumberOfPages(), product_total: ctx.total, supla_without_shaft: SUPLA_OFFER.base, supla_with_shaft: SUPLA_OFFER.withShaft, alternatives: ctx.alternatives || [], pricing_note: ctx.pricingNote || '', note: 'Produktove podklady pochazeji z katalogu a Mlzneho disku bez AI prekresleni konstrukce. SUPLA je volitelne. Nabidka je ulozena a nebyla odeslana klientovi.' });
   } catch (error) { return Response.json({ error: error.message }, { status: 500 }); }
 }

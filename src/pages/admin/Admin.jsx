@@ -35,11 +35,13 @@ import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 import AdminMcpConnect from './AdminMcpConnect';
 import AdminNotifications from './AdminNotifications';
 import AdminOffers from './AdminOffers';
+import AdminMobileSalesHub from './AdminMobileSalesHub';
 import AdminSalesHub from './AdminSalesHub';
 import AdminApprovals from './AdminApprovals';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'mobile-sales', label: 'Mobilní obchodní centrum', icon: BriefcaseBusiness },
   { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
   { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
@@ -72,7 +74,7 @@ const TABS = [
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
+  { label: 'Obchod', ids: ['mobile-sales', 'approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
   { label: 'Data & systém', ids: ['analytics', 'integrations', 'chatgpt', 'notifications', 'product-analytics', 'reference-analytics'] },
 ];
@@ -104,7 +106,7 @@ export default function Admin() {
         const u = await base44.auth.me();
         setUser(u);
         if (!u) navigate('/admin-login', { replace: true });
-      } catch (_error) {
+      } catch {
         navigate('/admin-login', { replace: true });
       } finally {
         setLoading(false);
@@ -135,6 +137,7 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    'mobile-sales': AdminMobileSalesHub,
     terminal: AdminTerminal,
     chat: AdminTeamChat,
     development: AdminSystemDevelopment,
@@ -196,9 +199,9 @@ export default function Admin() {
         </nav>
         <div className="p-3 border-t border-white/8 space-y-1">
           <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
-          <button onClick={() => navigate('/obchodni-nabidky')}
+          <button onClick={() => changeTab('mobile-sales')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
-            <BriefcaseBusiness size={16} /> Sales Hub
+            <BriefcaseBusiness size={16} /> Obchodní centrum
           </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">

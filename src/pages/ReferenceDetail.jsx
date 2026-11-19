@@ -9,6 +9,7 @@ import SiteButton from '@/components/ui/SiteButton';
 import GalleryLightbox from '@/components/GalleryLightbox';
 import CinematicReferenceHero from '@/components/CinematicReferenceHero';
 import ReferenceMediaStory from '@/components/premium/ReferenceMediaStory';
+import PolnaMrkevStory, { POLNA_REPORT_VIDEO } from '@/components/premium/PolnaMrkevStory';
 
 const CATEGORY_LABELS = { mestsky: 'Městský prostor', event: 'Event', soukromy: 'Soukromý', prumyslovy: 'Průmyslový' };
 const ZOO_ID = '6a42491409abbf575447aaeb';
@@ -60,6 +61,7 @@ export default function ReferenceDetail({ fixedId }) {
   if (notFound || !project) return <div className="min-h-screen flex items-center justify-center"><Link to="/reference">← Zpět na reference</Link></div>;
   const isZoo = referenceId === ZOO_ID;
   const isJicin = referenceId === JICIN_ID;
+  const isPolna = referenceId === POLNA_ID;
   const isMrak1414 = referenceId === '6a72947ef1579cba611a2f6b';
   // Jičín: galerijní soubor IMG_4974.jpg je ze zahrady, nikoli z náměstí.
   // V detailu ponecháváme jen ověřenou městskou fotografii a videa Jičín.
@@ -70,11 +72,13 @@ export default function ReferenceDetail({ fixedId }) {
   const heroText = getShortHeroText(project, isZoo);
   const videos = isJicin
     ? JICIN_VIDEOS
-    : [project.video_url, ...(project.gallery_urls || []).filter(isVideoFile)].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+    : isPolna
+      ? [POLNA_REPORT_VIDEO]
+      : [project.video_url, ...(project.gallery_urls || []).filter(isVideoFile)].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
   const zooCopy = 'Pro Zoologickou zahradu hl. m. Prahy jsme realizovali šest nerezových mlžících soch jako funkční prvek pro ochlazení návštěvníků během horkých letních dnů. Biomorfní tvary inspirované větvením korálů vznikly jako součást širšího architektonického a krajinářského řešení. Systém byl navržen s důrazem na intenzivní veřejný provoz, odolnost, automatizaci a přirozené začlenění do prostředí areálu.';
   const stats = [
     { label: 'Rok realizace', value: project.year },
-    { label: 'Lokalita', value: isZoo ? 'ZOO Praha · Troja' : project.location },
+    { label: 'Lokalita', value: isZoo ? 'ZOO Praha · Troja' : isPolna ? 'Husovo náměstí · Polná' : project.location },
     { label: 'Kategorie', value: CATEGORY_LABELS[project.category] || project.category },
     { label: 'Klient', value: project.client },
   ].filter((item) => item.value);
@@ -102,8 +106,9 @@ export default function ReferenceDetail({ fixedId }) {
    ['Výroba mlžného systému', 'HolmTec s.r.o.'],
  ].map(([label, value]) => <div key={label} className="border border-slate-200 rounded-xl p-5 bg-white"><p className="font-mono text-[10px] uppercase tracking-widest text-slate-400">{label}</p><p className="mt-3 text-sm font-semibold text-slate-900 leading-relaxed">{value}</p></div>)}</div></section>}
  {(isZoo || isJicin || isMrak1414) && <ReferenceMediaStory project={project} images={allImages} videos={videos} isZoo={isZoo} onOpenPhoto={(url) => { const index = allImages.indexOf(url); if (index >= 0) setLightbox(index); }} />}
+ {isPolna && <PolnaMrkevStory project={project} />}
  <VideoSlider videos={videos.filter((v) => !/\.(mp4|webm|mov|ogg)(\?|$)/i.test(v))} />
- {referenceId === '6a450e035aef0b45b2a8728f' && (
+ {false && referenceId === '6a450e035aef0b45b2a8728f' && (
    <section aria-label="Zdroj reportáže o mlžítku MRKEV" className="border-b border-[#D1E6EF] bg-[#F0F8FC]">
      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-6 text-sm text-[#34596C] lg:flex-row lg:items-center lg:justify-between lg:px-10">
        <div>

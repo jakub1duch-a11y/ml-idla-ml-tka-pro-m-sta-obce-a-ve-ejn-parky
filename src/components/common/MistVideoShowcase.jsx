@@ -92,7 +92,7 @@ export default function MistVideoShowcase() {
           </div>
           <div className="flex flex-col gap-3 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-7">
             <p className="max-w-3xl text-sm leading-6 text-muted-foreground">Realizace v ZOO Praha ukazuje využití nerezových mlžných prvků v exponovaném veřejném prostoru. Jemná mlha zpříjemňuje pobyt návštěvníků v horkých dnech a současně pomáhá zlepšit místní mikroklima.</p>
-            <Link to="/reference/mlzitka-pro-zoo-praha" className="shrink-0 text-sm font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Realizace ZOO Praha →</Link>
+            <Link to="/blog/zoo-praha-mlzitka-sest-nerezovych-soch" className="shrink-0 text-sm font-semibold text-[#0b4860] transition-colors hover:text-[#08394c]">Realizace ZOO Praha →</Link>
           </div>
         </motion.div>
 

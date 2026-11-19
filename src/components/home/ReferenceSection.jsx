@@ -5,11 +5,10 @@ import { base44 } from '@/api/base44Client';
 
 const selectedProjects = [
 { match: (item) => item.name?.includes('MRKEV'), fallback: 'Město Polná — mlžítko MRKEV' },
-{ match: (item) => item.name?.includes('Městská brána GATE'), fallback: 'Městská brána GATE' },
+{ match: (item) => item.name?.includes('Mlžítko MRAK pro Mateřskou školu Šiškova'), fallback: 'MRAK – MŠ Šiškova' },
 { match: (item) => item.name?.includes('BENDY na Jičínském náměstí'), fallback: 'BENDY v Jičíně' }];
 
 const referenceSlugs = {
-  '6a42491409abbf575447aaeb': 'mlzitka-pro-zoo-praha',
   '6a480e05664f948152611f5f': 'mlzitko-mrak-materska-skola-siskova',
   '6a480c0da87022c6c9559115': 'mlzitko-aura-domov-palata-praha-5',
   '6a72947ef1579cba611a2f6b': 'mlzitko-mrak-soukroma-zahrada',

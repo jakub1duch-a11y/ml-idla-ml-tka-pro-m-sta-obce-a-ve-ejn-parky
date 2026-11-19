@@ -10,9 +10,9 @@ const ITEMS = [
   ['galerie', 'Galerie'],
   ['vyhody', 'Výhody'],
   ['instalace', 'Instalace'],
-  ['reference', 'Reference'],
+  ['chytre-rizeni', 'Doplňky · SUPLA'],
   ['faq', 'Otázky'],
-  ['chytre-rizeni', 'SUPLA'],
+  ['reference', 'Reference'],
 ];
 
 export default function PdSectionNav({ product }) {

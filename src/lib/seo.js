@@ -489,8 +489,8 @@ export function getReferenceSEO(project) {
 
 export const SEO_PAGES = {
   home: {
-    title: 'Nerezová mlžítka pro města, obce, parky i zahrady',
-    description: 'Nerezová mlžítka, mlžné brány a mlhoviště pro města, obce, parky i zahrady. Výroba, pronájem, montáž, servis a chytré řízení podle místa.',
+    title: 'Česká výroba mlžítek pro města, obce a parky',
+    description: 'Česká výroba nerezových mlžítek a mlžných prvků HolmTec. Mlžné brány, mlhoviště a ochlazování měst, obcí, škol i sportovišť. Návrh a servis.',
     keywords: 'mlžítka, nerezová mlžítka, mlžítka pro města, mlžítka pro obce, mlhoviště, mlžiště, mlžné brány, městské ochlazování, vodní mlha, MLŽIDLA',
     canonicalPath: '/',
   },
@@ -507,8 +507,8 @@ export const SEO_PAGES = {
     canonicalPath: '/mestske-mlzitka',
   },
   mestskeOchlazovani: {
-    title: 'Městská mlžítka pro ochlazení měst',
-    description: 'Městská mlžítka, mlžné brány a mlžné zóny pro náměstí, parky, pěší zóny a sportoviště. Návrh rozmístění, technické podklady, řízení i servis.',
+    title: 'Ochlazování měst a obcí: mlžné zóny a prvky',
+    description: 'Jak řešit ochlazování měst a obcí? Mlžné zóny, brány a nerezová mlžítka pro náměstí, parky a sportoviště. Návrh, řízení provozu a servis.',
     keywords: 'městská mlžítka, mlžítka pro města, ochlazování měst, ochlazování veřejného prostoru, mlžné brány, mlžná zóna',
     canonicalPath: '/mestske-ochlazovani-verejneho-prostoru',
   },
@@ -529,6 +529,16 @@ export const SEO_PAGES = {
     description: 'Nerezová mlžítka pro města, obce, parky, hřiště, terasy i zahrady. Porovnejte typy, technické podklady, zakázkovou výrobu, montáž a servis.',
     keywords: 'mlžítko, mlžítka, nerezové mlžítko, městská mlžítka, zahradní mlžítka, mlžítka pro města, mlžítka pro obce, designové mlžítko',
     canonicalPath: '/mlzitko',
+  },
+  rezidencniMlzeni: {
+    title: 'Zahradní mlžítka a rezidenční mlžení pro terasy',
+    description: 'Zahradní mlžítka MLŽIDLA pro terasy, pergoly a soukromé zahrady. Nerezové mlžítko, vodní mlha, návrh umístění a ovládání podle prostoru.',
+    canonicalPath: '/rezidencni-mlzeni',
+  },
+  pronajem: {
+    title: 'Pronájem mlžítek GO pro festivaly a letní akce',
+    description: 'Pronájem mobilních mlžítek, mlžných bran a sestav MLŽIDLA GO pro festivaly, firemní akce a venkovní události. Poptávka podle místa a termínu.',
+    canonicalPath: '/pronajem',
   },
   mlhoviste: {
     title: 'Mlhoviště a mlžiště: návrh mlžné zóny',
@@ -567,9 +577,9 @@ export const SEO_PAGES = {
     canonicalPath: '/jak-to-funguje',
   },
   oNas: {
-    title: 'HolmTec: výrobce mlžítek a mlžných soch',
-    description: 'Poznejte HolmTec a výrobu mlžítek, mlžných bran a skulptur. Představujeme technický přístup a spolupráci při přípravě veřejných i rezidenčních projektů.',
-    keywords: 'HolmTec, výrobce mlžných prvků, mlzidla.cz, mlžné skulptury výroba, zakázková výroba Trutnov, nerezová mlžítka',
+    title: 'Česká výroba mlžítek a mlžných prvků | HolmTec',
+    description: 'Česká výroba nerezových mlžítek, mlžných bran a designových mlžných prvků v Trutnově. Poznejte výrobní zázemí HolmTec, návrh, ohýbání trubek a servis.',
+    keywords: 'česká výroba mlžítek, výrobce mlžítek, mlžné prvky česká výroba, HolmTec, nerezová mlžítka, mlžné brány Trutnov',
     canonicalPath: '/o-nas',
   },
   reference: {
@@ -601,6 +611,16 @@ export const SEO_PAGES = {
     description: 'Odpovědi na otázky k instalaci mlžítek, přívodu vody, spotřebě, údržbě, zazimování a chytrému řízení. Praktické podklady pro správce i provozovatele.',
     keywords: 'FAQ mlžná technika, údržba mlžítka, zazimování mlhoviště, instalace vodních prvků, certifikace pitná voda',
     canonicalPath: '/podpora',
+  },
+  sportoviste: {
+    title: 'Mlžítka pro sportoviště a venkovní areály',
+    description: 'Nerezová mlžítka pro sportoviště, běžecké areály, hřiště a odpočinkové zóny. Návrh umístění, napojení vody, ovládání a sezónního provozu.',
+    canonicalPath: '/mlzitka-pro-sportoviste',
+  },
+  mestskyMobiliar: {
+    title: 'Mlžítka jako součást městského mobiliáře',
+    description: 'Designová nerezová mlžítka a mlžné prvky pro městský mobiliář, náměstí, parky a promenády. Návrh tvaru, kotvení, přívodu vody a údržby.',
+    canonicalPath: '/mlzitka-mestsky-mobiliar',
   },
   mestOobce: {
     title: 'Mlžítka pro města a obce: návrh a výroba',
@@ -738,9 +758,9 @@ export const SEO_PAGES = {
     canonicalPath: '/kategorie/art-instalace',
   },
   deti: {
-    title: 'Mlhoviště pro školy, školky a dětská hřiště',
-    description: 'Mlhoviště a mlžítka pro mateřské školy, základní školy a dětská hřiště. Návrh mlžicí zóny a vhodného provozu podle věku uživatelů a charakteru areálu.',
-    keywords: 'mlhoviště škola, mlžítka školka, dětské hřiště mlžení, bezpečné mlžení dětí',
+    title: 'Mlžítka pro školky, školy a školní zahrady',
+    description: 'Nerezová mlžítka pro mateřské a základní školy, školní zahrady a pobytové zóny. Návrh umístění, přívodu vody, bezpečného provozního režimu a údržby.',
+    keywords: 'mlžítka pro školky, mlžítka pro školy, mlhoviště pro děti, ochlazení školní zahrady, mlžné prvky pro školky',
     canonicalPath: '/kategorie/skoly-skolky-deti',
   },
 };

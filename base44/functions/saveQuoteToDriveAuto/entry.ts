@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.40';
 import { ensureOfferCaseFolders, uploadBytes } from '../../shared/offerDrive.ts';
+import { assertBusinessAccount, getVerifiedGoogleAccount } from '../../shared/businessWorkflowGuard.mjs';
 
 Deno.serve(async (req) => {
   try {
@@ -12,6 +13,8 @@ Deno.serve(async (req) => {
 
     const bytes = pdfBase64 ? Uint8Array.from(atob(pdfBase64), (character) => character.charCodeAt(0)) : new Uint8Array(pdfBytes);
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
+    // Verify actual OAuth identity before creating folders or uploading commercial PDFs.
+    assertBusinessAccount(await getVerifiedGoogleAccount(accessToken, 'googledrive'), 'googledrive');
     const folders = await ensureOfferCaseFolders(accessToken, { quoteNumber, clientName: inquiryName || inquiryEmail || 'klient', issuedAt: issuedAt || new Date().toISOString() });
     const uploaded = await uploadBytes(accessToken, folders.offerFolderId, bytes, filename, 'application/pdf');
 

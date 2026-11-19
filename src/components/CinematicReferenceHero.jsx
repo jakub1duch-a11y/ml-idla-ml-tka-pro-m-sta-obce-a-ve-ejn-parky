@@ -16,7 +16,7 @@ const DISSOLVE_SECONDS = 1.3;
 const MAX_SEQUENCES = 5;
 
 export default function CinematicReferenceHero({
-  project, videos = [], description, isTechnicalVisual = false,
+  project, videos = [], description, isTechnicalVisual = false, title, badge,
 }) {
   const reducedMotion = useReducedMotion();
   const containerRef = useRef(null);
@@ -187,11 +187,18 @@ export default function CinematicReferenceHero({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.85, ease: 'easeOut' }}
           >
-          <p className="mb-4 text-[11px] font-semibold uppercase tracking-[.23em] text-cyan-200 sm:text-xs">
-            MLŽIDLA® / REFERENCE / BY HOLMTEC
-          </p>
+          <div className="mb-4 flex flex-wrap items-center gap-3">
+            <p className="text-[11px] font-semibold uppercase tracking-[.23em] text-cyan-200 sm:text-xs">
+              MLŽIDLA® / REFERENCE / BY HOLMTEC
+            </p>
+            {badge && (
+              <span className="rounded-full border border-white/35 bg-white/15 px-3 py-1 text-xs font-semibold text-white">
+                {badge}
+              </span>
+            )}
+          </div>
           <h1 className="font-heading text-4xl leading-[1.06] tracking-tight drop-shadow-lg sm:text-6xl lg:text-[4.75rem]">
-            {project.name}
+            {title || project.name}
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
             {description}

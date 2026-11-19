@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Maximize2, Pause, Play, X, Droplets } from '
 import { base44 } from '@/api/base44Client';
 import { getCuratedProductMedia } from '@/lib/curatedProductMedia';
 import { getOptimizedMediaUrl } from '@/lib/optimizedMedia';
+import { responsiveProductSrcSet } from '@/lib/responsiveProductMedia';
 import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 import './PdVisualGalleryCompact.css';
 
@@ -115,7 +116,7 @@ function GalleryImage({ item, index, productName, onOpen, onFailed }) {
   return (
     <button type="button" className="pdpc-image-open" onClick={onOpen} aria-label={'Zvětšit fotografii ' + (index + 1) + ': ' + productName}>
       {!shown && !failed && !VIDEO_RE.test(item.url) && <span className="pdpc-image-loading" aria-hidden="true"><span className="pdpc-loading-mark"><Droplets size={21} /></span><span className="pdpc-loading-line" /></span>}
-      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
+      {!failed ? (VIDEO_RE.test(item.url) ? <video src={item.url} poster={item.poster} controls playsInline preload="metadata" className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} onLoadedData={() => setLoaded(true)} onError={() => { setFailed(true); onFailed(item.url); }} /> : <img src={src} srcSet={responsiveProductSrcSet(src)} sizes="(max-width: 900px) 100vw, 75vw" width={1200} height={900} alt={item.alt || (productName + ' — ' + (item.title || ('fotografie ' + (index + 1))))} className={'pdpc-image ' + (item.fit === 'cover' ? 'is-cover' : 'is-contain') + (shown ? ' is-loaded' : '')} loading="eager" decoding="async" fetchPriority={index === 0 ? 'high' : 'auto'} onLoad={() => { loadedImages.add(src); setLoaded(true); }} onError={() => { setFailed(true); onFailed(item.url); }} />) :
         <span className="pdpc-image-fallback">Tento snímek nyní není dostupný.</span>}
     </button>
   );
@@ -236,8 +237,21 @@ export default function PdVisualGalleryCompact({ product }) {
     }));
 
     const primaryProductItems = productItems.slice(0, 2);
-    const additionalProductItems = productItems.slice(2);
-    return dedupe([...primaryProductItems, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
+    // Product proposal for Polná/Peklo: show among the first gallery images,
+    // distinctly labelled as visualization, never as installed GATE.
+    const pekloProposalUrl = product.slug === 'mlzna-brana-gate'
+      ? (product.gallery_urls || []).find((url) => url.includes('MLZIDLA_Polna_Peklo_GATE_vizualizace_16x9.webp'))
+      : null;
+    const additionalProductItems = productItems.slice(2).filter((item) => item.url !== pekloProposalUrl);
+    const pekloProposal = pekloProposalUrl && isProductMediaAllowed(product, pekloProposalUrl) ? [{
+      url: pekloProposalUrl,
+      title: 'BRÁNA GATE — Polná, rybník Peklo',
+      caption: 'Vizualizace návrhu umístění. Nejde o fotografii hotové instalace.',
+      badge: 'Vizualizace návrhu',
+      fit: 'cover',
+      alt: 'Vizualizace návrhu mlžné brány GATE pro rybník Peklo v Polné, nikoli hotová realizace'
+    }] : [];
+    return dedupe([...primaryProductItems, ...pekloProposal, ...approved.slice(0, 4), ...admin.slice(0, 3), ...curated, ...additionalProductItems])
       .filter((item) => !failedUrls.includes(item.url))
       .slice(0, 12);
   }, [mediaFiles, approvedVisuals, product, failedUrls]);

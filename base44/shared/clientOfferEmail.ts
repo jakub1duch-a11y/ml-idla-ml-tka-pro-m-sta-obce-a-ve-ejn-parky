@@ -48,8 +48,8 @@ export interface BuiltEmail {
 const COOPERATION_STEPS = [
   { num: '1', title: 'Nabídka', desc: 'Připravili jsme pro vás cenovou nabídku s vizualizacemi.' },
   { num: '2', title: 'Potvrzení', desc: 'Potvrďte zájem v klientské sekci nebo e-mailem.' },
-  { num: '3', title: 'Výrobní záloha 50 %', desc: 'Po potvrzení vystavíme daňový doklad na 50 % výrobní zálohy.' },
-  { num: '4', title: 'Výroba', desc: 'Zahájíme výrobu vašeho řešení na míru (typicky 2–4 týdny).' },
+  { num: '3', title: 'Obchodní podmínky', desc: 'Domluvíme platbu a případnou výrobní zálohu podle schválené nabídky.' },
+  { num: '4', title: 'Výroba', desc: 'Po potvrzení podkladů a platebních podmínek sdělíme výrobní harmonogram.' },
   { num: '5', title: 'Dodání / instalace', desc: 'Doručíme a případně nainstalujeme řešení na vašem místě.' },
 ];
 
@@ -64,7 +64,7 @@ function buildVisualizationBlock(visualizations: string[]): string {
     <div style="margin:28px 0 8px">
       <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:${ACCENT_CYAN};margin-bottom:10px;font-weight:700">Vizualizace vašeho projektu</div>
       ${images}
-      <p style="margin:10px 0 0;font-size:11px;line-height:1.6;color:${TEXT_MUTED}">Vizualizace mají konceptní charakter a slouží k představě umístění produktu. Finální provedení může mírně lišovat podle technických podmínek lokality.</p>
+      <p style="margin:10px 0 0;font-size:11px;line-height:1.6;color:${TEXT_MUTED}">Vizualizace mají konceptní charakter a slouží k představě umístění produktu. Finální provedení se upřesní podle schválené technické dokumentace a podmínek lokality.</p>
     </div>`;
 }
 
@@ -110,7 +110,7 @@ function buildSmartControlBlock(smartControlIncluded: boolean): string {
   return `
     <div style="margin:24px 0;padding:20px 24px;background:linear-gradient(135deg,rgba(11,95,255,.04),rgba(0,168,232,.04));border:1px solid rgba(11,95,255,.15);border-radius:16px">
       <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:${ACCENT_BLUE};margin-bottom:8px;font-weight:700">Chytré ovládání SUPLA</div>
-      <p style="margin:0;font-size:13px;line-height:1.65;color:${TEXT_DARK}">Nabídka zahrnuje chytré řízení mlžení přes platformu SUPLA — teplotní automatika (aktivace nad 25 °C), časové plány, monitoring spotřeby vody a možnost dálkového přehledu a řízení z mobilní aplikace.</p>
+      <p style="margin:0;font-size:13px;line-height:1.65;color:${TEXT_DARK}">Součástí navrženého řešení je chytré řízení SUPLA. Konkrétní funkce, senzory a intervaly mlžení vycházejí z položkové specifikace přiložené nabídky; další možnosti lze doplnit po technickém ověření.</p>
     </div>`;
 }
 
@@ -154,8 +154,8 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
     ['Počet ks', data.quantity > 1 ? `${data.quantity} ks` : '1 ks'],
     ['Lokalita', data.location],
     ['Číslo nabídky', data.quoteNumber],
-    ['Cena bez DPH', data.totalPrice ? money(data.totalPrice) : 'dle nabídky'],
-    ['Platnost do', data.validUntil ? formatDate(data.validUntil) : '30 dnů od odeslání'],
+    ['Cenová rekapitulace', 'v přiložené položkové nabídce'],
+    ['Platnost do', data.validUntil ? formatDate(data.validUntil) : 'k potvrzení v nabídce'],
   ].filter(([, v]) => v) as Array<[string, string]>;
 
   const summaryBlock = summaryRows.map(([label, value]) => `
@@ -215,7 +215,7 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
 
     <!-- Validity -->
     <div style="margin:20px 0;padding:14px 20px;background:rgba(0,168,232,.06);border-radius:10px;border-left:3px solid ${ACCENT_CYAN}">
-      <div style="font-size:12px;color:${TEXT_DARK}"><strong>Platnost nabídky:</strong> ${escapeHtml(data.validUntil ? formatDate(data.validUntil) : '30 dnů od odeslání')}. Po tomto termínu si vyhrazujeme právo na úpravu cen materiálů.</div>
+      <div style="font-size:12px;color:${TEXT_DARK}"><strong>Platnost nabídky:</strong> ${escapeHtml(data.validUntil ? formatDate(data.validUntil) : 'k potvrzení v nabídce')}. Po tomto termínu si vyhrazujeme právo na úpravu cen materiálů.</div>
     </div>
 
     ${FOOTER_HTML}
@@ -242,12 +242,12 @@ export function buildClientOfferEmail(data: OfferEmailData): BuiltEmail {
     'VIZUALIZACE:',
     ...data.visualizations.map((url, i) => `Vizualizace ${i + 1}: ${url}`),
     '',
-    data.smartControlIncluded ? 'CHYTRÉ OVLÁDÁNÍ SUPLA: Nabídka zahrnuje chytré řízení mlžení — teplotní automatika, časové plány, monitoring spotřeby a dálkové řízení z mobilní aplikace.' : '',
+    data.smartControlIncluded ? 'CHYTRÉ OVLÁDÁNÍ SUPLA: Konkrétní režimy, senzory a funkce jsou uvedeny ve specifikaci nabídky.' : '',
     '',
     'POSTUP SPOLUPRÁCE:',
     ...COOPERATION_STEPS.map(s => `${s.num}. ${s.title} — ${s.desc}`),
     '',
-    `PLATNOST NABÍDKY: ${data.validUntil ? formatDate(data.validUntil) : '30 dnů od odeslání'}`,
+    `PLATNOST NABÍDKY: ${data.validUntil ? formatDate(data.validUntil) : 'k potvrzení v nabídce'}`,
     '',
     `Nabídku najdete také v klientské sekci: ${data.portalUrl}`,
     '',
@@ -277,11 +277,12 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
     { project_order_id: projectId, asset_type: 'generated_visualization', selected_for_offer: true },
     { sort: 'sort_order', limit: 10 }
   ).catch(() => ({ items: [] }));
-  const visualizations = (assetPage?.items || []).map((a: any) => a.file_url).filter(Boolean);
+  const visualizations = (Array.isArray(assetPage) ? assetPage : (assetPage?.items || [])).map((a: any) => a.file_url).filter(Boolean);
 
   // Load inquiry for location and summary
   let location = '';
   let inquirySummary = '';
+  let quantity = 1;
   if (project.inquiry_id) {
     const inquiry = project.inquiry_type === 'contact'
       ? await base44.asServiceRole.entities.ContactInquiry.get(project.inquiry_id).catch(() => null)
@@ -289,6 +290,8 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
     if (inquiry) {
       location = (inquiry as any).installation_location || (inquiry as any).location || '';
       inquirySummary = (inquiry as any).zprava || (inquiry as any).message || (inquiry as any).description || '';
+      const requested = Number((inquiry as any).quantity);
+      if (Number.isInteger(requested) && requested > 0 && requested <= 1000) quantity = requested;
     }
   }
 
@@ -301,14 +304,12 @@ export async function loadOfferEmailData(base44: any, projectId: string): Promis
   const attachments: Array<{ name: string; url?: string }> = [];
   if (project.quote_pdf_url) attachments.push({ name: `Cenová nabídka ${project.quote_number || ''}.pdf`, url: project.quote_pdf_url });
   if (project.presentation_pdf_url) attachments.push({ name: `Prezentace ${project.quote_number || ''}.pdf`, url: project.presentation_pdf_url });
-  visualizations.forEach((url: string, i: number) => {
-    if (url.startsWith('http')) attachments.push({ name: `Vizualizace ${i + 1}.webp`, url });
-  });
+  // Vizualizace jsou již vložené přímo v HTML e-mailu; neuvádíme je falešně jako fyzické přílohy.
 
   const data: OfferEmailData = {
     clientName: project.client_name || '',
     productName: project.product_name || 'mlžící systém',
-    quantity: 1,
+    quantity,
     location,
     visualizations,
     portalUrl,

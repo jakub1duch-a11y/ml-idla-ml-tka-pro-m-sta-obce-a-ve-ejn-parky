@@ -4,7 +4,6 @@ import { ArrowRight, ArrowUpRight, Gauge, Droplets, ShieldCheck } from 'lucide-r
 import { GATE_MEDIA } from '@/lib/gateMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import ProductViewMenu from '@/components/produkt/ProductViewMenu';
-import MrakSizeBadge from '@/components/produkt/MrakSizeBadge';
 import { getLine, getFamily } from '@/lib/productFamilies';
 import './bento.css';
 

@@ -18,7 +18,7 @@
 
   /* Product detail: fewer visual blocks, generous breathing room. */
   .product-detail-page section,
-  .product-detail-page > div > section { padding-inline: var(--mobile-gutter); }
+  .product-detail-page > div > section { padding-inline: 0; }
   .product-detail-page section + section { margin-top: 12px; }
   .product-detail-page [class*='py-20'],
   .product-detail-page [class*='py-24'],

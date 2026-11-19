@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Droplets, Layers3, ShieldCheck, Wrench } from 'lucide-react';
+import './PdWaterTitle.css';
 import AnchorMotionPreview from '@/components/installation/AnchorMotionPreview';
 
 const TECHNICAL_MEDIA_RE = /(1000008748|technick|schema|schéma|edraw|vykres|výkres|montaz|montáž|instalac)/i;
@@ -14,23 +15,23 @@ export default function PdInstallationPrep({ product }) {
   const items = [
     {
       icon: ShieldCheck,
-      title: 'Materiál a povrch',
-      text: product.material || 'Materiál, povrch a odolnost ověřujeme podle konkrétního výrobního provedení.',
+      title: 'S patkou',
+      text: 'U provedení s navařenou patkou lze podle místa řešit viditelné i skryté kotvení. Dostupnost provedení potvrdíme pro zvolený produkt.',
     },
     {
       icon: Droplets,
       title: 'Přívod vody',
-      text: isSeasonal ? 'Přívod vody a rychlost přípravy se řeší podle místa dočasného nasazení.' : 'Trasa přívodu vody a připojovací bod se navrhují podle místa instalace.',
+      text: isSeasonal ? 'Přívod vody a rychlost přípravy se řeší podle místa dočasného nasazení.' : 'U provedení s patkou je přívod vody navařený hned nad ní a může být také skrytý. Připojení přes ventil k vodovodnímu řadu navrhneme podle zvolené sestavy.',
     },
     {
       icon: Layers3,
-      title: isSeasonal ? 'Umístění a stabilita' : 'Kotvení podle místa',
-      text: isSeasonal ? 'Stabilní osazení se volí podle povrchu, provozu a podmínek konkrétní akce.' : 'Typ patky, kotvení a návaznost na povrch se potvrzují podle výrobku a projektové dokumentace.',
+      title: isSeasonal ? 'Umístění a stabilita' : 'Bez patky',
+      text: isSeasonal ? 'Stabilní osazení se volí podle povrchu, provozu a podmínek konkrétní akce.' : 'Pro vhodné modely lze navrhnout provedení do zatíženého přenosného podstavce nebo zemního vrutu. Kompatibilitu ověříme podle konstrukce a místa.',
     },
     {
       icon: Wrench,
-      title: 'Trysky a servis',
-      text: 'Typ, počet trysek i servisní přístup se řídí ověřenou specifikací konkrétního produktu.',
+      title: 'Přístup pro údržbu',
+      text: 'Při návrhu ponecháme přístup k ventilu a připojení vody, aby běžná údržba nevyžadovala rozebírání okolního povrchu.',
     },
   ];
 
@@ -43,11 +44,11 @@ export default function PdInstallationPrep({ product }) {
               Příprava a instalace
             </p>
             <h2 className="mt-3 font-heading text-3xl font-bold leading-[1.04] tracking-[-.035em] text-[#0A2342] sm:text-4xl lg:text-5xl">
-              {isSeasonal ? 'Připravené pro sezónní nasazení.' : 'Promyšlená instalace do konkrétního prostoru.'}
+              {isSeasonal ? 'Připravené pro sezónní nasazení.' : <><span className="pd-water-title">Promyšlená instalace<span className="pd-water-title__ripple" aria-hidden="true" /></span><span className="mt-3 block">do konkrétního prostoru.</span></>}
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-[#0D2F4F]/62 sm:text-base">
-            {isSeasonal ? 'U mobilního řešení se příprava, přívod vody a stabilní umístění plánují podle konkrétní akce a podmínek na místě.' : 'Způsob kotvení, přívod vody a servisní přístup se navrhují podle skutečné konstrukce produktu a podmínek místa. Neověřené instalační detaily nezobrazujeme jako garantované vlastnosti.'}
+            {isSeasonal ? 'U mobilního řešení se příprava, přívod vody a stabilní umístění plánují podle konkrétní akce a podmínek na místě.' : 'Způsob kotvení, přívod vody a servisní přístup se navrhují podle skutečné konstrukce produktu a podmínek místa. Společně vybereme provedení pro váš prostor.'}
           </p>
         </div>
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from '@/App.jsx'
+import AppErrorBoundary from '@/components/common/AppErrorBoundary'
 import '@/index.css'
 import '@/styles/architecture-system.css'
 import '@/styles/mlzidla-atmosphere.css'
@@ -9,7 +10,7 @@ import '@/styles/brand-expressive.css'
 import '@/styles/typography-enhanced.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <App />
+  <AppErrorBoundary><App /></AppErrorBoundary>
 )
 
 if ('serviceWorker' in navigator) {

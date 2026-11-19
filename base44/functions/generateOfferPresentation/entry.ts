@@ -223,7 +223,8 @@ export default async function(req) {
     requests.push(...shapeText('t7c', s[6], arUrl ? `AR / vizualizace:\n${arUrl}` : 'AR nebo vizualizace bude připojena podle dostupného modelu a podkladů.', 430, 335, 245, 40, 11, INK, false));
 
     // 8 — commercial summary
-    const price = quote.final_total ?? product.price_from;
+    // Cena v prezentaci pouze ze sestavené nabídky, nikdy ze starého Product.price_from.
+    const price = Number(quote.final_total || 0);
     const priceIsEstimate = Boolean(quote.price_is_estimate);
     requests.push(background(s[7], WHITE), ...accentBar('a8', s[7], 0, 0, 720, 8));
     requests.push(...shapeText('t8a', s[7], priceIsEstimate ? 'Orientační investice' : 'Investice do řešení', 48, 44, 420, 45, 27, PETROL, true));

@@ -1,6 +1,24 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Droplets, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
+import { ArrowRight, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
+
+// Jednorázový, nenápadný akcent při vstupu do zorného pole; bez scroll hijackingu.
+function ScrollAccent({ children }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || !('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        node.classList.add('ml-scroll-accent-visible');
+        observer.disconnect();
+      }
+    }, { threshold: 0.55 });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return <span ref={ref} className="ml-scroll-accent">{children}</span>;
+}
 
 // Přehledné informace o výrobcích, funkci a výrobě.
 // Záměrně bez dalšího obrazového slideru, pohybujících se kulis a duplicitního loga.
@@ -24,7 +42,7 @@ export function HomeOverview() {
         <div className="grid items-center gap-10 lg:grid-cols-[1.03fr_.97fr] lg:gap-16">
           <div className="max-w-[610px]">
             <p className="text-xs font-bold uppercase tracking-[.1em] text-[#076EDC]">MLŽIDLA.CZ · česká výroba HolmTec</p>
-            <h1 id="home-about-title" className="mt-5 font-heading text-[clamp(2.2rem,4.35vw,4.45rem)] font-extrabold leading-[1.09] tracking-[-.048em]">Designová mlžítka, která mění veřejný prostor.</h1>
+            <h1 id="home-about-title" className="mt-5 font-heading text-[clamp(2.2rem,4.35vw,4.45rem)] font-extrabold leading-[1.09] tracking-[-.048em]">Designová mlžítka, která <ScrollAccent>mění veřejný prostor.</ScrollAccent></h1>
             <p className="mt-7 max-w-[580px] text-base leading-8 text-[#39556B] sm:text-lg">Navrhujeme a vyrábíme nerezová mlžítka, mlžné brány a originální mlžné instalace na míru pro města, parky, školy, sportovní areály i soukromé prostory.</p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <Link to="/katalog-mlzitek" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#086EF2] px-6 text-sm font-bold text-white transition-colors hover:bg-[#095DC6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#086EF2]">Prohlédnout mlžítka <ArrowRight size={18} /></Link>
@@ -41,7 +59,7 @@ export function HomeOverview() {
         </div>
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4 lg:gap-5" aria-label="Hlavní přednosti našich mlžítek">
           {benefits.map(({ icon: Icon, title, text }) => (
-            <article key={title} className="flex items-start gap-4 rounded-[20px] border border-[#E5EBF1] bg-[#FAFCFE] p-5 shadow-[0_5px_22px_rgba(10,35,66,.035)] sm:flex-col sm:gap-3 sm:p-6">
+            <article key={title} className={`flex items-start gap-4 rounded-[20px] border border-[#E5EBF1] bg-[#FAFCFE] p-5 shadow-[0_5px_22px_rgba(10,35,66,.035)] sm:flex-col sm:gap-3 sm:p-6 ${title === 'Osvěžení' ? 'ml-first-benefit' : ''}`}>
               <Icon className="mt-0.5 shrink-0 text-[#086EF2]" size={30} strokeWidth={1.7} aria-hidden="true" />
               <div><h2 className="font-heading text-base font-bold leading-snug sm:text-lg">{title}</h2><p className="mt-1 text-sm leading-6 text-[#526B7D]">{text}</p></div>
             </article>

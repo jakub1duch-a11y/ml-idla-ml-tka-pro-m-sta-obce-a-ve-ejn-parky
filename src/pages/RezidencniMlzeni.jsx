@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Droplets, Gauge, Leaf, ShieldCheck, Smartphone, Sparkles, Wind } from 'lucide-react';
-import { setSEO } from '@/lib/seo';
+import { setSEO, SEO_PAGES } from '@/lib/seo';
 
 const HERO_IMAGE = '/media/optimized/b94c771e1_a982a794f_mlzitkosteblo.webp';
 const DETAIL_IMAGE = '/media/optimized/cfc837b23_image.webp';
@@ -26,11 +26,7 @@ export default function RezidencniMlzeni() {
   const mistOpacity = useTransform(scrollYProgress, [0, 0.65, 1], [0.8, 0.35, 0]);
 
   useEffect(() => {
-    setSEO({
-      title: 'Rezidenční mlžení pro zahrady a terasy | MLŽIDLA.cz',
-      description: 'Prémiové rezidenční mlžení pro zahrady, terasy a venkovní relaxační zóny. Nízkotlaké řešení bez čerpadla, chytré řízení a návrh na míru.',
-      canonicalPath: '/rezidencni-mlzeni',
-    });
+    setSEO(SEO_PAGES.rezidencniMlzeni);
   }, []);
 
   return (

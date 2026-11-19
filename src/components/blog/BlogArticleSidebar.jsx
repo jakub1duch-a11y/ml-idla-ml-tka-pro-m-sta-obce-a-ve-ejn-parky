@@ -7,6 +7,7 @@ const menuItems = [
   ['#article-gallery-heading', 'Obrazový kontext', Sparkles],
   ['#related-products-heading', 'Související produkty', ArrowRight],
   ['#faq', 'Časté otázky', Headphones],
+  ['#blog-comments', 'Diskuze a komentáře', MessageCircle],
 ];
 
 const recommendedLinks = [
@@ -30,6 +31,14 @@ export default function BlogArticleSidebar({ related = [] }) {
               </a>
             ))}
           </nav>
+        </section>
+
+        <section className="rounded-[1.5rem] border border-[#BFDDEB] bg-gradient-to-br from-[#EAF8FC] to-white p-5" aria-label="Zapojte se do článku">
+          <p className="font-mono text-[10px] uppercase tracking-[.18em] text-[#087DA5]">Váš projekt</p>
+          <h3 className="mt-2 font-heading text-lg font-bold text-[#092C44]">Vodní mlha i pro váš prostor?</h3>
+          <p className="mt-2 text-xs leading-6 text-[#4D6879]">Pošlete nám místo instalace a doporučíme vhodné mlžítko nebo zakázkový návrh.</p>
+          <Link to="/poptavka" className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#07334D] px-3 text-xs font-bold text-white transition hover:bg-[#08648D]">Navrhnout do prostoru <ArrowRight size={15}/></Link>
+          <a href="#blog-comments" className="mt-2 inline-flex min-h-10 w-full items-center justify-center gap-2 rounded-full border border-[#AACFDA] bg-white px-3 text-xs font-bold text-[#0C4D6C]">Přidat komentář <MessageCircle size={15}/></a>
         </section>
 
         <section className="rounded-[1.5rem] border border-[#CDEAF0] bg-[#F1FBFD] p-5" aria-label="Doporučené odkazy">

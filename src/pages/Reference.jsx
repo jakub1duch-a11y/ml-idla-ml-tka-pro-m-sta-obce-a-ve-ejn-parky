@@ -9,32 +9,32 @@ import PremiumSwiper from '@/components/common/PremiumSwiper';
 const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
 
 const featuredReferences = [
-  {
-    id: 'zoo-praha',
-    eyebrow: 'Veřejný prostor',
-    title: 'ZOO Praha',
-    text: 'Ukázka realizace MLŽIDLA® ve frekventovaném veřejném areálu.',
-    src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp',
-    href: '/reference/mlzitka-pro-zoo-praha',
-    cta: 'Prohlédnout realizaci',
-  },
-  {
-    id: 'jicin',
-    eyebrow: 'Městský prostor',
-    title: 'Jičín',
-    text: 'Inspirace pro začlenění mlžení do městského prostoru a pobytových zón.',
-    src: 'https://drive.google.com/thumbnail?id=1DMozP4S_U8KaiNlCraTE-fugcQuytuB7&sz=w1600',
-    href: '/reference',
-    cta: 'Prohlédnout reference',
-  },
-];
+{
+  id: 'zoo-praha',
+  eyebrow: 'Veřejný prostor',
+  title: 'ZOO Praha',
+  text: 'Ukázka realizace MLŽIDLA® ve frekventovaném veřejném areálu.',
+  src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp',
+  href: '/reference/mlzitka-pro-zoo-praha',
+  cta: 'Prohlédnout realizaci'
+},
+{
+  id: 'jicin',
+  eyebrow: 'Městský prostor',
+  title: 'Jičín',
+  text: 'Inspirace pro začlenění mlžení do městského prostoru a pobytových zón.',
+  src: 'https://drive.google.com/thumbnail?id=1DMozP4S_U8KaiNlCraTE-fugcQuytuB7&sz=w1600',
+  href: '/reference',
+  cta: 'Prohlédnout reference'
+}];
+
 
 const sectors = [
-  { Icon: Building2, label: 'Města', path: '/mlzitka-pro-mesta-obce' },
-  { Icon: Trees, label: 'Parky', path: '/kategorie/parky-hriste' },
-  { Icon: Hotel, label: 'Hotely', path: '/kategorie/komercni' },
-  { Icon: Utensils, label: 'Restaurace', path: '/kategorie/komercni' },
-];
+{ Icon: Building2, label: 'Města', path: '/mlzitka-pro-mesta-obce' },
+{ Icon: Trees, label: 'Parky', path: '/kategorie/parky-hriste' },
+{ Icon: Hotel, label: 'Hotely', path: '/kategorie/komercni' },
+{ Icon: Utensils, label: 'Restaurace', path: '/kategorie/komercni' }];
+
 
 
 export default function Reference() {
@@ -78,7 +78,7 @@ export default function Reference() {
       </section>
 
       <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10">
+        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10 hidden">
           <p className="mb-6 text-center font-mono uppercase tracking-[.18em] text-slate-400 text-xs">Vybrané realizace a partneři</p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:grid-cols-5">
             {[0, 1, 2, 3, 4].map((item) =>

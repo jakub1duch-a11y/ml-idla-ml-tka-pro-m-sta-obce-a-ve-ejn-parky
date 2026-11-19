@@ -17,10 +17,26 @@ if (typeof document !== 'undefined' && !window.__gads_loaded) {
   try { accepted = localStorage.getItem('cookie_consent') === 'accepted'; } catch { /* Essential only. */ }
   const consent = accepted ? 'granted' : 'denied';
   window.gtag('consent', 'default', { ad_storage: consent, analytics_storage: consent, ad_user_data: consent, ad_personalization: consent });
-  const s = document.createElement('script');
-  s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18399688870';
-  s.async = true;
-  document.head.appendChild(s);
-  window.gtag('js', new Date());
-  window.gtag('config', 'AW-18399688870', { send_page_view: false });
+  // Marketing tag must not load before explicit opt-in.
+  const loadAds = () => {
+    if (window.__mlzidla_ads_script_loaded) return;
+    window.__mlzidla_ads_script_loaded = true;
+    const s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=AW-18399688870';
+    s.async = true;
+    document.head.appendChild(s);
+    window.gtag('js', new Date());
+    window.gtag('config', 'AW-18399688870', { send_page_view: false });
+  };
+  if (accepted) loadAds();
+  window.addEventListener('mlzidla:cookie-consent', (event) => {
+    const allowed = event.detail?.value === 'accepted';
+    window.gtag('consent', 'update', {
+      ad_storage: allowed ? 'granted' : 'denied',
+      analytics_storage: allowed ? 'granted' : 'denied',
+      ad_user_data: allowed ? 'granted' : 'denied',
+      ad_personalization: allowed ? 'granted' : 'denied',
+    });
+    if (allowed) loadAds();
+  });
 }

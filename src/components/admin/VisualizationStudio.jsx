@@ -9,8 +9,10 @@ import {
   getProductReferenceImages,
   VISUAL_ENVIRONMENTS,
 } from '@/lib/productVisualizationRules';
+import { validateProductForVisualization } from '@/lib/driveProductMasterRegistry';
 import LockedVideoPanel from '@/components/admin/LockedVideoPanel';
 import useLockedVideo from '@/components/admin/useLockedVideo';
+import { generateHiggsfieldProductMotion } from '@/lib/higgsfieldMotion';
 
 const ASPECT_OPTIONS = [
   { value: '16:9', label: '16:9 · Na šířku' },
@@ -41,6 +43,7 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
   const [heightMm, setHeightMm] = useState('');
   const [diameterMm, setDiameterMm] = useState('');
   const [seconds, setSeconds] = useState(6);
+  const [videoProvider, setVideoProvider] = useState('base44');
   const [batchRunning, setBatchRunning] = useState(false);
   const [batchProgress, setBatchProgress] = useState({ done: 0, total: 0, current: '', errors: [] });
   const locked = useLockedVideo();
@@ -91,8 +94,8 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
   });
 
   useEffect(() => {
-    if (mode === 'video' && selectedProductObj?.slug) locked.loadPlan(lockedPayload());
-  }, [mode, selectedProductObj?.slug]);
+    if (mode === 'video' && selectedProductObj?.slug && videoProvider === 'base44') locked.loadPlan(lockedPayload());
+  }, [mode, selectedProductObj?.slug, videoProvider]);
 
   const applyConfiguration = (value) => {
     setConfiguration(value);
@@ -102,6 +105,8 @@ export default function VisualizationStudio({ products = [], onVisualizationsCha
 
   const generate = async () => {
     if (!selectedProductObj) { setError('Nejdříve vyberte konkrétní produkt.'); return; }
+    const validation = validateProductForVisualization(selectedProductObj);
+    if (!validation.ok) { setError(`Generování zablokováno – neověřená MASTER reference. ${validation.errors.join(' ')}`); return; }
     if (!masterReference) { setError('Produkt nemá hlavní produktovou fotografii. Generování je zablokované.'); return; }
     setError('');
     setBusy(true);
@@ -127,8 +132,19 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
         if (!res?.url) throw new Error('Generátor nevrátil obrázek.');
         setResult({ type: 'image', url: res.url, fullPrompt, references, guard });
       } else {
-        const video = await locked.generate(lockedPayload());
-        setResult({ type: 'video', url: video.url, fullPrompt: video.prompt, references: video.references, guard });
+        if (videoProvider === 'higgsfield') {
+          if (Number(quantity) !== 1) throw new Error('Higgsfield PRODUCT LOCK podporuje v tomto režimu jeden výrobek; pro více kusů použijte Base44.');
+          const hf = await generateHiggsfieldProductMotion({
+            productSlug: selectedProductObj.slug,
+            prompt: `${VISUAL_ENVIRONMENTS.find((item) => item.value === environment)?.prompt || ''}. ${scene}`,
+            duration: seconds,
+            aspectRatio: aspect,
+          });
+          setResult({ type: 'video', url: hf.url, fullPrompt: hf.prompt || scene, references: [masterReference], guard });
+        } else {
+          const video = await locked.generate(lockedPayload());
+          setResult({ type: 'video', url: video.url, fullPrompt: video.prompt, references: video.references, guard });
+        }
       }
     } catch (err) {
       setError(err?.response?.data?.error || err?.message || 'Generování selhalo.');
@@ -141,9 +157,9 @@ KOMPOZICE: výrobek musí být celý čitelný a kontrolovatelný, nesmí být o
   // Outputs are never auto-approved or published to product pages.
   const generateForAllProducts = async () => {
     if (batchRunning) return;
-    const eligible = products.filter((product) => product?.slug && getMasterReference(product));
+    const eligible = products.filter((product) => product?.slug && validateProductForVisualization(product).ok && getMasterReference(product));
     if (!eligible.length) {
-      setError('Žádný produkt nemá použitelnou hlavní referenční fotografii. Nejdříve doplňte MASTER fotografie v katalogu.');
+      setError('Žádný produkt nemá ověřenou MASTER referenci. V administraci nejprve ověřte přesnou fotografii konkrétního výrobku.');
       return;
     }
     const confirmed = window.confirm(`Vytvořit jednu novou návrhovou vizualizaci pro ${eligible.length} produktů? Výstupy budou uloženy pouze jako „k ověření“, nebudou automaticky publikovány. Generování může trvat několik minut.`);
@@ -244,8 +260,8 @@ Záběr musí ukázat celý výrobek a zároveň čitelný detail nerezové kons
       </div>
       <div className="mb-5 rounded-xl border border-cyan/15 bg-cyan/5 p-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div><p className="text-sm font-semibold text-white">Vizuál pro každý produkt</p><p className="mt-1 max-w-2xl text-xs leading-5 text-white/45">Vytvoří jednu novou scénu městského parku pro každý produkt s dostupnou MASTER fotografií. Vše se ukládá jako „k ověření“ a nic se automaticky nezveřejní.</p></div>
-          <button type="button" onClick={generateForAllProducts} disabled={batchRunning || !products.length} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-cyan px-4 py-2.5 text-sm font-bold text-slate-950 disabled:opacity-40">{batchRunning ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>} {batchRunning ? `Generuji ${batchProgress.done}/${batchProgress.total}` : `Generovat pro všech ${products.filter((p) => p?.slug && getMasterReference(p)).length} produktů`}</button>
+          <div><p className="text-sm font-semibold text-white">Vizuál pro každý produkt</p><p className="mt-1 max-w-2xl text-xs leading-5 text-white/45">Vytvoří jednu novou scénu městského parku pouze pro produkty s ověřenou MASTER fotografií. Vše se ukládá jako „k ověření“ a nic se automaticky nezveřejní.</p></div>
+          <button type="button" onClick={generateForAllProducts} disabled={batchRunning || !products.length} className="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-cyan px-4 py-2.5 text-sm font-bold text-slate-950 disabled:opacity-40">{batchRunning ? <Loader size={15} className="animate-spin"/> : <Sparkles size={15}/>} {batchRunning ? `Generuji ${batchProgress.done}/${batchProgress.total}` : `Generovat pro všech ${products.filter((p) => p?.slug && validateProductForVisualization(p).ok && getMasterReference(p)).length} produktů`}</button>
         </div>
         {(batchRunning || batchProgress.total > 0) && <div className="mt-3"><div className="h-1.5 overflow-hidden rounded-full bg-white/10"><div className="h-full rounded-full bg-cyan transition-all" style={{ width: `${batchProgress.total ? batchProgress.done / batchProgress.total * 100 : 0}%` }}/></div><p className="mt-2 text-[11px] text-white/45">{batchRunning ? `Právě: ${batchProgress.current}` : `Hotovo ${batchProgress.done} z ${batchProgress.total}`} · chyb: {batchProgress.errors.length}</p>{batchProgress.errors.length > 0 && <ul className="mt-2 max-h-28 overflow-auto text-[11px] text-rose-300">{batchProgress.errors.map((message) => <li key={message}>{message}</li>)}</ul>}</div>}
       </div>
@@ -303,7 +319,17 @@ Záběr musí ukázat celý výrobek a zároveň čitelný detail nerezové kons
           <textarea value={prompt} onChange={(e) => setPrompt(e.target.value)} rows={3} placeholder="Volitelně doplňte styl prostoru, lidi, světlo, kompozici nebo atmosféru. Konstrukci produktu sem neměňte." className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-cyan/40"/>
         </div>
 
-        {mode === 'video' && <LockedVideoPanel plan={locked.plan} heightMm={heightMm} diameterMm={diameterMm} setHeightMm={setHeightMm} setDiameterMm={setDiameterMm} seconds={seconds} setSeconds={setSeconds} />}
+        {mode === 'video' && (
+          <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+            <label htmlFor="mlz-video-provider" className="mb-1.5 block text-xs font-medium text-white/70">Poskytovatel generování videa</label>
+            <select id="mlz-video-provider" value={videoProvider} onChange={(e) => setVideoProvider(e.target.value)} className="w-full rounded-lg border border-white/10 bg-[#111820] px-3 py-2 text-sm text-white">
+              <option value="base44">Base44 AI Gateway · kredity Base44</option>
+              <option value="higgsfield">Higgsfield API · samostatný účet a kredity</option>
+            </select>
+            <p className="mt-2 text-xs text-white/50">Higgsfield využívá serverový API klíč HF_CREDENTIALS, nepoužívá kredity Base44 AI Gateway. Každé spuštění může být účtováno u Higgsfield. Výstup je vždy nutné ručně ověřit.</p>
+          </div>
+        )}
+        {mode === 'video' && <LockedVideoPanel plan={videoProvider === 'base44' ? locked.plan : { references: masterReference ? [masterReference] : [], diskCount: 0 }} heightMm={heightMm} diameterMm={diameterMm} setHeightMm={setHeightMm} setDiameterMm={setDiameterMm} seconds={seconds} setSeconds={setSeconds} />}
 
         {mode === 'video' && <div><label className="mb-1.5 block font-mono text-xs uppercase tracking-wider text-white/40">Poměr stran</label><div className="flex flex-wrap gap-2">{ASPECT_OPTIONS.map((opt) => <button key={opt.value} onClick={() => setAspect(opt.value)} className={`rounded-lg px-3 py-1.5 font-mono text-xs transition-all ${aspect === opt.value ? 'border border-cyan/30 bg-cyan/20 text-cyan' : 'border border-white/10 text-white/40 hover:text-white/70'}`}>{opt.label}</button>)}</div></div>}
 

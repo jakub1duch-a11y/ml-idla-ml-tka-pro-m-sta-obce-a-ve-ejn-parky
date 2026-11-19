@@ -198,6 +198,10 @@ export default function AdminTasks({ embedded = false }) {
       <button onClick={openNew} className="inline-flex items-center justify-center gap-2 rounded-full bg-cyan px-4 py-2.5 text-xs font-bold text-slate-950"><Plus size={14}/> Nový úkol</button>
     </div>
 
+    <div className="rounded-xl border border-cyan/20 bg-cyan/[.035] p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3"><div><h3 className="text-sm font-semibold text-white">Google Workspace · úkoly a poznámky</h3><p className="text-xs text-white/45 mt-1">Google Tasks doporučuji pro termíny a přiřazené úkoly, Keep pro rychlé poznámky. Automatická synchronizace zatím není nakonfigurována.</p></div><div className="flex gap-2 flex-wrap"><a href="https://tasks.google.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-white/20 px-3 py-2 text-xs text-white/80">Google Tasks ↗</a><a href="https://keep.google.com/" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-white/20 px-3 py-2 text-xs text-white/80">Google Keep ↗</a></div></div>
+      <p className="mt-3 text-xs text-amber-200/80">Pro obousměrné propojení je nutné ověřit Google Workspace účet, OAuth oprávnění a dostupnost Google Tasks API. Odkazy samy o sobě úkoly nesynchronizují.</p>
+    </div>
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       <div className="rounded-xl border border-white/8 bg-white/3 p-4"><CircleDashed size={14} className="text-amber-300"/><p className="mt-3 text-2xl text-white">{metrics.open}</p><p className="text-xs text-white/30">otevřených úkolů</p></div>
       <div className="rounded-xl border border-white/8 bg-white/3 p-4"><Search size={14} className="text-violet-300"/><p className="mt-3 text-2xl text-white">{metrics.review}</p><p className="text-xs text-white/30">čeká na kontrolu</p></div>

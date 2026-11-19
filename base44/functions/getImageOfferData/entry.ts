@@ -2,6 +2,7 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { VARIANTS, ENVIRONMENTS, ANGLES, COVER_INTRO } from '../../shared/imageOfferCatalog.ts';
 import { driveImage, urlImage, toDataUrl } from '../../shared/imageOfferMedia.ts';
 import { fetchSuplaPricing } from '../../shared/suplaPricing.ts';
+import { findPricingForProduct } from '../../shared/pricingSheet.ts';
 
 // Vrací data pro obrazové nabídky: klient, souhrn poptávky, ceny z ceníku a originální fotografie jako data URL.
 export default async function(req) {
@@ -20,18 +21,31 @@ export default async function(req) {
     ]);
     const { accessToken } = await base44.asServiceRole.connectors.getConnection('googledrive');
     const supla = await fetchSuplaPricing(base44);
-    const alt1414 = orderVariants.items.find(v => /1414/.test(`${v.label} ${v.product_name}`));
+    const PRICE_KEYS = {
+      'mrak-2424': 'MRAK 13R 2424',
+      'mrak-1414': 'MRAK 10R 1414',
+      'aura-garden': 'AURA 700',
+      'lizatko': 'LÍZÁTKO',
+      'linea-trubka': 'LINEA TR 60',
+      'linea-jekl': 'LINEA JA 70',
+      'bendy': 'BENDY_60',
+    };
     const variants = await Promise.all(VARIANTS.map(async (v) => {
       const product = products.items.find(p => p.slug === v.slug) || products.items.find(p => p.slug === 'mlzitko-mrak');
       const profile = profiles.items.find(p => p.product_slug === v.slug);
-      const price = v.fixedPrice || (v.priceFromOrderAlternative ? Number(alt1414?.total_price || 0) : Number(profile?.unit_price_ex_vat || 0));
+      const sourceKey = PRICE_KEYS[v.key];
+      const verifiedPricing = sourceKey
+        ? await findPricingForProduct(base44, { name: sourceKey, slug: v.slug })
+        : null;
+      const price = verifiedPricing?.matched ? verifiedPricing.offer_price_ex_vat : 0;
+      const pricingNote = verifiedPricing?.note || (!price ? 'Cena není ověřena v tabulce Kalkulace mlžítka 2026; ruční nacenění.' : '');
       const images = [];
       for (const id of v.driveFiles) { try { images.push(toDataUrl(await driveImage(accessToken, id))); } catch (_) { /* přeskočit nedostupnou fotku */ } }
       if (!images.length && product) {
         const img = await urlImage(product.visual_master_reference_url || product.image_url);
         if (img) images.push(toDataUrl(img));
       }
-      return { key: v.key, eyebrow: v.eyebrow, title: v.title, subtitle: v.subtitle, recommended: !!v.recommended, price, priceNote: v.priceNote || (price ? '' : 'Cena bude potvrzena po ověření rozsahu.'), spec: v.spec, tableSpec: v.tableSpec, fit: v.fit, material: product?.material || '', pressure: product?.pressure || '', water: product?.water_consumption || '', images };
+      return { key: v.key, eyebrow: v.eyebrow, title: v.title, subtitle: v.subtitle, recommended: !!v.recommended, price, priceNote: pricingNote || v.priceNote || (price ? '' : 'Cena bude potvrzena po ověření rozsahu.'), spec: v.spec, tableSpec: v.tableSpec, fit: v.fit, material: product?.material || '', pressure: product?.pressure || '', water: product?.water_consumption || '', images };
     }));
     return Response.json({
       ok: true,

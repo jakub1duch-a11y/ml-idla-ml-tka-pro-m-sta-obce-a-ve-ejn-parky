@@ -1,20 +1,12 @@
 import React from 'react';
-import { Droplets, Gauge, Layers, Wifi } from 'lucide-react';
 import { getProductDetailConfig } from '@/lib/productDetailConfig';
 
 export default function PdBenefits({ product }) {
   const detailConfig = getProductDetailConfig(product);
 
-  const technical = [
-    product.material && { icon: Layers, label: 'Materiál', value: product.material, code: '// MATERIAL' },
-    product.pressure && { icon: Gauge, label: 'Provozní tlak', value: product.pressure, code: '// TLAK' },
-    product.water_consumption && { icon: Droplets, label: 'Spotřeba vody', value: product.water_consumption, code: '// VODA' },
-    product.power_supply && { icon: Wifi, label: 'Ovládání', value: product.power_supply, code: '// ŘÍZENÍ' },
-  ].filter(Boolean).slice(0, 4);
-
   const benefits = (detailConfig.benefits || []).slice(0, 4);
 
-  if (benefits.length === 0 && technical.length === 0) return null;
+  if (benefits.length === 0 && !detailConfig.useCases?.length) return null;
 
   return (
     <section className="bg-[#F4FAFC] py-14 sm:py-16 lg:py-24">
@@ -59,21 +51,7 @@ export default function PdBenefits({ product }) {
           </div>
         )}
 
-        {technical.length > 0 && (
-          <div className="mt-5 grid overflow-hidden border border-[#D3E2E8] bg-white sm:grid-cols-2 lg:grid-cols-4">
-            {technical.map((item, index) => (
-              <div key={item.label} className={`flex items-center gap-4 p-5 sm:p-6 ${index > 0 ? 'border-t border-[#D3E2E8] sm:border-t-0 sm:border-l' : ''}`}>
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center text-[#153863]">
-                  <item.icon size={20} strokeWidth={1.5} />
-                </span>
-                <div>
-                  <p className="font-mono text-[9px] uppercase tracking-[.14em] text-[#5A6B78]">{item.code}</p>
-                  <p className="mt-1 font-heading text-sm font-semibold text-[#0A1628]">{item.value}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+
       </div>
     </section>
   );

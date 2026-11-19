@@ -8,6 +8,7 @@ import AiSuggestionsTab from '@/components/admin/marketing/AiSuggestionsTab';
 import InstagramConnectCard from '@/components/admin/marketing/InstagramConnectCard';
 import MarketingBriefingTab from '@/components/admin/marketing/MarketingBriefingTab';
 import MarketingConnectorHealth from '@/components/admin/marketing/MarketingConnectorHealth';
+import BrandOfferPreflight from '@/components/admin/marketing/BrandOfferPreflight';
 import MarketingNewsAgentPanel from '@/components/admin/marketing/MarketingNewsAgentPanel';
 import ThumbnailDirectorTab from '@/components/admin/marketing/ThumbnailDirectorTab';
 import VisualizationStudio from '@/components/admin/VisualizationStudio';
@@ -40,6 +41,7 @@ export default function AdminMarketing(){
     </section>
 
     <MarketingConnectorHealth />
+    {!productsLoading && <BrandOfferPreflight products={products} />}
     <MarketingNewsAgentPanel onCreated={loadPosts} />
 
     <section className="rounded-2xl border border-cyan/15 bg-cyan/5 p-4">

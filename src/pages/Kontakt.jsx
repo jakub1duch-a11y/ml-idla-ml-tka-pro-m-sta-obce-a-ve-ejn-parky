@@ -93,6 +93,11 @@ export default function Kontakt() {
         }
       </div>
 
+      <section className="max-w-7xl mx-auto px-6 lg:px-8 pb-10" aria-labelledby="kontakt-mlzitka">
+        <h2 id="kontakt-mlzitka" className="font-heading text-2xl text-slate-900 mb-3">Kontakt na výrobce mlžítek a mlžných bran</h2>
+        <p className="max-w-3xl text-slate-600 leading-relaxed">HolmTec v Trutnově připravuje nerezová městská mlžítka, mlhoviště, zahradní mlžítka a mlžné brány. Pomůžeme s výběrem výrobku pro náměstí, park, školu, terasu nebo soukromou zahradu. Při konzultaci řešíme rozměry prostoru, přívod vody, umístění, způsob ovládání a servis. Pro technický návrh nám můžete poslat fotografii místa nebo situační výkres.</p>
+      </section>
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 pb-24">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact info */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 const stories = {
@@ -32,25 +32,26 @@ export default function SpaceScrollStory({ variant = 'schools' }) {
   const data = stories[variant] || stories.schools;
   const ref = useRef(null);
   const videoRef = useRef(null);
+  const [motionEnabled, setMotionEnabled] = useState(true);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end end'] });
   const scale = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || reduced || !ref.current) return;
+    if (!video || reduced || !motionEnabled || !ref.current) { video?.pause(); return; }
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) video.play().catch(() => {});
       else video.pause();
     }, { threshold: 0.1 });
     observer.observe(ref.current);
     return () => { observer.disconnect(); video.pause(); };
-  }, [reduced]);
+  }, [reduced, motionEnabled]);
   return (
     <section ref={ref} aria-label={data.heading} className="relative bg-[#071c28] text-white lg:h-[260vh]">
       <div className="relative isolate overflow-hidden lg:sticky lg:top-0 lg:h-screen lg:min-h-[620px]">
-        <motion.div className="absolute inset-0" style={reduced ? {} : { scale }}>
+        <motion.div className="absolute inset-0" style={reduced || !motionEnabled ? {} : { scale }}>
           <img src={data.poster} alt="" loading="lazy" className="h-full w-full object-cover" />
-          <video ref={videoRef} aria-hidden="true" muted loop playsInline preload="none" poster={data.poster} className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden">
+          <video ref={videoRef} aria-hidden="true" muted loop playsInline preload="none" poster={data.poster} className={`absolute inset-0 h-full w-full object-cover motion-reduce:hidden ${!motionEnabled ? "hidden" : ""}`}>
             <source src={data.video} type="video/webm" />
           </video>
         </motion.div>
@@ -69,6 +70,7 @@ export default function SpaceScrollStory({ variant = 'schools' }) {
               </motion.div>
             ))}
           </div>
+          {!reduced && <button type="button" onClick={() => setMotionEnabled(value => !value)} className="mt-6 w-fit rounded-full border border-white/50 px-5 py-2 text-sm text-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-pressed={!motionEnabled}>{motionEnabled ? "Pozastavit animaci" : "Spustit animaci"}</button>}
           <a href="#poptavka" className="mt-8 inline-flex w-fit items-center rounded-full bg-cyan-200 px-7 py-3.5 font-semibold text-slate-950 transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Navrhnout řešení pro tento prostor</a>
         </div>
       </div>

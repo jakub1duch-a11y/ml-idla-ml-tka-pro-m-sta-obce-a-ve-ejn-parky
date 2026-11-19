@@ -67,3 +67,8 @@ U foto-listu DAHbICVcThc Canva chybně typuje dekorativní pole main_image_type 
 - Zkontrolovat HubSpot marketingový souhlas, segmentaci a suppression před jakýmkoliv marketingovým odesláním.
 - Funkční testy: 1–4 modely, chybějící cena, chybný účet, neplatný MASTER, nepřístupná příloha, selhání exportu, kontrola zákazu odeslání.
 - GitHub PR musí projít build/testy, kontrolou náhledu a schválením správce. Bez toho neslučovat do main.
+
+
+## Kritický nález reálného Canva Autofill testu 19. 11. 2026
+
+V interním testu dvoumodelového listu DAHbICZZIgU Canva správně doplnila názvy a ceny AURA 700 a LINEA TR 60, ale v konečném návrhu ZŮSTALY pevné popisky KATALOG / LINEA TR 60, KATALOG / BENDY_60, stará cena 17 900 Kč a samostatné OD. Takový dokument je nevhodný jako cenová nabídka a nesmí být vložen do CRM jako schválené PDF. Samotná existence Autofill datasetu nestačí. V režimu kontroly je nutné po Autofill načíst výsledný design read_design, provést cenovou a vizuální kontrolu, odstranit statické přepisovací prvky v šablonách a až potom zvážit použití. Stejně prověřit TRIO a 4 modely: jejich originální návrhy obsahují pevné cenové údaje, názvy produktů a upozornění na neschválené fotografie. V kódu existuje kontrola inspectRenderedMlzCanvaSummary a regresní test. Neoznačovat tyto šablony za plně funkční pro klientský export.

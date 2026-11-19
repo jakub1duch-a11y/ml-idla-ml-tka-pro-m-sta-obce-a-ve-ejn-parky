@@ -16,7 +16,7 @@ function BackgroundLoop({ src, poster, label }) {
   const [broken, setBroken] = useState(false);
   const [activated, setActivated] = useState(false);
   const [tabVisible, setTabVisible] = useState(true);
-  const shouldPlay = Boolean(inView && tabVisible && !paused && (!reducedMotion || explicitPlay) && !broken);
+  const shouldPlay = Boolean(activated && inView && tabVisible && !paused && (!reducedMotion || explicitPlay) && !broken);
 
   useEffect(() => { if (inView) setActivated(true); }, [inView]);
   useEffect(() => {

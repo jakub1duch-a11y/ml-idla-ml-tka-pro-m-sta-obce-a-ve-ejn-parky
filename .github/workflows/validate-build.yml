@@ -47,5 +47,8 @@ jobs:
       - name: Check framework compatibility
         run: npm run framework:check
 
+      - name: Validate Canva A4 autofill mappings and offer safety
+        run: node --test tests/mlzCanvaAutofillRegistry.test.mjs tests/canvaOfferSafety.test.mjs
+
       - name: Build optimized website
         run: npm run build

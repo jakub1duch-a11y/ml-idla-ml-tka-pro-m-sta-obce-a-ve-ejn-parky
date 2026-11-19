@@ -445,12 +445,12 @@ export function getReferenceSEO(project) {
   const isBendyJicin = project.id === '6a71d1ff57598752eed27bfb';
   const isBendyLineaGarden = project.id === '6a9fdf2f153be3ee13d70207';
   const title = isBendyJicin
-    ? 'BENDY na Valdštejnově náměstí v Jičíně – realizace'
+    ? 'Mlžítko BENDY v Jičíně – realizace na Valdštejnově náměstí'
     : isBendyLineaGarden
       ? 'BENDY + LINEA v rodinné zahradě – nízkotlaké mlžení'
       : project.name;
   const description = isBendyJicin
-    ? 'Skutečná realizace nerezového mlžítka BENDY na Valdštejnově náměstí v Jičíně. Fotografie a videa pouze z této městské instalace.'
+    ? 'Prohlédněte si mlžítko BENDY na Valdštejnově náměstí v Jičíně. Fotografie náměstí, videa mlžení a příběh realizace nerezového mlžítka pro město.'
     : isBendyLineaGarden
       ? 'Reálná realizace nízkotlakého mlžícího prostoru BENDY + LINEA v rodinné zahradě. Nerezová mlžítka, lokální ochlazení a monitoring provozu.'
       : project.description;

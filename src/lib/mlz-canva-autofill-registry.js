@@ -104,7 +104,9 @@ export function planMlzCanvaPages({ purpose = 'quote', segment = '', products = 
   return {
     ready: true, templateKeys: keys, photoSheetCopies: products.length,
     mainQuoteRequiresManualPriceFieldReview: true,
-    warning: 'Hlavní nabídka REV4 není automaticky schválena: některé cenové položky mají v Canva chybný datový typ.',
+    readyForClientExport: false,
+    staticTemplateContentRequiresReview: products.length >= 2,
+    warning: 'Hlavní nabídka REV4 má chybně typované ceny a vícemodelové souhrny obsahují původní pevné popisky/ceny. Canva Autofill sám o sobě nevyčistí šablonu; před klientským exportem je povinné odstranit tyto texty a zkontrolovat vykreslený obsah.',
     errors: [], draftOnly: true,
   };
 }
@@ -205,4 +207,63 @@ export function makeOutreachCanvaData({ templateKey, fields = {}, canvaAssetId }
     else throw new Error('Chybí schválený text Autofill pole: ' + key);
   }
   return result;
+}
+
+/**
+ * Last-mile safeguard: text from Canva.read_design AFTER autofill must be
+ * inspected. Canva keeps static labels and old hard-coded prices even when
+ * named fields are correctly filled (observed in DUO on 2026-11-19).
+ * This routine intentionally cannot itself approve the customer PDF.
+ */
+export function inspectRenderedMlzCanvaSummary({
+  renderedText = '', expectedProducts = [], allowedSupplementaryCzk = [],
+} = {}) {
+  const blockers = [];
+  const value = String(renderedText || '');
+  if (!value.trim()) blockers.push('Chybí text skutečně vyrenderovaného Canva listu.');
+  if (!expectedProducts.length) blockers.push('Chybí schválené položky nabídky.');
+  const allowed = new Set();
+  for (const product of expectedProducts) {
+    if (product.priceVerified !== true ||
+      !Number.isFinite(product.unitPriceExVatCzk) ||
+      !Number.isFinite(product.lineTotalExVatCzk) ||
+      !product.productName || !product.productVariant) {
+      blockers.push('Neověřený produkt nebo cena v kontrolovaném listu.');
+      continue;
+    }
+    allowed.add(product.unitPriceExVatCzk);
+    allowed.add(product.lineTotalExVatCzk);
+    if (!value.includes(product.productName)) {
+      blockers.push('V listu chybí požadovaný model: ' + product.productName);
+    }
+  }
+  if (expectedProducts.length) {
+    allowed.add(expectedProducts.reduce((sum, p) => sum + (p.lineTotalExVatCzk || 0), 0));
+  }
+  for (const amount of allowedSupplementaryCzk) {
+    if (Number.isFinite(amount)) allowed.add(amount);
+  }
+  const renderedAmounts = Array.from(value.matchAll(/(\d{1,3}(?:[ \u00A0\u202F]\d{3})*(?:[,.]\d{1,2})?)\s*Kč/g),
+    match => Number(match[1].replace(/[ \u00A0\u202F]/g, '').replace(',', '.')));
+  for (const amount of renderedAmounts) {
+    if (!allowed.has(amount)) blockers.push('Neznámá/stará cena ve výsledném listu: ' + amount + ' Kč.');
+  }
+  // Static lines are NOT part of Canva's named fillable fields. Reject their
+  // stale product IDs even when all current custom fields look correct.
+  const requested = expectedProducts.map(p => String(p.productVariant || '').toLocaleUpperCase('cs'));
+  for (const match of value.matchAll(/(?:KATALOG\s*\/|MODEL\s*\/)\s*([^\n]+)/gi)) {
+    const staticVariant = match[1].trim().toLocaleUpperCase('cs');
+    if (!requested.some(item => item === staticVariant)) {
+      blockers.push('Šablona stále uvádí jiný, pevně zapsaný model: ' + match[1].trim());
+    }
+  }
+  if (/\bOD\s*$/m.test(value)) blockers.push('Na listu zůstal neupravený text ceny OD.');
+  return {
+    safeForCustomer: false,
+    // A check here is not a substitute for rendered image crop, watermarks,
+    // logo, VAT, and full PDF review. Release needs independent human QA.
+    reviewRequired: true,
+    blockers: [...new Set(blockers)],
+    recognizedPricesCzk: renderedAmounts,
+  };
 }

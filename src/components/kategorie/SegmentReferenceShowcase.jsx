@@ -33,7 +33,7 @@ export default function SegmentReferenceShowcase({
     let cancelled = false;
     Promise.all(referenceIds.map((id) => base44.entities.Realizace.get(id).catch(() => null)))
       .then((items) => {
-        if (!cancelled) setReferences(items.filter((item) => item?.published !== false));
+        if (!cancelled) setReferences(items.filter((item) => item?.published !== false && !['6a42491409abbf575447aaeb', '6a60d9d9702abda4e28159d3'].includes(item?.id)));
       });
     return () => { cancelled = true; };
   }, [referenceIds.join('|')]);

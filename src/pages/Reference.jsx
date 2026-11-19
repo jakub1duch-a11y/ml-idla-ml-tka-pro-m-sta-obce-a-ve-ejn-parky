@@ -43,11 +43,11 @@ export default function Reference() {
           </div>
 
           <div className="hidden lg:block">
-            <Link to="/reference/mlzitka-pro-zoo-praha" className="group ml-auto block max-w-md border border-white/20 bg-[#062d3b]/88 p-7 text-white shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan/60 hover:bg-[#062d3b]/95">
-              <div className="flex items-center gap-3"><Sparkles size={18} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Vybraná reference</p></div>
+            <Link to="/blog/zoo-praha-mlzitka-sest-nerezovych-soch" className="group ml-auto block max-w-md border border-white/20 bg-[#062d3b]/88 p-7 text-white shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan/60 hover:bg-[#062d3b]/95">
+              <div className="flex items-center gap-3"><Sparkles size={18} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Z magazínu MLŽIDLA.cz</p></div>
               <h2 className="mt-5 font-heading text-3xl tracking-[-0.01em]">ZOO Praha</h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/82">Mlžítka v jednom z nejnavštěvovanějších veřejných areálů v Česku. Důraz na odolnost, provozní spolehlivost a komfort návštěvníků.</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-cyan">Zobrazit realizaci <ArrowRight size={15} /></span>
+              <p className="mt-3 text-sm leading-relaxed text-white/82">Šest autorských nerezových mlžných soch. Příběh spolupráce designérů, projektantů a výroby HolmTec.</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-cyan">Přečíst redakční příběh <ArrowRight size={15} /></span>
             </Link>
           </div>
         </div>

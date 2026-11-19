@@ -194,7 +194,7 @@ export default function MestaObce() {
         segment="cities"
         eyebrow="Ověřené realizace"
         title="Veřejný prostor od náměstí po ZOO Praha."
-        referenceIds={['6a71d1ff57598752eed27bfb', '6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f']}
+        referenceIds={['6a71d1ff57598752eed27bfb', '6a450e035aef0b45b2a8728f']}
       />
       </div>
 

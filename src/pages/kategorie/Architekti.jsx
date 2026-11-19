@@ -164,7 +164,7 @@ export default function Architekti() {
         segment="architects"
         eyebrow="Reference pro projektanty"
         title="Od autorského konceptu po provozní detail."
-        referenceIds={['6a42491409abbf575447aaeb', '6a450e035aef0b45b2a8728f', '6a480c0da87022c6c9559115']}
+        referenceIds={['6a450e035aef0b45b2a8728f', '6a480c0da87022c6c9559115']}
       />
 
       {/* Kontakt na projektovou podporu */}

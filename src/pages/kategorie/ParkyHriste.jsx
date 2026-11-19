@@ -1,3 +1,4 @@
+import SpaceScrollStory from '@/components/kategorie/SpaceScrollStory';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
@@ -16,7 +17,7 @@ import ProductHoverImage from '@/components/ui/ProductHoverImage';
 const USE_CASES = [
   { emoji: '🏰', title: 'Zámecké parky', desc: 'Decentní estetika, organické tvary z nerezu — zapadnou do historické zeleně.' },
   { emoji: '🌆', title: 'Městská zeleň', desc: 'Osvěžení parků, alejí a relaxačních zón v centru města.' },
-  { emoji: '🧒', title: 'Dětská hřiště', desc: 'Potravinářská nerez, bez chemie. Bezpečné pro nejmenší. Interaktivní tvary.' },
+  { emoji: '🧒', title: 'Dětská hřiště', desc: 'Mlžné prvky pro pobytové zóny u hřišť. Umístění a provoz posuzujeme individuálně.' },
   { emoji: '⚽', title: 'Sportovní areály', desc: 'Ochlazení tribun, hřišť a běžeckých okruhů.' },
 ];
 
@@ -50,7 +51,7 @@ export default function ParkyHriste() {
               Mlžítka pro parky,<br /><span style={{ fontStyle: 'italic' }}>zeleň a místa setkávání.</span>
             </h1>
             <p className="text-white/70 text-lg max-w-2xl leading-relaxed font-light mb-8">
-              Mlžítka pro parky a hřiště jsou navržena tak, aby splynula s přírodním prostředím. Organické tvary inspirované stromy, mraky nebo rostlinami — z potravinářské nerezové oceli bez chemie. Ideální pro dětská hřiště, zámecké parky i městskou zeleň.
+              Nerezová mlžítka a mlžné prvky pro parkové cesty, pobytové zóny a městskou zeleň. Tvar, umístění, bezpečnost a provoz navrhujeme podle konkrétního prostoru. Mlžítka nejsou herní prvky.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <a href="#poptavka" className="btn-metallic-mist px-7 py-3.5 text-sm font-bold">
@@ -64,6 +65,8 @@ export default function ParkyHriste() {
         </div>
       </section>
 </MotionConfig>
+
+      <SpaceScrollStory variant="parks" />
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -82,8 +85,8 @@ export default function ParkyHriste() {
 
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
         <div className="mb-8 p-6 rounded-2xl bg-slate-50 border border-slate-200">
-          <p className="text-slate-900 font-medium text-sm mb-2">✓ Bezpečnost pro děti</p>
-          <p className="text-slate-600 text-sm leading-relaxed">Veškeré naše produkty pro dětská hřiště jsou vyrobeny z potravinářské nerezové oceli AISI 304/316L bez chemických přísad. Mikrotrysky rozptylují kapičky 50–100 μm, které se okamžitě odpařují — žádné mokré povrchy ani louže. Splňujeme normy pro dětská hřiště.</p>
+          <p className="text-slate-900 font-medium text-sm mb-2">Bezpečnost a provoz</p>
+          <p className="text-slate-600 text-sm leading-relaxed">Mlžítka nejsou herní prvky a nesplňují ČSN EN 1176. U každého projektu posuzujeme riziko mokrých povrchů, hygienu vody, provozní dohled a vhodné umístění. Materiál a parametry ověřujeme podle konkrétního produktu.</p>
         </div>
 
         <p className="text-xs font-mono tracking-widest uppercase text-slate-400 mb-3">Doporučené produkty</p>
@@ -116,7 +119,7 @@ export default function ParkyHriste() {
         <div className="p-10 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div>
             <h3 className="text-slate-900 text-2xl mb-2" style={{ fontWeight: 700, letterSpacing: '-0.03em' }}>Navrhneme mlžítko pro váš park.</h3>
-            <p className="text-slate-500 text-sm mb-6">Konzultace a 3D vizualizace zdarma · Odpovídáme do 24 h</p>
+            <p className="text-slate-500 text-sm mb-6">Popište místo, přívod vody a zamýšlené využití. Připravíme návrh dalšího postupu.</p>
             <Link to="/reference" className="inline-flex items-center gap-2 px-6 py-3 border border-slate-300 text-slate-900 text-sm rounded-full hover:bg-slate-100 transition-all">
               Reference realizací <ArrowRight size={14} />
             </Link>

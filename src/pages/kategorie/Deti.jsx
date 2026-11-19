@@ -1,3 +1,4 @@
+import SpaceScrollStory from '@/components/kategorie/SpaceScrollStory';
 import HeroAtmosphere from '@/components/ui/HeroAtmosphere';
 import AllProductsCatalog from '@/components/kategorie/AllProductsCatalog';
 import HeroBackgroundVideo from '@/components/ui/HeroBackgroundVideo';
@@ -71,6 +72,8 @@ export default function Deti() {
         </div>
       </section>
 </MotionConfig>
+
+      <SpaceScrollStory variant="schools" />
 
       <section className="bg-slate-50 border-y border-slate-200 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">

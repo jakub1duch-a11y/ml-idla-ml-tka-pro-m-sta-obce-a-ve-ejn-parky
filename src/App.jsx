@@ -164,6 +164,7 @@ const AuthenticatedApp = () => {
         <Route path="/kalkulacka" element={<Kalkulacka />} />
         <Route path="/o-nas" element={<ONas />} />
         <Route path="/reference" element={<Reference />} />
+        <Route path="/realizace" element={<Navigate to="/reference" replace />} />
         <Route path="/reference/mlzitka-pro-zoo-praha" element={<ReferenceDetail fixedId="6a42491409abbf575447aaeb" />} />
         <Route path="/reference/mlzitko-mrak-materska-skola-siskova" element={<ReferenceDetail fixedId="6a480e05664f948152611f5f" />} />
         <Route path="/reference/mlzitko-aura-domov-palata-praha-5" element={<ReferenceDetail fixedId="6a480c0da87022c6c9559115" />} />

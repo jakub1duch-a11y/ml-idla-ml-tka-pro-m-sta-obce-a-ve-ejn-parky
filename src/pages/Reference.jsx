@@ -21,13 +21,15 @@ export default function Reference() {
   }), []);
 
   return (
-    <div className="bg-background pt-16">
-      <section className="relative min-h-[680px] overflow-hidden bg-primary lg:min-h-[760px]">
+    // A long, asynchronously populated gallery must remain visible even if a
+    // scroll observer cannot reach its intersection threshold on a phone.
+    <div data-no-scroll-motion className="bg-background pt-16">
+      <section className="relative overflow-hidden bg-primary lg:min-h-[760px]">
         <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp" alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/95 via-[#082f3f]/78 to-[#041c28]/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/70 via-transparent to-[#041c28]/10" />
 
-        <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
+        <div className="relative mx-auto grid min-h-[520px] max-w-7xl items-end gap-8 px-4 pb-12 pt-16 sm:min-h-[680px] sm:px-6 sm:pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
             <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Reference MLŽIDLA®</p>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace mlžítek, mlžných bran a mlhovišť</h1>

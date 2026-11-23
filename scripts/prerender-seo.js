@@ -42,6 +42,7 @@ const LEGACY_REDIRECTS = {
   '/produkt/linea-solo': '/produkt/Linea-ce',
   '/produkt/linea-ce': '/produkt/Linea-ce',
   '/mlziste': '/mlhoviste',
+  '/realizace': '/reference',
   '/domu': '/',
   '/hello-world': '/',
   '/category/uncategorized': '/blog',

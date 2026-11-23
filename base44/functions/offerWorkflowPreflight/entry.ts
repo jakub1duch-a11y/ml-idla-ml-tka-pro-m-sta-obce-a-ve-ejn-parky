@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
       !originalPhotosConfirmed ? 'MASTER geometrie produktu není schválena.' : '');
     if (matchingScenes.length === 0) blockers.push('Pro konkrétní produkt/poptávku zatím není schválená prostorová vizualizace; vizualizaci nelze vložit do klientské nabídky.');
     set('pricing', 'blocked', 'Cena musí být živě ověřena interní backendovou funkcí proti Kalkulaci 2026 v účtu meduna@holmtec.cz; lokální ProductOfferProfile nestačí.');
-    set('canva', 'blocked', 'Výchozí brand šablona Mlžítka HolmTec EAHbBX1hTpE nemá vyplnitelný Autofill dataset; ruční doplnění, QA všech stran a ověřený export PDF jsou povinné.');
+    set('canva', 'blocked', 'Původní Brand Template EAHbBX1hTpE nemá Autofill; nové A4 Canva designy již mají ověřené datové sloty. Zatím ale chybí ověřené produkční napojení HubSpot/Base44→Canva, schválení vizuálů, QA každé strany a skutečný export PDF.');
     set('qa', existingPdf.length ? 'needs_review' : 'blocked',
       existingPdf.length ? 'Existuje PDF, ale jeho ceny, geometrie a přílohy vyžadují QA.' : 'Neexistuje ověřený PDF export klientské nabídky.');
     set('drive', verified('mlzny_disk_offer_archive') ? 'needs_review' : 'blocked',

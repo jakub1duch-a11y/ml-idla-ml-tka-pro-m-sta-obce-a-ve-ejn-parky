@@ -6,7 +6,6 @@ import { base44 } from '@/api/base44Client';
 import { trackFunnelStep } from '@/lib/ga4';
 
 const REFERENCE_PATHS = {
-  '6a42491409abbf575447aaeb': '/reference/mlzitka-pro-zoo-praha',
   '6a480e05664f948152611f5f': '/reference/mlzitko-mrak-materska-skola-siskova',
   '6a480c0da87022c6c9559115': '/reference/mlzitko-aura-domov-palata-praha-5',
   '6a72947ef1579cba611a2f6b': '/reference/mlzitko-mrak-soukroma-zahrada',
@@ -33,7 +32,7 @@ export default function SegmentReferenceShowcase({
     let cancelled = false;
     Promise.all(referenceIds.map((id) => base44.entities.Realizace.get(id).catch(() => null)))
       .then((items) => {
-        if (!cancelled) setReferences(items.filter((item) => item?.published !== false));
+        if (!cancelled) setReferences(items.filter((item) => item?.published !== false && !['6a42491409abbf575447aaeb', '6a60d9d9702abda4e28159d3'].includes(item?.id)));
       });
     return () => { cancelled = true; };
   }, [referenceIds.join('|')]);

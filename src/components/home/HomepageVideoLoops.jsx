@@ -19,7 +19,7 @@ function classifyVideo(file) {
     return { key: 'ostrev', label: 'mlžítko Y-ARMIST', href: '/produkt/y-armist-tr60' };
   }
   if (group === 'ZOO_PRAHA' || name.includes('zoo')) {
-    return { key: 'zoo', label: 'Realizace ZOO Praha', href: '/reference/mlzitka-pro-zoo-praha' };
+    return { key: 'zoo', label: 'Realizace ZOO Praha', href: '/blog/zoo-praha-mlzitka-sest-nerezovych-soch' };
   }
   if (group === 'STEBLO' || slug.includes('bendy') || name.includes('steblo')) {
     return { key: 'bendy', label: 'BENDY / STÉBLO®', href: '/produkt/bendy-alej' };

@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Loader, Clock, Eye } from 'lucide-react';
 import BlogArticleSidebar from '@/components/blog/BlogArticleSidebar';
+import ZooPrahaEditorial from '@/components/blog/ZooPrahaEditorial';
 import ReactMarkdown from 'react-markdown';
 import { base44 } from '@/api/base44Client';
 import { setSEO, getBlogPostSEO, getBlogFaqItems } from '@/lib/seo';
@@ -139,6 +140,9 @@ export default function BlogDetail() {
       </div>
     </div>);
 
+
+  // Full-width magazine article with genuine project photography and video.
+  if (post.slug === 'zoo-praha-mlzitka-sest-nerezovych-soch') return <ZooPrahaEditorial post={post} />;
 
   const cleanContent = cleanArticleContent(post.content);
   const videoLink = (post.related_links || []).find((item) =>

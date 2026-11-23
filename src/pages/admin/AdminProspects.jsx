@@ -23,7 +23,7 @@ const STATUSES = [
 ];
 
 const REFERENCES = [
-  { key: 'zoo_praha', label: 'ZOO Praha', url: 'https://mlzidla.cz/reference/mlzitka-pro-zoo-praha' },
+  { key: 'zoo_praha', label: 'ZOO Praha', url: 'https://mlzidla.cz/blog/zoo-praha-mlzitka-sest-nerezovych-soch' },
   { key: 'polna', label: 'Město Polná', url: 'https://mlzidla.cz/reference/mesto-polna-mlzitko-mrkev' },
   { key: 'jicin', label: 'Město Jičín', url: 'https://mlzidla.cz/reference/bendy-jicinske-namesti' },
 ];

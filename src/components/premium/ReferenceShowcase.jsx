@@ -142,7 +142,7 @@ export default function ReferenceShowcase() {
   useEffect(() => {
     let current = true;
     base44.entities.Realizace.list('-created_date', 100)
-      .then((items) => { if (current) setProjects((items || []).filter((item) => item.published !== false)); })
+      .then((items) => { if (current) setProjects((items || []).filter((item) => item.published !== false && !['6a42491409abbf575447aaeb', '6a60d9d9702abda4e28159d3'].includes(item.id))); })
       .catch(() => { if (current) setError(true); })
       .finally(() => { if (current) setLoading(false); });
     return () => { current = false; };

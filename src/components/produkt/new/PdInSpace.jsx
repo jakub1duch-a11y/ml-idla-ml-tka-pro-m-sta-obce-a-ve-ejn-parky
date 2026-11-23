@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-import { isProductMediaAllowed } from '@/lib/productMediaGuard';
 
 // Produktově oddělené fotografie; žádná univerzální vizualizace pro všechny modely.
 const CURATED_SCENES = Object.freeze({
@@ -19,16 +18,14 @@ const MRAK_SCENES = Object.freeze({
 
 export default function PdInSpace({ product }) {
   const slug = String(product?.slug || '').toLowerCase();
-  const gallery = (product?.gallery_urls || []).filter((url) => isProductMediaAllowed(product, url) && /\.(jpe?g|png|webp|avif)(\?|$)/i.test(url));
-  const scene = MRAK_SCENES[slug] || CURATED_SCENES[slug] || gallery.find((url) => /vizualiz|realiz|prostred|prostřed|exterier|exteriér/i.test(url));
+  // Only explicitly assigned product scenes; never infer a product from a filename.
+  const scene = MRAK_SCENES[slug] || CURATED_SCENES[slug];
   if (!scene) return null;
-  const fullImage = slug === 'mlzny-mrak-1414'
-    ? 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/a4389816d_file_0000000004e082108545726a647c5439.png'
-    : scene;
+  const fullImage = scene;
   const displayName = product?.name || 'Mlžítko';
   return (
     <section aria-labelledby="product-in-space-title" className="relative isolate w-full overflow-hidden bg-[#163E48]">
-      <img src={fullImage} alt={`${displayName} v prostoru`} loading="lazy" className="absolute inset-0 h-full w-full object-cover object-center" />
+      <img src={fullImage} alt={`${displayName} v prostoru`} loading="lazy" className="absolute inset-0 h-full w-full object-contain object-center" />
       <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[#082C36]/90 via-[#082C36]/25 to-transparent md:bg-gradient-to-r md:from-[#082C36]/85 md:via-[#082C36]/30 md:to-transparent" />
       <div className="relative mx-auto flex min-h-[680px] max-w-7xl flex-col justify-end px-6 pb-10 pt-28 sm:min-h-[720px] sm:px-10 md:min-h-[620px] md:justify-center md:py-20 lg:min-h-[760px] lg:px-14">
         <div className="max-w-xl text-white">

@@ -16,7 +16,7 @@ const DISSOLVE_SECONDS = 1.3;
 const MAX_SEQUENCES = 5;
 
 export default function CinematicReferenceHero({
-  project, videos = [], description, isTechnicalVisual = false, title, badge,
+  project, videos = [], description, isTechnicalVisual = false, title, badge, homeMode = false,
 }) {
   const reducedMotion = useReducedMotion();
   const containerRef = useRef(null);
@@ -119,7 +119,7 @@ export default function CinematicReferenceHero({
   return (
     <section
       ref={containerRef}
-      aria-label={`Úvod realizace ${project.name}`}
+      aria-label={homeMode ? 'Úvodní prezentace MLŽIDLA.cz – ZOO Praha' : `Úvod realizace ${project.name}`}
       className="relative isolate h-[100svh] min-h-[620px] max-h-[1050px] overflow-hidden bg-[#061f2b] text-white"
       data-reference-cinematic-hero
     >
@@ -175,10 +175,10 @@ export default function CinematicReferenceHero({
 
       <div className="relative mx-auto flex h-full w-full max-w-7xl flex-col justify-between px-5 pb-7 pt-24 sm:px-8 lg:px-10 lg:pb-12 lg:pt-32">
         <Link
-          to="/reference"
+          to={homeMode ? '/reference/mlzitka-pro-zoo-praha' : '/reference'}
           className="inline-flex w-fit min-h-11 items-center gap-2 text-sm text-white/85 transition hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
         >
-          <ArrowLeft size={16} aria-hidden="true" /> Všechny realizace
+          {homeMode ? null : <ArrowLeft size={16} aria-hidden="true" />} {homeMode ? 'Prohlédnout realizaci ZOO Praha' : 'Všechny realizace'}
         </Link>
 
         <motion.div style={{ opacity: headlineOpacity }} className="max-w-[900px] pb-8">
@@ -189,7 +189,7 @@ export default function CinematicReferenceHero({
           >
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-[.23em] text-cyan-200 sm:text-xs">
-              MLŽIDLA® / REFERENCE / BY HOLMTEC
+              {homeMode ? 'MLŽIDLA® / REALIZACE / BY HOLMTEC' : 'MLŽIDLA® / REFERENCE / BY HOLMTEC'}
             </p>
             {badge && (
               <span className="rounded-full border border-white/35 bg-white/15 px-3 py-1 text-xs font-semibold text-white">
@@ -212,9 +212,7 @@ export default function CinematicReferenceHero({
         </motion.div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/25 pt-4 text-xs sm:text-sm">
-          <a href="#reference-story" className="inline-flex min-h-11 items-center gap-3 hover:text-cyan-200">
-            <ArrowDown size={18} aria-hidden="true" /> Prozkoumat projekt
-          </a>
+          {homeMode ? <Link to="/reference/mlzitka-pro-zoo-praha" className="inline-flex min-h-11 items-center gap-3 hover:text-cyan-200"><ArrowDown size={18} aria-hidden="true" /> Prozkoumat realizaci</Link> : <a href="#reference-story" className="inline-flex min-h-11 items-center gap-3 hover:text-cyan-200"><ArrowDown size={18} aria-hidden="true" /> Prozkoumat projekt</a>}
           <div className="flex flex-wrap items-center gap-2">
             {hasVideo && (
               <>

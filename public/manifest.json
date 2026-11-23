@@ -11,9 +11,9 @@
   "lang": "cs",
   "icons": [
     {
-      "src": "/favicon-mlzidla-2026.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/058086f9dba9852bce6cfd30ed13a6c4_mlzidla-favicon-256.png",
+      "sizes": "256x256",
+      "type": "image/png",
       "purpose": "any"
     },
     {

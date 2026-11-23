@@ -4,11 +4,11 @@
    mono = dokumenty, obchodní/tiskové materiály a černobílý tisk. */
 
 :root {
-  --mlzidla-navy: #07182b;
-  --mlzidla-cyan: #00c9f2;
+  --mlzidla-navy: #102B3A;
+  --mlzidla-cyan: #00C6D6;
   --mlzidla-white: #ffffff;
-  --mlzidla-logo-dark: url('/brand/mlzidla-logo-dark-master.png');
-  --mlzidla-logo-light: url('/brand/mlzidla-logo-horizontal-master.png');
+  --mlzidla-logo-dark: url('https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/e5e08f1b34bb79650fac64705a85145f_mlzidla-logo-web-dark.png');
+  --mlzidla-logo-light: url('https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/11bdd7fdde1f06b5959ea8336413c05a_mlzidla-logo-web-light.png');
   --mlzidla-logo-tagline: url('/brand/mlzidla-logo-tagline-master.png');
   --mlzidla-logo-mono: url('/brand/mlzidla-logo-mono.svg');
 }

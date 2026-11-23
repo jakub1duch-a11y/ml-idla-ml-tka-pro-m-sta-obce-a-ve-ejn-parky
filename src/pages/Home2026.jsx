@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
+import HeroMediaSlider from '@/components/home/new/HeroMediaSlider';
 import { Link } from 'react-router-dom';
 import { ArrowDown, ArrowRight, Building2, Factory, School, Trees, Wifi, Waves, Check, Droplets, Wrench, Clock3, MapPin, ShieldCheck, Sparkles } from 'lucide-react';
 import { MotionConfig } from 'framer-motion';
@@ -30,7 +31,7 @@ const spaces = [
 function HomeHero() {
   return (
     <section className="ml-home26-hero" aria-labelledby="ml-home26-hero-title">
-      <div className="ml-home26-hero-media" aria-hidden="true"><img src={HERO_URL} alt="" loading="eager" fetchPriority="high" decoding="async" /></div>
+      <div className="ml-home26-hero-media" aria-label="Videogalerie realizací MLŽIDLA.cz"><HeroMediaSlider /></div>
       <div className="ml-home26-hero-shade" aria-hidden="true" />
       <div className="ml-home26-container ml-home26-hero-inner">
         <div className="ml-home26-hero-copy">

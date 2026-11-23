@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ExternalLink, Workflow, Mail, FileSpreadsheet, Palette, ShieldCheck, AlertTriangle, LayoutDashboard, BriefcaseBusiness, Bot, RefreshCw } from 'lucide-react';
+import { ExternalLink, Workflow, Mail, FileSpreadsheet, Palette, ShieldCheck, AlertTriangle, LayoutDashboard, BriefcaseBusiness, Bot } from 'lucide-react';
 
 const BOOK = 'https://docs.google.com/spreadsheets/d/1zDl-j3xjKmAIvY3UmMq5D-SF2IkMUJznnuQhvgLRS_s/edit';
 const VIEWS = [

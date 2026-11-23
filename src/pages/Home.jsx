@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
-import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
+import HomeZooPrahaHero from '@/components/home/new/HomeZooPrahaHero';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import '@/styles/reference-motion.css';
@@ -31,7 +31,7 @@ export default function Home() {
     <div className="home-atmosphere home-clean">
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
-        <TopGateHeroSlider />
+        <HomeZooPrahaHero />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
           <HomeOverview />
           <ProductPhotoGallery />

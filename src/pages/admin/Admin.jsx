@@ -37,6 +37,7 @@ import AdminNotifications from './AdminNotifications';
 import AdminOffers from './AdminOffers';
 import AdminMobileSalesHub from './AdminMobileSalesHub';
 import AdminSalesHub from './AdminSalesHub';
+import AdminUnifiedPipeline from './AdminUnifiedPipeline';
 import AdminApprovals from './AdminApprovals';
 
 const TABS = [
@@ -64,6 +65,7 @@ const TABS = [
   { id: 'approvals', label: 'Schvalovací centrum', icon: ClipboardCheck },
   { id: 'offers', label: 'Odeslané nabídky', icon: Send },
   { id: 'sales-hub', label: 'Obchodní centrum', icon: BriefcaseBusiness },
+  { id: 'unified-pipeline', label: 'Pipeline HolmTec + MLŽIDLA', icon: BarChart3 },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
@@ -74,7 +76,7 @@ const TABS = [
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['mobile-sales', 'approvals', 'sales-hub', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
+  { label: 'Obchod', ids: ['mobile-sales', 'approvals', 'sales-hub', 'unified-pipeline', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
   { label: 'Data & systém', ids: ['analytics', 'integrations', 'chatgpt', 'notifications', 'product-analytics', 'reference-analytics'] },
 ];
@@ -160,6 +162,7 @@ export default function Admin() {
     approvals: AdminApprovals,
     offers: AdminOffers,
     'sales-hub': AdminSalesHub,
+    'unified-pipeline': AdminUnifiedPipeline,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,

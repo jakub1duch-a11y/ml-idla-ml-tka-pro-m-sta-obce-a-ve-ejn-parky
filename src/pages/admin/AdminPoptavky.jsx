@@ -88,7 +88,7 @@ export default function AdminPoptavky() {
         offer_status: p.offer_status || 'nova_poptavka',
       })),
       ...inquiries.map((item) => ({
-        id: item.id, entity: 'ContactInquiry', source: 'Kontakt', name: item.name, email: item.email, phone: '',
+        id: item.id, entity: 'ContactInquiry', source: 'Kontakt', name: item.name, email: item.email, phone: item.phone || '',
         company: '', product: item.product_id, message: item.message, status: item.status, created_date: item.created_date,
         offer_status: 'nova_poptavka',
       })),

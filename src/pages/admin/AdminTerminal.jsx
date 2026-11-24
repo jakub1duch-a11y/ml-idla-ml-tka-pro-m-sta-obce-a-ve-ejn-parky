@@ -28,7 +28,7 @@ export default function AdminTerminal() {
     ]);
     const merged = [
       ...(poptavky || []).map((p) => ({ id: p.id, entity: 'Poptavka', name: p.jmeno, email: p.email, phone: p.telefon, company: p.firma, message: p.zprava, status: p.status, created_date: p.created_date })),
-      ...(contacts || []).map((c) => ({ id: c.id, entity: 'ContactInquiry', name: c.name, email: c.email, phone: '', company: '', message: c.message, status: c.status, created_date: c.created_date })),
+      ...(contacts || []).map((c) => ({ id: c.id, entity: 'ContactInquiry', name: c.name, email: c.email, phone: c.phone || '', company: '', message: c.message, status: c.status, created_date: c.created_date })),
     ].sort((a, b) => new Date(b.created_date || 0) - new Date(a.created_date || 0));
     setInquiries(merged);
     setTasks((adminTasks || []).filter((t) => !['completed', 'cancelled'].includes(t.status)));

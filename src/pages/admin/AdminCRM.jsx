@@ -51,7 +51,7 @@ export default function AdminCRM() {
         offer_status: p.offer_status || 'nova_poptavka', created_date: p.created_date, total: 0,
       })),
       ...contacts.map((c) => ({
-        id: c.id, source: 'contact', name: c.name, email: c.email, phone: '',
+        id: c.id, source: 'contact', name: c.name, email: c.email, phone: c.phone || '',
         company: '', product: '', message: c.message, status: c.status,
         offer_status: 'nova_poptavka', created_date: c.created_date, total: 0,
       })),

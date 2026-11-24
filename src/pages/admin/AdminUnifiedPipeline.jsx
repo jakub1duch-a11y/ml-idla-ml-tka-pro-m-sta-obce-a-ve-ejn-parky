@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { base44 } from '@/api/base44Client';
 import {
   ArrowUpRight, CalendarDays, ChevronRight, CircleAlert, ClipboardList,
   ExternalLink, FileSpreadsheet, Filter, LayoutGrid, List, Mail,
@@ -16,6 +17,49 @@ const BRAND_FILTERS = [
 ];
 const FORMAT_CZK = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
 const normalize = (input) => String(input || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const LIVE_STATUS = {
+  draft: 'calculation',
+  pending_approval: 'calculation',
+  approved: 'offer',
+  sent: 'offer',
+  accepted: 'order',
+  ordered: 'order',
+  in_production: 'order',
+  completed: 'order',
+};
+const CLOSED_STATUSES = new Set(['cancelled', 'canceled', 'rejected', 'archived', 'lost']);
+const isTestOrder = (order) => /\b(test|ghost test|duplicita|nepoužívat)\b/i.test(
+  [order.project_name, order.client_company, order.production_notes?.slice(0, 150)].join(' ')
+);
+const validAmount = (value) => typeof value === 'number' && Number.isFinite(value) && value > 0;
+function toLiveCase(order) {
+  const state = String(order.status || '').toLowerCase();
+  const accepted = ['accepted', 'ordered', 'in_production', 'completed'].includes(state);
+  const total = validAmount(order.total_price) ? order.total_price : null;
+  return {
+    key: 'base44-' + order.id,
+    bt: order.quote_number || 'Bez čísla CN',
+    quote: order.quote_number || '',
+    brand: 'mlzidla',
+    customer: order.client_company || order.client_name || 'Neuvedený zákazník',
+    project: order.project_name || 'Neupřesněný projekt',
+    product: order.product_name || order.description?.slice(0, 90) || 'Mlžítko',
+    stage: LIVE_STATUS[state] || 'inquiry',
+    date: order.updated_date ? new Date(order.updated_date).toLocaleDateString('cs-CZ') : '—',
+    nextStep: accepted ? 'Ověřit výrobní a dodací stav podle zakázky.' : 'Ověřit stav nabídky a další komunikaci.',
+    note: 'Živá evidence Base44 (ProjectOrder). Celková hodnota nemá ve schématu jednoznačně doložený režim DPH. Finální smluvní cenu a její DPH potvrďte objednávkou.',
+    source: 'live',
+    amountUnclassified: total,
+    finalPrice: null,
+    offerPrice: null,
+    basePrice: null,
+    priceStatus: total == null ? 'Cena zatím neověřena' : (accepted ? 'Evidovaná částka objednávky – režim DPH ověřit' : 'Evidovaná částka – nepotvrzená finální cena'),
+    orderUrl: order.quote_pdf_url || order.quote_drive_file_url || '',
+    folderUrl: order.drive_case_folder_url || '',
+    gmail: '',
+  };
+}
+
 
 function StageLabel({ stage }) {
   const config = PIPELINE_STAGES.find((item) => item.id === stage);
@@ -52,6 +96,8 @@ function CaseCard({ item, onOpen }) {
       </div>
       <div className="text-[14px] font-semibold leading-5 text-[#142f3d]">{item.customer}</div>
       <p className="mt-1.5 min-h-9 text-xs leading-[1.5] text-slate-600">{item.product}</p>
+      {item.finalPrice != null && <p className="mt-2 text-sm font-bold text-emerald-700">Finální: {FORMAT_CZK.format(item.finalPrice)}</p>}
+      {item.amountUnclassified != null && <p className="mt-2 text-sm font-semibold tabular-nums text-[#152f3c]">{FORMAT_CZK.format(item.amountUnclassified)} <span className="text-[10px] font-normal text-slate-500">režim DPH neověřen</span></p>}
       {item.offerPrice != null && <p className="mt-2 text-sm font-bold tabular-nums text-[#152f3c]">{FORMAT_CZK.format(item.offerPrice)}</p>}
       {item.basePrice != null && <p className="mt-2 text-sm font-bold tabular-nums text-[#152f3c]">{FORMAT_CZK.format(item.basePrice)} <span className="text-[10px] font-normal text-slate-500">základ</span></p>}
       <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
@@ -95,10 +141,14 @@ function CaseDetail({ item, onClose }) {
               <dt className="text-slate-500">Projekt</dt><dd className="font-medium text-slate-800">{item.project || 'Neuvedeno'}</dd>
               <dt className="text-slate-500">BT</dt><dd className="font-medium text-slate-800">{item.bt}</dd>
               <dt className="text-slate-500">CN BT</dt><dd className="font-medium text-slate-800">{item.quote || 'Zatím nepřiřazeno'}</dd>
+              <dt className="text-slate-500">Finální cena</dt><dd className="font-semibold">{item.finalPrice != null ? FORMAT_CZK.format(item.finalPrice) : 'Nepotvrzena'}</dd>
+              <dt className="text-slate-500">Zdroj</dt><dd>{item.source === 'live' ? 'Base44 – aktuální záznam' : 'Google Sheets – snímek ' + PIPELINE_SNAPSHOT_DATE}</dd>
               <dt className="text-slate-500">Změna</dt><dd className="font-medium text-slate-800">{item.date}</dd>
-              {(item.offerPrice != null || item.basePrice != null) && <>
-                <dt className="text-slate-500">Cena</dt>
-                <dd className="font-semibold text-slate-800">{FORMAT_CZK.format(item.offerPrice ?? item.basePrice)}<div className="mt-0.5 text-xs font-normal text-slate-500">{item.offerPriceNote || item.basePriceNote}</div></dd>
+              {(item.offerPrice != null || item.basePrice != null || item.amountUnclassified != null) && <>
+                <dt className="text-slate-500">Cena nabídky</dt>
+                <dd className="font-semibold text-slate-800">{item.offerPrice != null ? FORMAT_CZK.format(item.offerPrice) : '—'}<div className="mt-0.5 text-xs font-normal text-slate-500">{item.offerPriceNote || 'Není ověřena odeslaná cena'}</div></dd>
+                {item.basePrice != null && <><dt className="text-slate-500">Pracovní základ</dt><dd>{FORMAT_CZK.format(item.basePrice)} <span className="text-xs text-slate-500">{item.basePriceNote}</span></dd></>}
+                {item.amountUnclassified != null && <><dt className="text-slate-500">Částka Base44</dt><dd>{FORMAT_CZK.format(item.amountUnclassified)}<div className="text-xs font-normal text-amber-700">{item.priceStatus}</div></dd></>}
               </>}
             </dl>
           </div>
@@ -114,10 +164,12 @@ function CaseDetail({ item, onClose }) {
           </div>}
 
           <div className="space-y-2">
-            <a href={item.gmail} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#102d3c] px-4 py-3 text-sm font-semibold text-white hover:bg-[#17495e]"><Mail size={17} /> Otevřít komunikaci v Gmailu <ArrowUpRight size={15} /></a>
+            {item.gmail && <a href={item.gmail} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#102d3c] px-4 py-3 text-sm font-semibold text-white hover:bg-[#17495e]"><Mail size={17} /> Otevřít komunikaci v Gmailu <ArrowUpRight size={15} /></a>}
+            {item.orderUrl && <a href={item.orderUrl} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-cyan-300 bg-white px-4 py-3 text-sm font-semibold text-[#142f3d]"><FileSpreadsheet size={17} /> PDF nabídky <ArrowUpRight size={15} /></a>}
+            {item.folderUrl && <a href={item.folderUrl} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-[#142f3d]">Složka projektu <ArrowUpRight size={15} /></a>}
             <a href={PIPELINE_SHEET_URL} target="_blank" rel="noopener noreferrer" className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-semibold text-[#142f3d] hover:border-cyan-400"><FileSpreadsheet size={17} /> Otevřít záznam v Google Sheets <ArrowUpRight size={15} /></a>
           </div>
-          <p className="text-xs leading-5 text-slate-500">Úpravy fází a cen se zatím provádějí ve zdrojové tabulce. Toto zobrazení je čtecí náhled ověřeného snímku dat k {PIPELINE_SNAPSHOT_DATE}.</p>
+          <p className="text-xs leading-5 text-slate-500">Historická BT evidence je pouze snímek k {PIPELINE_SNAPSHOT_DATE}; položky Base44 se načítají zvlášť. Zobrazení je pouze pro čtení.</p>
         </div>
       </section>
     </div>
@@ -129,12 +181,34 @@ export default function AdminUnifiedPipeline() {
   const [view, setView] = useState('kanban');
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(null);
+  const [liveOrders, setLiveOrders] = useState([]);
+  const [liveError, setLiveError] = useState('');
+  const [liveLoading, setLiveLoading] = useState(true);
+  useEffect(() => {
+    let active = true;
+    base44.entities.ProjectOrder.list('-updated_date', 250)
+      .then((rows) => {
+        if (!active) return;
+        const unique = new Map();
+        (Array.isArray(rows) ? rows : []).forEach((order) => {
+          if (!order?.id || isTestOrder(order) || CLOSED_STATUSES.has(String(order.status || '').toLowerCase())) return;
+          const key = order.quote_number || order.id;
+          if (!unique.has(key)) unique.set(key, toLiveCase(order));
+        });
+        setLiveOrders(Array.from(unique.values()));
+        setLiveError('');
+      })
+      .catch(() => { if (active) setLiveError('Živé záznamy Base44 nelze načíst. Zobrazen je pouze historický snímek.'); })
+      .finally(() => { if (active) setLiveLoading(false); });
+    return () => { active = false; };
+  }, []);
+  const allCases = useMemo(() => [...liveOrders, ...PIPELINE_CASES.map((item) => ({ ...item, source: 'snapshot' }))], [liveOrders]);
 
-  const filtered = useMemo(() => PIPELINE_CASES.filter((item) => {
+  const filtered = useMemo(() => allCases.filter((item) => {
     if (brand !== 'all' && item.brand !== brand) return false;
     const haystack = [item.bt, item.quote, item.customer, item.project, item.product, item.nextStep].join(' ');
     return normalize(haystack).includes(normalize(query.trim()));
-  }), [brand, query]);
+  }), [allCases, brand, query]);
 
   const counters = useMemo(() => ({
     offer: filtered.filter((item) => item.stage === 'offer').length,
@@ -173,7 +247,7 @@ export default function AdminUnifiedPipeline() {
       <main className="mx-auto max-w-[1440px] space-y-5 px-4 pt-6 md:px-7">
         <div role="status" className="flex items-start gap-3 rounded-2xl border border-amber-200 bg-[#fffbec] px-4 py-3 text-xs leading-5 text-[#7b6125]">
           <CircleAlert size={18} className="mt-0.5 shrink-0" />
-          <div><strong>Ověřený snímek k {PIPELINE_SNAPSHOT_DATE}.</strong> Data se zatím nenačítají automaticky z Google Sheets. Úpravy a aktuální stav najdete ve zdrojové tabulce; změny karet zde neprovádíme, abychom nevytvářeli druhou evidenci.</div>
+          <div><strong>Smíšené zdroje.</strong> {liveLoading ? 'Načítám živé případy Base44. ' : liveError || ('Načteno ' + liveOrders.length + ' projektů z Base44. ')} Historická BT evidence je snímek k {PIPELINE_SNAPSHOT_DATE} a není online synchronizovaná s Google Sheets. Ceny bez ověřené sazby DPH ani finální smluvní ceny se nezapočítávají jako potvrzené.</div>
         </div>
 
         <section className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between" aria-label="Filtry pipeline">
@@ -198,7 +272,7 @@ export default function AdminUnifiedPipeline() {
 
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="flex items-center gap-2 text-base font-semibold"><Filter size={17} className="text-[#007e92]" /> {view === 'kanban' ? 'Kanban zakázek' : 'Přehled zakázek'}</h2>
-          <span className="text-xs text-slate-500">{filtered.length} z {PIPELINE_CASES.length} zaznamenaných případů</span>
+          <span className="text-xs text-slate-500">{filtered.length} z {allCases.length} zobrazených případů (Base44 + starší BT snímek)</span>
         </div>
 
         {view === 'kanban' ? (
@@ -222,7 +296,7 @@ export default function AdminUnifiedPipeline() {
           <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
             <table className="w-full min-w-[800px] border-collapse text-left text-sm">
               <thead className="bg-[#eef3f6] text-[11px] font-semibold uppercase tracking-wider text-slate-500">
-                <tr><th className="px-4 py-4">Číslo BT</th><th className="px-4 py-4">Zákazník / produkt</th><th className="px-4 py-4">Značka</th><th className="px-4 py-4">Fáze</th><th className="px-4 py-4">Cena bez DPH</th><th className="px-4 py-4">Detail</th></tr>
+                <tr><th className="px-4 py-4">Číslo BT</th><th className="px-4 py-4">Zákazník / produkt</th><th className="px-4 py-4">Značka</th><th className="px-4 py-4">Fáze</th><th className="px-4 py-4">Nabídka bez DPH</th><th className="px-4 py-4">Finální cena</th><th className="px-4 py-4">Fáze zdroje</th><th className="px-4 py-4">Detail</th></tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {filtered.map((item) => <tr key={item.key} className="hover:bg-cyan-50/40">
@@ -231,12 +305,14 @@ export default function AdminUnifiedPipeline() {
                   <td className="px-4 py-4"><BrandLabel brand={item.brand} /></td>
                   <td className="px-4 py-4"><StageLabel stage={item.stage} /></td>
                   <td className="whitespace-nowrap px-4 py-4 text-xs font-semibold tabular-nums text-slate-800">{item.offerPrice != null ? FORMAT_CZK.format(item.offerPrice) : item.basePrice != null ? FORMAT_CZK.format(item.basePrice) + ' *' : '—'}</td>
+                  <td className="px-4 py-4 text-xs">{item.finalPrice != null ? FORMAT_CZK.format(item.finalPrice) : '—'}</td>
+                  <td className="px-4 py-4 text-xs">{item.source === 'live' ? 'Base44 · živě' : 'BT · snímek'}</td>
                   <td className="px-4 py-4"><button type="button" onClick={() => setSelected(item)} className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-semibold text-[#007e92] hover:bg-cyan-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-600">Otevřít <ChevronRight size={14} /></button></td>
                 </tr>)}
-                {filtered.length === 0 && <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-500">Pro zadané filtry nejsou žádné případy.</td></tr>}
+                {filtered.length === 0 && <tr><td colSpan={8} className="px-5 py-12 text-center text-sm text-slate-500">Pro zadané filtry nejsou žádné případy.</td></tr>}
               </tbody>
             </table>
-            <p className="border-t border-slate-100 p-3 text-xs text-slate-500">* Jen schválená cena základních výrobků, nikoli kompletní nabídka.</p>
+            <p className="border-t border-slate-100 p-3 text-xs text-slate-500">* Pouze pracovní základ výrobků. Částky Base44 bez určeného režimu DPH jsou v detailu projektu; finální cena se uvádí až po ověření objednávky.</p>
           </div>
         )}
         <footer className="flex items-start gap-2 rounded-xl border border-[#d8e6eb] bg-white p-4 text-xs leading-5 text-slate-500">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, ChevronDown, Instagram, Linkedin, Youtube, MapPin, Phone, Mail, ShieldCheck, Code2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown, Instagram, Linkedin, Youtube, MapPin, Phone, Mail, ShieldCheck } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 
@@ -51,14 +51,15 @@ export default function Footer() {
         <div className="grid gap-12 border-b border-white/15 pb-12 xl:grid-cols-[minmax(260px,.95fr)_minmax(0,1.75fr)] xl:gap-20">
           <div className="min-w-0">
             <Link to="/" className="inline-flex max-w-full" aria-label="MLŽIDLA.cz — úvodní stránka">
-              <Logo size="lg" variant="full" className="max-w-full" />
+              <Logo size="lg" className="max-w-full" />
             </Link>
+            <p className="mt-2 text-[11px] font-normal tracking-[.08em] text-white/70">by HolmTec</p>
             <p className="mt-5 max-w-[430px] text-sm leading-7 text-white/75">
               Nerezová mlžítka pro města, veřejná prostranství, sportoviště i zahrady.
               Návrh, výroba a automatizace pro konkrétní prostor.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link to="/poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#04B9ED] px-5 py-3 text-sm font-bold text-[#07131D] transition hover:bg-[#62D6F4]">
+              <Link to="/poptavka" className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[#08B5B7] px-5 py-3 text-sm font-bold text-[#052B3E] transition hover:bg-[#55D6D4]">
                 Poptat projekt <ArrowRight size={16} aria-hidden="true" />
               </Link>
               <Link to="/reference" className="inline-flex min-h-11 items-center rounded-full border border-white/40 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10">
@@ -134,9 +135,8 @@ export default function Footer() {
             </span>
           </div>
           <span className="inline-flex flex-wrap items-center gap-1.5 text-white/75">
-            <Code2 size={14} className="text-[#50D2F0]" aria-hidden="true" />
-            Created with <span role="img" aria-label="modré srdce">💙</span> powered by
-            <a href="https://holmtec.cz" target="_blank" rel="noopener noreferrer" className="font-semibold text-white hover:text-[#67D7F4]">HolmTec s.r.o.</a>
+            <span>MLŽIDLA.cz <span className="text-white/55">by</span></span>
+            <a href="https://holmtec.cz" target="_blank" rel="noopener noreferrer" className="font-medium text-white hover:text-[#67D7F4]">HolmTec</a>
           </span>
         </div>
       </div>

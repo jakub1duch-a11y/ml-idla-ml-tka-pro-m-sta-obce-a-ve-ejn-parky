@@ -148,4 +148,3 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
     </main>
   );
 }
-

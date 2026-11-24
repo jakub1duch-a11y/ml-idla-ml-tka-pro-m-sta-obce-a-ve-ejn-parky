@@ -11,7 +11,7 @@ const TYPES = [
 ];
 
 export default function SpoluPartnerForm() {
-  const [form, setForm] = useState({ name: '', email: '', partner_type: 'architekt', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', partner_type: 'architekt', message: '' });
   const [state, setState] = useState('idle');
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
@@ -22,7 +22,7 @@ export default function SpoluPartnerForm() {
     const typeLabel = TYPES.find((t) => t.value === form.partner_type)?.label;
     await base44.entities.ContactInquiry.create({
       name: form.name,
-      email: form.email,
+      email: form.email, phone: form.phone.trim(),
       service_type: `partnerstvi-${form.partner_type}`,
       message: `Zájem o partnerskou spolupráci (${typeLabel}).\n\n${form.message}`,
     });
@@ -67,6 +67,10 @@ export default function SpoluPartnerForm() {
                 className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white placeholder:text-white/25 focus:border-cyan-400/50 focus:outline-none" placeholder="jan@studio.cz" />
             </label>
           </div>
+          <label className="block">
+            <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-widest text-white/40">Telefon *</span>
+            <input required type="tel" autoComplete="tel" value={form.phone} onChange={set('phone')} className="w-full rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-sm text-white" placeholder="+420 123 456 789" />
+          </label>
           <label className="block">
             <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-widest text-white/40">Typ partnera</span>
             <select value={form.partner_type} onChange={set('partner_type')}

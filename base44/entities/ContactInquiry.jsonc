@@ -6,6 +6,7 @@
       "type": "string",
       "description": "Contact name"
     },
+    "phone": { "type": "string", "description": "Telefonní kontakt" },
     "email": {
       "type": "string",
       "description": "Contact email"

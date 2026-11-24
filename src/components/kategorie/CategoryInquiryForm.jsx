@@ -13,7 +13,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
     try {
       const created = await base44.entities.ContactInquiry.create({
         name: form.name,
-        email: form.email,
+        email: form.email, phone: form.phone.trim(),
         project_scope: projectScope,
         service_type: `segment:${category}`,
         description: [
@@ -53,7 +53,7 @@ export default function CategoryInquiryForm({ category, projectScope = 'urban', 
       <input value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })}
       placeholder="Lokalita projektu" className="px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-slate-900 bg-white" />
       <input type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      placeholder="Telefon (nepovinné)" className="px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-slate-900 bg-white sm:col-span-2" />
+      required placeholder="Telefon *" className="px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-slate-900 bg-white sm:col-span-2" />
       <textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
       placeholder="Co řešíte? Stačí typ prostoru, přibližná plocha a fáze projektu." rows={3} className="px-4 py-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-slate-900 bg-white sm:col-span-2 resize-none" />
       {status === 'error' ? <p className="sm:col-span-2 text-sm text-red-700">Poptávku se nepodařilo odeslat. Zkuste to prosím znovu nebo nás kontaktujte telefonicky.</p> : null}

@@ -11,8 +11,8 @@ export default function SpecialistContactForm() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!form.phone.trim() && !form.email.trim()) {
-      setError('Vyplňte prosím alespoň telefon nebo email.');
+    if (!form.phone.trim()) {
+      setError('Vyplňte prosím telefonní číslo.');
       return;
     }
     setError('');
@@ -20,7 +20,7 @@ export default function SpecialistContactForm() {
     try {
       const created = await base44.entities.ContactInquiry.create({
         name: form.name || 'Neuvedeno',
-        email: form.email || 'neuvedeno@mlzidla.cz',
+        email: form.email || 'neuvedeno@mlzidla.cz', phone: form.phone.trim(),
         message: `[Smart systém — poptávka kontaktu] Telefon: ${form.phone || 'neuvedeno'}`
       });
       trackQuickInquiryClick('Smart systém — specialista', 'smart_savings_form');
@@ -45,14 +45,14 @@ export default function SpecialistContactForm() {
         placeholder="Jméno nebo firma"
         className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 transition-colors" />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
-          placeholder="Telefon"
+        <input required type="tel" autoComplete="tel" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+          placeholder="Telefon *"
           className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 transition-colors" />
         <input value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
           placeholder="Email"
           className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-slate-900 transition-colors" />
       </div>
-      <p className="text-xs text-slate-400">Vyplňte alespoň telefon nebo email.</p>
+      <p className="text-xs text-slate-400">Telefonní kontakt je povinný.</p>
       {error && <p className="text-xs text-red-500">{error}</p>}
       <button type="submit" disabled={sending}
         className="w-full py-4 bg-slate-900 text-white text-sm font-bold rounded-full hover:bg-slate-800 transition-all disabled:opacity-60 flex items-center justify-center gap-2">

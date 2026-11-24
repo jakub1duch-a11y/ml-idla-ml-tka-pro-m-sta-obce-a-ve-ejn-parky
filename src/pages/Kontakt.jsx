@@ -58,7 +58,7 @@ export default function Kontakt() {
 
       const created = await base44.entities.ContactInquiry.create({
         name: form.name,
-        email: form.email,
+        email: form.email, phone: form.phone.trim(),
         message: msg,
         service_type: form.request_type || 'contact',
         status: 'new'
@@ -161,7 +161,7 @@ export default function Kontakt() {
                 className={inputCls} />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input type="tel" placeholder="Telefon"
+                  <input type="tel" required autoComplete="tel" placeholder="Telefon *"
                 value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })}
                 className={inputCls} />
                   <input type="text" placeholder="Firma / organizace"

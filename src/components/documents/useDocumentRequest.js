@@ -14,7 +14,7 @@ export default function useDocumentRequest(initialValues) {
   const submit = async (event) => {
     event.preventDefault();
     if (pending.current || sent) return;
-    if (!values.name.trim() || !values.email.trim() || !values.document.trim() || !values.consent) {
+    if (!values.name.trim() || !values.email.trim() || !values.phone?.trim() || !values.document.trim() || !values.consent) {
       setError('Vyplňte jméno, e-mail a požadované podklady a potvrďte souhlas.');
       return;
     }
@@ -23,7 +23,7 @@ export default function useDocumentRequest(initialValues) {
     setError('');
     try {
       const record = await base44.entities.ContactInquiry.create({
-        name: values.name.trim(), email: values.email.trim().toLowerCase(),
+        name: values.name.trim(), email: values.email.trim().toLowerCase(), phone: values.phone.trim(),
         service_type: 'technical_documents', status: 'new',
         message: ['ŽÁDOST O TECHNICKÉ PODKLADY', `Podklady: ${values.document.trim()}`,
           values.product.trim() && `Produkt: ${values.product.trim()}`,

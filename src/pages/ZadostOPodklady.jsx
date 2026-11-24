@@ -9,7 +9,7 @@ export default function ZadostOPodklady() {
     setSEO({ title: 'Žádost o technické podklady | MLŽIDLA.cz', description: 'Vyžádejte si technické listy, výkresy a montážní dokumentaci pro konkrétní produkt a projekt.', canonicalPath: '/zadost-o-podklady' });
   }, []);
   const initialValues = {
-    name: '', email: '', company: '', consent: false, details: '',
+    name: '', email: '', phone: '', company: '', consent: false, details: '',
     product: (params.get('produkt') || '').slice(0, 200),
     document: (params.get('dokument') || params.get('zprava') || '').slice(0, 1000),
   };

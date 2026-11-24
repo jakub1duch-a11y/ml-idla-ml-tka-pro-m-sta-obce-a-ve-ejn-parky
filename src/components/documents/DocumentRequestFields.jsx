@@ -3,6 +3,7 @@ import React from 'react';
 const fields = [
   { name: 'name', label: 'Jméno a příjmení', required: true, autoComplete: 'name', maxLength: 160 },
   { name: 'email', label: 'E-mail', required: true, type: 'email', autoComplete: 'email', maxLength: 254 },
+  { name: 'phone', label: 'Telefon', required: true, type: 'tel', autoComplete: 'tel', maxLength: 30 },
   { name: 'company', label: 'Firma / organizace', autoComplete: 'organization', maxLength: 200 },
   { name: 'product', label: 'Produkt (pokud jej znáte)', maxLength: 200 },
 ];

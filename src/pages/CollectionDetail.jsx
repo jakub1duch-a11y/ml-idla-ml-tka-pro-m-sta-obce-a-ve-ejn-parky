@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowRight, MapPin, Ruler, Droplets } from 'lucide-react';
+import { ArrowRight, MapPin, Ruler, Droplets, ShieldCheck, Wrench } from 'lucide-react';
 import { setSEO, SEO_PAGES } from '@/lib/seo';
 import DetailPhotoStory from '@/components/motion/DetailPhotoStory';
 import CollectionHero from '@/components/kolekce/CollectionHero';
@@ -169,4 +169,3 @@ export default function CollectionDetail({ forcedCollection, canonicalPath }) {
     </main>
   );
 }
-

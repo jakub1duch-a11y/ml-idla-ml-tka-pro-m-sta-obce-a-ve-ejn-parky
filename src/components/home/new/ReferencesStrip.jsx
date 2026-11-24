@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, MapPin, Calendar } from 'lucide-react';
+import { ArrowRight, MapPin, Calendar, PlayCircle, Shapes } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
 const CATEGORY = { mestsky: 'Veřejný prostor', event: 'Event', soukromy: 'Soukromá zahrada', prumyslovy: 'Areál' };
 const FALLBACK = '/media/optimized/518c8c2a3_mlzitka-pro-mesta.webp';
+const POLNA_ID = '6a450e035aef0b45b2a8728f';
+const isPolna = (item) => item?.id === POLNA_ID || /poln[aá]/i.test(item?.name || '') && /mrkev/i.test(item?.name || '');
+const hasVideo = (item) => Boolean(item?.video_url || (item?.gallery_urls || []).some((url) => /\.(mp4|webm|mov|ogg)(\?|$)|youtube\.com|youtu\.be|drive\.google\.com\/file\/d\//i.test(url)));
+const referenceUrl = (item) => isPolna(item) ? '/reference/mesto-polna-mlzitko-mrkev' : `/reference/${item.id}`;
 
 export default function ReferencesStrip() {
   const [items, setItems] = useState(null);
 
   useEffect(() => {
-    base44.entities.Realizace.filter({ published: true }, { sort: '-featured', limit: 6 })
-      .then((page) => setItems(page.items || []))
+    base44.entities.Realizace.filter({ published: true }, { sort: '-featured', limit: 40 })
+      .then((page) => {
+        const all = page.items || [];
+        setItems([...all.filter(isPolna), ...all.filter((item) => !isPolna(item))].slice(0, 6));
+      })
       .catch(() => setItems([]));
   }, []);
 
@@ -44,11 +51,12 @@ export default function ReferencesStrip() {
 
 function RefCard({ item, large }) {
   return (
-    <Link to={`/reference/${item.id}`} className={`group relative block overflow-hidden rounded-3xl bg-[#0A2342] ${large ? 'aspect-[4/3]' : 'aspect-square'}`}>
+    <Link to={referenceUrl(item)} className={`group relative block overflow-hidden rounded-3xl bg-[#0A2342] ${large ? 'aspect-[4/3]' : 'aspect-square'}`}>
       <img src={item.image_url || FALLBACK} alt={item.name} loading="lazy" decoding="async" onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = FALLBACK; }} className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#07131D]/90 via-[#07131D]/25 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 text-white">
-        {item.category && <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.12em] backdrop-blur">{CATEGORY[item.category]}</span>}
+        {isPolna(item) ? <span className="inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1.5 text-[11px] font-bold text-[#0A2342]"><Shapes size={15} aria-hidden="true" /> Mlžítko na míru pro město Polná</span> : item.category && <span className="rounded-full bg-white/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[.12em] backdrop-blur">{CATEGORY[item.category]}</span>}
+        {hasVideo(item) && <span className="ml-2 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2.5 py-1.5 text-[11px] font-bold text-[#0A2342]"><PlayCircle size={14} aria-hidden="true" /> Video</span>}
         <h3 className={`mt-2 font-heading font-bold leading-tight ${large ? 'text-2xl sm:text-3xl' : 'text-sm sm:text-base line-clamp-2'}`}>{item.name}</h3>
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-xs text-white/75">
           {item.location && <span className="inline-flex items-center gap-1"><MapPin size={12} />{item.location}</span>}

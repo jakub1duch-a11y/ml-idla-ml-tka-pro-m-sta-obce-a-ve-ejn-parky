@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu, Wifi, TrainFront, Landmark, Hotel } from 'lucide-react';
+import { ChevronDown, Building2, Trees, Waves, Palette, Tent, Factory, Flower2, Sparkles, Baby, HelpCircle, ShieldCheck, Wrench, Download, Calculator, PlayCircle, LogIn, UserPlus, Droplets, Cpu, Wifi, TrainFront, Landmark, Hotel, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from '@/components/layout/Logo';
 import MobileMenu from '@/components/layout/MobileMenu';
@@ -232,7 +232,7 @@ export default function Header() {
                 </AnimatePresence>
               </div>
               <Link to={inquiryPath}
-              className="btn-metallic-mist min-h-11 px-5 py-2.5 text-sm font-bold rounded-none">{locale === 'cs' ? 'POPTAT CENU' : internationalCopy.quote}
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#08B5B7] px-5 py-2.5 text-sm font-bold text-[#052B3E] shadow-sm transition-colors hover:bg-[#55D6D4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#55D6D4]">{locale === 'cs' ? 'Poptat řešení' : internationalCopy.quote}
               </Link>
             </div>
             
@@ -247,37 +247,9 @@ export default function Header() {
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.94 }}
               transition={{ duration: 0.12, ease: 'easeOut' }}
-              className="group relative xl:hidden flex h-10 w-10 -mr-2 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
+              className="group relative xl:hidden flex h-11 w-11 items-center justify-center rounded-full text-white outline-none transition-colors duration-300 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-200/70">
               
-              <motion.span
-                aria-hidden="true"
-                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
-                animate={{
-                  width: mobileOpen ? 22 : 22,
-                  y: mobileOpen ? 0 : -4,
-                  rotate: mobileOpen ? 45 : 0,
-                  x: mobileOpen ? 0 : 0
-                }}
-                whileHover={!mobileOpen ? { x: 1.5 } : { rotate: 48 }}
-                transition={{ duration: 0.12, ease: 'easeOut' }} />
-              
-              <motion.span
-                aria-hidden="true"
-                className="pointer-events-none absolute h-[1.5px] rounded-full bg-current shadow-[0_0_10px_rgba(255,255,255,.16)]"
-                animate={{
-                  width: mobileOpen ? 22 : 15,
-                  y: mobileOpen ? 0 : 4,
-                  rotate: mobileOpen ? -45 : 0,
-                  x: mobileOpen ? 0 : 3.5
-                }}
-                whileHover={!mobileOpen ? { width: 22, x: 0 } : { rotate: -48 }}
-                transition={{ duration: 0.12, ease: 'easeOut' }} />
-              
-              <motion.span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-1 rounded-full border border-white/0"
-                animate={{ borderColor: mobileOpen ? 'rgba(255,255,255,.14)' : 'rgba(255,255,255,0)' }}
-                transition={{ duration: .22 }} />
+              {mobileOpen ? <X size={24} strokeWidth={1.8} aria-hidden="true" /> : <Menu size={24} strokeWidth={1.8} aria-hidden="true" />}
               
             </motion.button>
           </div>

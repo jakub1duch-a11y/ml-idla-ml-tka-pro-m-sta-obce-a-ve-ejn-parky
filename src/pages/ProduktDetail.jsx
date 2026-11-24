@@ -9,7 +9,10 @@ import PdCompactHero from '@/components/produkt/new/PdCompactHero';
 import GateVariantHero from '@/components/produkt/new/GateVariantHero';
 import PdProductSuggestions from '@/components/produkt/new/PdProductSuggestions';
 import PdVisualGalleryCompact from '@/components/produkt/new/PdVisualGalleryCompact';
+import PdInSpace from '@/components/produkt/new/PdInSpace';
 import ProductMotionSection from '@/components/produkt/ProductMotionSection';
+import SpiralEditorialSections from '@/components/produkt/SpiralEditorialSections';
+import LizatkoEditorialSections from '@/components/produkt/LizatkoEditorialSections';
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
@@ -75,12 +78,25 @@ export default function ProduktDetail() {
       <div id="parametry" className="scroll-mt-36"><PdSpecs product={product} /></div>
       <AvenueConfigurator product={product} />
       <div id="galerie" className="scroll-mt-36"><PdVisualGalleryCompact product={product} /></div>
+      <PdInSpace product={product} />
+      {product.slug === 'mlzna-spirála' && <SpiralEditorialSections product={product} />}
+      {['mlzitko-lizatko', 'lolli'].includes(product.slug) && <LizatkoEditorialSections product={product} />}
       <ProductMotionSection key={product.slug} product={product} />
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <PdSuplaControl product={product} />
       <PdFaq product={product} />
-      <div id="reference" className="scroll-mt-24"><PdReferences product={product} /></div>
+      <div id="reference" className="scroll-mt-24">
+        <PdReferences product={product} />
+        {/mrak/i.test(`${product.slug || ''} ${product.name || ''}`) && (
+          <div className="mx-auto max-w-7xl px-5 pb-8 sm:px-8 lg:px-10">
+            <Link to="/reference/mlzitko-mrak-soukroma-zahrada" className="inline-flex items-center gap-2 rounded-full border border-[#C9DFD5] bg-[#F3FAF6] px-4 py-2 text-xs font-semibold text-[#236A4E] transition-colors hover:bg-[#E1F3E9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#236A4E]">
+              Skutečná realizace · MRAK 1414 v soukromé zahradě <ArrowRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        )}
+      </div>
+
       <section className="mx-auto max-w-7xl px-5 py-10"><div className="rounded-3xl border border-cyan-900/15 bg-[#eef8fb] p-7 md:p-10"><h2 className="text-2xl font-semibold">Filtrace a úprava vody pro mlžítko</h2><p className="mt-3 max-w-3xl text-slate-600">Kvalita vstupní vody ovlivňuje zanášení trysek a nároky na údržbu. Podle tvrdosti vody lze doplnit vhodnou filtraci nebo změkčovač.</p><Link to="/uprava-vody" className="mt-5 inline-flex font-semibold text-[#0b4860] underline underline-offset-4">Jak upravovat vodu pro nízkotlaká mlžítka →</Link></div></section>
       <PdClosingCta product={product} />
       <PdProductSuggestions product={product} />

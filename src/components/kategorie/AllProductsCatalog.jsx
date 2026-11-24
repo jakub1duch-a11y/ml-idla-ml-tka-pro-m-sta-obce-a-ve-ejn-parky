@@ -42,8 +42,8 @@ export default function AllProductsCatalog({ categoryTitle = 'vybrané oblasti' 
     <div className="mx-auto max-w-7xl px-6 lg:px-10">
       <div className="mb-8 max-w-3xl">
         <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-700">Kompletní katalog MLŽIDLA®</p>
-        <h2 id="all-products-heading" className="mt-3 font-heading text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Prohlédněte si katalog mlžítek</h2>
-        <p className="mt-3 text-sm leading-6 text-slate-600">V katalogu můžete porovnat jednotlivé produktové řady. Vhodnost pro {categoryTitle} se posuzuje individuálně podle umístění, podmínek místa a konkrétního provedení.</p>
+        <h2 id="all-products-heading" className="mt-3 font-heading text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">Všechny produkty pro {categoryTitle}</h2>
+        <p className="mt-3 text-sm leading-6 text-slate-600">Prohlédněte si kompletní nabídku a vyfiltrujte model podle názvu nebo produktové kategorie. Každá karta vede na detail konkrétního produktu.</p>
       </div>
       <div className="mb-8 grid gap-3 md:grid-cols-[minmax(0,1fr)_minmax(180px,240px)_minmax(180px,220px)]">
         <label className="flex min-h-12 items-center gap-3 rounded-xl border border-slate-200 bg-white px-4">

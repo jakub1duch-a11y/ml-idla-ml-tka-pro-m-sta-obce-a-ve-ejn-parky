@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap, Bell, Send } from 'lucide-react';
+import { Package, ImageIcon, MessageSquare, BarChart3, LogOut, ChevronRight, Newspaper, Instagram, FileStack, FolderOpen, Megaphone, TrendingUp, LayoutDashboard, ScanLine, BriefcaseBusiness, Database, ListTodo, Activity, Users, Wand2, TerminalSquare, MessagesSquare, Sparkles, PlugZap, Bell, Send, ClipboardCheck } from 'lucide-react';
 import AdminTeamChat from './AdminTeamChat';
 import AdminMobileNav from '@/components/admin/AdminMobileNav';
 import InstallAppButton from '@/components/admin/team/InstallAppButton';
@@ -35,10 +35,14 @@ import BrandIconStudio from '@/components/admin/brand/BrandIconStudio';
 import AdminMcpConnect from './AdminMcpConnect';
 import AdminNotifications from './AdminNotifications';
 import AdminOffers from './AdminOffers';
+import AdminMobileSalesHub from './AdminMobileSalesHub';
 import AdminSalesHub from './AdminSalesHub';
+import AdminUnifiedPipeline from './AdminUnifiedPipeline';
+import AdminApprovals from './AdminApprovals';
 
 const TABS = [
   { id: 'dashboard', label: 'Přehled', icon: LayoutDashboard },
+  { id: 'mobile-sales', label: 'Mobilní obchodní centrum', icon: BriefcaseBusiness },
   { id: 'terminal', label: 'Terminál', icon: TerminalSquare },
   { id: 'chat', label: 'Týmový chat', icon: MessagesSquare },
   { id: 'development', label: 'Vývoj systému', icon: Activity },
@@ -58,8 +62,10 @@ const TABS = [
   { id: 'crm', label: 'CRM Corporate', icon: BriefcaseBusiness },
   { id: 'hubspot', label: 'HubSpot CRM', icon: BriefcaseBusiness },
   { id: 'poptavky', label: 'Poptávky', icon: MessageSquare },
+  { id: 'approvals', label: 'Schvalovací centrum', icon: ClipboardCheck },
   { id: 'offers', label: 'Odeslané nabídky', icon: Send },
   { id: 'sales-hub', label: 'Obchodní centrum', icon: BriefcaseBusiness },
+  { id: 'unified-pipeline', label: 'Pipeline HolmTec + MLŽIDLA', icon: BarChart3 },
   { id: 'ar', label: 'AR návrhy', icon: ScanLine },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'databricks', label: 'Databricks', icon: Database },
@@ -70,9 +76,9 @@ const TABS = [
 
 const TAB_GROUPS = [
   { label: 'Řízení', ids: ['dashboard', 'tasks', 'chat'] },
-  { label: 'Obchod', ids: ['sales-hub', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
+  { label: 'Obchod', ids: ['mobile-sales', 'approvals', 'sales-hub', 'unified-pipeline', 'poptavky', 'offers', 'crm', 'hubspot', 'prospects'] },
   { label: 'Obsah & produkty', ids: ['products', 'ai-optimalizace', 'brand-visuals', 'references', 'blog', 'pages', 'media', 'marketing', 'instagram', 'ar'] },
-  { label: 'Data & systém', ids: ['product-analytics', 'reference-analytics', 'analytics', 'integrations', 'chatgpt', 'development', 'databricks', 'terminal', 'notifications'] },
+  { label: 'Data & systém', ids: ['analytics', 'integrations', 'chatgpt', 'notifications', 'product-analytics', 'reference-analytics'] },
 ];
 
 export default function Admin() {
@@ -102,7 +108,7 @@ export default function Admin() {
         const u = await base44.auth.me();
         setUser(u);
         if (!u) navigate('/admin-login', { replace: true });
-      } catch (_error) {
+      } catch {
         navigate('/admin-login', { replace: true });
       } finally {
         setLoading(false);
@@ -133,6 +139,7 @@ export default function Admin() {
 
   const ActiveComponent = {
     dashboard: AdminDashboard,
+    'mobile-sales': AdminMobileSalesHub,
     terminal: AdminTerminal,
     chat: AdminTeamChat,
     development: AdminSystemDevelopment,
@@ -152,8 +159,10 @@ export default function Admin() {
     crm: AdminCRM,
     hubspot: AdminHubSpot,
     poptavky: AdminPoptavky,
+    approvals: AdminApprovals,
     offers: AdminOffers,
     'sales-hub': AdminSalesHub,
+    'unified-pipeline': AdminUnifiedPipeline,
     ar: AdminAR,
     analytics: AdminAnalytics,
     databricks: AdminDatabricks,
@@ -193,9 +202,9 @@ export default function Admin() {
         </nav>
         <div className="p-3 border-t border-white/8 space-y-1">
           <InstallAppButton className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/50 hover:text-white hover:bg-white/5 transition-all" />
-          <button onClick={() => navigate('/obchodni-nabidky')}
+          <button onClick={() => changeTab('mobile-sales')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-cyan/80 hover:text-cyan hover:bg-cyan/10 transition-all">
-            <BriefcaseBusiness size={16} /> Sales Hub
+            <BriefcaseBusiness size={16} /> Obchodní centrum
           </button>
           <button onClick={() => navigate('/admin-logout')}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-white/40 hover:text-white hover:bg-white/5 transition-all">

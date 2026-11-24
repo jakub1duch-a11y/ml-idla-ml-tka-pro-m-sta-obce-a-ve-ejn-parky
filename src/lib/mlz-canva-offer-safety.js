@@ -7,6 +7,8 @@
  * This module does not call Canva or send email. It only rejects unsafe
  * exports and provides required-field instructions to a human/editor.
  */
+import { MLZ_CANVA_AUTOFILL_TEMPLATES } from './mlz-canva-autofill-registry.js';
+
 export const CANVA_OFFER_MASTER = Object.freeze({
   brandTemplateId: 'EAHbBX1hTpE',
   title: 'Mlžítka HolmTec',
@@ -41,7 +43,11 @@ export function verifyCanvaOfferForDraft(input = {}) {
   if (input.pdfReviewed !== true) errors.push('Není dokončena kontrola finálního PDF.');
   if (input.accountVerified !== true) errors.push('Není potvrzen firemní účet meduna@holmtec.cz.');
   if (input.autoSend === true) errors.push('Automatické odesílání je zakázáno.');
-  if (input.templateId && input.templateId !== CANVA_OFFER_MASTER.brandTemplateId) errors.push('Nesprávná Canva brand šablona.');
+  const registeredDesign = Object.values(MLZ_CANVA_AUTOFILL_TEMPLATES)
+    .find(item => item.designId === input.templateId);
+  if (input.templateId && input.templateId !== CANVA_OFFER_MASTER.brandTemplateId && !registeredDesign) {
+    errors.push('Neznámá nebo neschválená Canva šablona.');
+  }
   if (!Number.isInteger(input.quantity) || input.quantity < 1) errors.push('Množství není kladné celé číslo.');
   if (!(typeof input.priceExVat === 'number' && Number.isFinite(input.priceExVat) && input.priceExVat > 0)) errors.push('Neověřená cena bez DPH.');
   if (!(typeof input.vatRate === 'number' && Number.isFinite(input.vatRate) && input.vatRate >= 0)) errors.push('Neověřená sazba DPH.');
@@ -64,7 +70,12 @@ export function verifyCanvaOfferForDraft(input = {}) {
   } else {
     errors.push('Chybí kontrola skutečně vyplněného obsahu Canva kopie.');
   }
-  if (input.canvaAutofillClaimed) errors.push('Canva šablona nemá Autofill dataset – nelze tvrdit automatické vyplnění.');
+  if (input.canvaAutofillClaimed) {
+    if (!registeredDesign) errors.push('Původní Brand Template nemá Autofill dataset; nelze tvrdit automatické vyplnění.');
+    if (registeredDesign && input.canvaDatasetFieldsVerified !== true) {
+      errors.push('Chybí ověření skutečných polí a typů Canva Autofill datasetu.');
+    }
+  }
   if (!input.hubspotDealVerified) warnings.push('Ověř vazbu na správný HubSpot Deal před archivací.');
   if (!input.googleDriveArchiveVerified) warnings.push('Ulož PDF do potvrzeného firemního Mlžného disku.');
   return {

@@ -2,7 +2,7 @@ import React, { Suspense, lazy, useEffect } from 'react';
 import HomeFaqTeaser from '@/components/home/HomeFaqTeaser';
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
-import TopGateHeroSlider from '@/components/home/new/TopGateHeroSlider';
+import HomeZooPrahaHero from '@/components/home/new/HomeZooPrahaHero';
 import MobileStickyBar from '@/components/home/new/MobileStickyBar';
 import HomeGsapMotion from '@/components/home/new/HomeGsapMotion';
 import '@/styles/reference-motion.css';
@@ -14,7 +14,6 @@ const HomeTechnology = lazy(() => import('@/components/home/new/HomeEditorialSec
 const HomeHolmTec = lazy(() => import('@/components/home/new/HomeEditorialSections').then(m => ({ default: m.HomeHolmTec })));
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
 const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
-const CooperationSteps = lazy(() => import('@/components/home/new/CooperationSteps'));
 const HomeInquiryForm = lazy(() => import('@/components/home/new/HomeInquiryForm'));
 
 export default function Home() {
@@ -32,14 +31,13 @@ export default function Home() {
     <div className="home-atmosphere home-clean">
       <MotionConfig reducedMotion="user">
         <HomeGsapMotion />
-        <TopGateHeroSlider />
+        <HomeZooPrahaHero />
         <Suspense fallback={<div className="min-h-[60vh] bg-[#07131D]" />}>
           <HomeOverview />
           <ProductPhotoGallery />
           <HomeTechnology />
           <ReferencesStrip />
           <HomeHolmTec />
-          <CooperationSteps />
           <HomeInquiryForm />
           <HomeFaqTeaser />
         </Suspense>

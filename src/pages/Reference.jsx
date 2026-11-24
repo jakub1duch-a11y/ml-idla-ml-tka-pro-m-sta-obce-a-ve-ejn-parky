@@ -4,30 +4,6 @@ import { Link } from 'react-router-dom';
 import { setSEO } from '@/lib/seo';
 import ReferenceMetrics from '@/components/premium/ReferenceMetrics';
 import ReferenceShowcase from '@/components/premium/ReferenceShowcase';
-import PremiumSwiper from '@/components/common/PremiumSwiper';
-
-const HERO_IMAGE = '/assets/reference-zoo-hero.webp';
-
-const featuredReferences = [
-{
-  id: 'zoo-praha',
-  eyebrow: 'Veřejný prostor',
-  title: 'ZOO Praha',
-  text: 'Ukázka realizace MLŽIDLA® ve frekventovaném veřejném areálu.',
-  src: 'https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp',
-  href: '/reference/mlzitka-pro-zoo-praha',
-  cta: 'Prohlédnout realizaci'
-},
-{
-  id: 'jicin',
-  eyebrow: 'Městský prostor',
-  title: 'Jičín',
-  text: 'Inspirace pro začlenění mlžení do městského prostoru a pobytových zón.',
-  src: 'https://drive.google.com/thumbnail?id=1DMozP4S_U8KaiNlCraTE-fugcQuytuB7&sz=w1600',
-  href: '/reference',
-  cta: 'Prohlédnout reference'
-}];
-
 
 const sectors = [
 { Icon: Building2, label: 'Města', path: '/mlzitka-pro-mesta-obce' },
@@ -39,19 +15,21 @@ const sectors = [
 
 export default function Reference() {
   useEffect(() => setSEO({
-    title: 'Realizace mlžítek, mlžných bran a mlhovišť',
-    description: 'Prohlédněte si realizace městských mlžítek, mlžných bran a mlhovišť pro města, parky, školy, ZOO, hotely i soukromé zahrady.',
+    title: 'Reference mlžítek a mlžných bran – realizace pro města a zahrady',
+    description: 'Skutečné realizace nerezových mlžítek, mlžných bran a ochlazovacích zón v ZOO Praha, Jičíně, Polné, školách i zahradách. Fotografie a videa projektů.',
     canonicalPath: '/reference'
   }), []);
 
   return (
-    <div className="bg-background pt-16">
-      <section className="relative min-h-[680px] overflow-hidden bg-primary lg:min-h-[760px]">
+    // A long, asynchronously populated gallery must remain visible even if a
+    // scroll observer cannot reach its intersection threshold on a phone.
+    <div data-no-scroll-motion className="bg-background pt-16">
+      <section className="relative overflow-hidden bg-primary lg:min-h-[760px]">
         <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/d9bb9188f_ec8c866ef_copilot_image_1784351460863.webp" alt="Realizace mlžítek v ZOO Praha" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#041c28]/95 via-[#082f3f]/78 to-[#041c28]/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/70 via-transparent to-[#041c28]/10" />
 
-        <div className="relative mx-auto grid min-h-[680px] max-w-7xl items-end gap-10 px-6 pb-16 pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
+        <div className="relative mx-auto grid min-h-[520px] max-w-7xl items-end gap-8 px-4 pb-12 pt-16 sm:min-h-[680px] sm:px-6 sm:pt-28 lg:min-h-[760px] lg:grid-cols-[1.15fr_.85fr] lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
             <p className="mb-5 font-mono text-[11px] uppercase tracking-[0.18em] text-cyan">Reference MLŽIDLA®</p>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-7xl leading-[1.02] tracking-[-0.02em] text-white">Realizace mlžítek, mlžných bran a mlhovišť</h1>
@@ -67,53 +45,42 @@ export default function Reference() {
           </div>
 
           <div className="hidden lg:block">
-            <Link to="/reference/mlzitka-pro-zoo-praha" className="group ml-auto block max-w-md border border-white/20 bg-[#062d3b]/88 p-7 text-white shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan/60 hover:bg-[#062d3b]/95">
-              <div className="flex items-center gap-3"><Sparkles size={18} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Vybraná reference</p></div>
+            <Link to="/blog/zoo-praha-mlzitka-sest-nerezovych-soch" className="group ml-auto block max-w-md border border-white/20 bg-[#062d3b]/88 p-7 text-white shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:border-cyan/60 hover:bg-[#062d3b]/95">
+              <div className="flex items-center gap-3"><Sparkles size={18} className="text-cyan" /><p className="font-mono text-[10px] uppercase tracking-[.16em] text-cyan">Z magazínu MLŽIDLA.cz</p></div>
               <h2 className="mt-5 font-heading text-3xl tracking-[-0.01em]">ZOO Praha</h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/82">Mlžítka v jednom z nejnavštěvovanějších veřejných areálů v Česku. Důraz na odolnost, provozní spolehlivost a komfort návštěvníků.</p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-cyan">Zobrazit realizaci <ArrowRight size={15} /></span>
+              <p className="mt-3 text-sm leading-relaxed text-white/82">Šest autorských nerezových mlžných soch. Příběh spolupráce designérů, projektantů a výroby HolmTec.</p>
+              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition group-hover:text-cyan">Přečíst redakční příběh <ArrowRight size={15} /></span>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8 lg:py-10 hidden">
-          <p className="mb-6 text-center font-mono uppercase tracking-[.18em] text-slate-400 text-xs">Vybrané realizace a partneři</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 lg:grid-cols-5">
-            {[0, 1, 2, 3, 4].map((item) =>
-            <div key={item} className="flex min-h-24 items-center justify-center border border-slate-200 px-0 py-0 bg-slate-0 rounded-1x2">
-                <img src="/media/optimized/a054af86d_a42154bab9f5224d63ab06d8f3f9678c.webp" alt="Logo reference" className="max-h-12 w-auto max-w-full object-contain" />
-              </div>
-            )}
           </div>
         </div>
       </section>
 
       <ReferenceMetrics />
 
-      <section className="overflow-hidden bg-slate-50 py-16 lg:py-20" aria-labelledby="featured-reference-title">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-8 max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-[.18em] text-cyan-700">Realizace v pohybu</p>
-            <h2 id="featured-reference-title" className="mt-3 font-heading text-3xl font-semibold tracking-[-.03em] text-slate-950 sm:text-4xl">Vybrané realizace MLŽIDLA®.</h2>
-          </div>
-          <PremiumSwiper items={featuredReferences} ariaLabel="Vybrané realizace MLŽIDLA" />
+      <section id="realizace" className="scroll-mt-20 bg-[#F5F8F9] pt-16 lg:pt-24" aria-labelledby="reference-realizace-title">
+        <div className="mx-auto max-w-7xl px-6 pb-10 lg:px-8">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[.19em] text-teal-700">Dokončené projekty · fotografie a videa</p>
+          <h2 id="reference-realizace-title" className="max-w-4xl font-heading text-3xl leading-tight tracking-tight text-slate-950 sm:text-5xl">
+            Skutečné realizace mlžítek pro města, školy, ZOO i zahrady.
+          </h2>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600 sm:text-lg">
+            Podívejte se, jak nerezová mlžítka, mlžné brány a mlžné zóny fungují v konkrétních místech.
+            U každé realizace najdete příběh projektu, fotografie, dostupná videa a informace o použitých prvcích.
+          </p>
         </div>
+        <ReferenceShowcase />
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8">
+      <section className="mx-auto max-w-7xl px-6 py-10 lg:px-8" aria-label="Mlžítka podle typu prostoru">
         <div className="grid grid-cols-2 overflow-hidden border border-slate-200 bg-white lg:grid-cols-4">
           {sectors.map(({ Icon, label, path }) =>
-          <Link to={path} key={label} className="group flex items-center justify-center gap-3 border-b border-r border-slate-200 px-4 py-6 transition hover:bg-slate-50 lg:border-b-0 last:border-r-0">
+            <Link to={path} key={label} className="group flex items-center justify-center gap-3 border-b border-r border-slate-200 px-4 py-6 transition hover:bg-slate-50 lg:border-b-0 last:border-r-0">
               <Icon size={19} className="text-teal-700 transition-transform group-hover:scale-110" />
               <span className="font-medium text-slate-700">{label}</span>
             </Link>
           )}
         </div>
       </section>
-
-      <div id="realizace"><ReferenceShowcase /></div>
 
       <section className="bg-[#062d3b] py-20 lg:py-24">
         <div className="mx-auto grid max-w-7xl items-end gap-8 px-6 lg:grid-cols-[1fr_auto] lg:px-8">

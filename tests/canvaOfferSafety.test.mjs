@@ -17,6 +17,23 @@ test('template has no Autofill and is one page', () => {
   assert.equal(CANVA_OFFER_MASTER.datasetFieldsAvailable, false);
   assert.equal(CANVA_OFFER_MASTER.inspectedPageCount, 1);
 });
+test('named A4 design with verified dataset may be used for an approved draft', () => {
+  const result = verifyCanvaOfferForDraft({
+    ...valid, templateId: 'DAHbIPt73-s', canvaAutofillClaimed: true,
+    canvaDatasetFieldsVerified: true,
+  });
+  assert.equal(result.readyForGmailDraftWithAttachment, true);
+  assert.equal(result.emailMode, 'draft_only');
+});
+
+test('claims of AutoFill without the actual Canva field types fail closed', () => {
+  const result = verifyCanvaOfferForDraft({
+    ...valid, templateId: 'DAHbIPt73-s', canvaAutofillClaimed: true,
+    canvaDatasetFieldsVerified: false,
+  });
+  assert.equal(result.readyForGmailDraftWithAttachment, false);
+});
+
 test('fully reviewed and verified customer quote may become draft only', () => {
   const result = verifyCanvaOfferForDraft(valid);
   assert.equal(result.readyForGmailDraftWithAttachment, true);

@@ -47,6 +47,10 @@
     "quote_pdf_url": {
       "type": "string"
     },
+    "quote_drive_file_url": {
+      "type": "string",
+      "description": "Intern\u00ed p\u0159\u00edm\u00fd odkaz na PDF nab\u00eddky ve sd\u00edlen\u00e9m Ml\u017en\u00e9m disku; nezve\u0159ej\u0148ovat v z\u00e1kaznick\u00e9m port\u00e1lu."
+    },
     "inquiry_pdf_url": {
       "type": "string"
     },

@@ -43,7 +43,7 @@ export default function InstallAppButton({ className = '' }) {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-widest text-cyan">Přidat na plochu</p>
-                <h3 className="mt-1 text-lg text-white">Administrace jako aplikace</h3>
+                <h3 className="mt-1 text-lg text-white">MLŽIDLA jako aplikace</h3>
               </div>
               <button onClick={() => setShowIosHint(false)} className="text-white/30 hover:text-white"><X size={18} /></button>
             </div>
@@ -58,7 +58,7 @@ export default function InstallAppButton({ className = '' }) {
                 <>
                   <li>1. Otevřete nabídku prohlížeče (⋮).</li>
                   <li>2. Zvolte „Přidat na plochu“ nebo „Instalovat aplikaci“.</li>
-                  <li>3. Potvrďte — ikona Admin se objeví na ploše.</li>
+                  <li>3. Potvrďte — ikona MLŽIDLA se objeví na ploše.</li>
                 </>
               )}
             </ol>

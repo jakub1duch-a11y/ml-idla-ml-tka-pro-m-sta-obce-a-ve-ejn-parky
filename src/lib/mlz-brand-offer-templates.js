@@ -1,3 +1,9 @@
+import { MLZ_CANVA_AUTOFILL_TEMPLATES } from './mlz-canva-autofill-registry.js';
+
+// Named Canva DESIGN datasets verified in Canva; do not confuse with
+// legacy Brand Template EAHbBX1hTpE, whose Autofill dataset remains empty.
+export const MLZ_CANVA_VERIFIED_DESIGN_REGISTRY = MLZ_CANVA_AUTOFILL_TEMPLATES;
+
 // MLŽIDLA.cz – canonical visual identity and Canva working templates.
 // Authoritative media from user-supplied transparent Logo_full.png, not a redrawn wordmark.
 // All Canva copies are WORKING DRAFTS until logo placements and price/data fields are reviewed.
@@ -68,7 +74,8 @@ export const MLZ_WORKFLOW_BINDINGS = Object.freeze({
   destinationAfterApproval: 'Google Drive projektová složka → HubSpot Deal link → Gmail koncept',
   defaultCanvaTemplateId: MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.id,
   defaultCanvaTemplateUrl: MLZ_DEFAULT_CANVA_OFFER_TEMPLATE.url,
-  canvaAutofillReady: false,
+  canvaAutofillReady: false, // End-to-end connector automation still unverified.
+  namedA4DesignDatasetsAvailable: true,
   gmailMode: 'draft_only',
   requireVerifiedPdfBeforeDraftAttachment: true,
   autoSend: false,

@@ -36,9 +36,13 @@ const DEFAULT_IMAGE = 'https://media.base44.com/images/public/6a3ee88c10959cd358
 // we emit exact static redirect documents with noindex + canonical + instant
 // meta/JS redirect. Static route files take precedence over the SPA fallback.
 const LEGACY_REDIRECTS = {
+  '/reference/mlzitka-pro-zoo-praha': '/blog/zoo-praha-mlzitka-sest-nerezovych-soch',
+  '/reference/6a42491409abbf575447aaeb': '/blog/zoo-praha-mlzitka-sest-nerezovych-soch',
+  '/reference/6a60d9d9702abda4e28159d3': '/blog/zoo-praha-mlzitka-sest-nerezovych-soch',
   '/produkt/linea-solo': '/produkt/Linea-ce',
   '/produkt/linea-ce': '/produkt/Linea-ce',
   '/mlziste': '/mlhoviste',
+  '/realizace': '/reference',
   '/domu': '/',
   '/hello-world': '/',
   '/category/uncategorized': '/blog',

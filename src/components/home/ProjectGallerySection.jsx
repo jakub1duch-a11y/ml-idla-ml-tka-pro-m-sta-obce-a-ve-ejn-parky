@@ -18,7 +18,6 @@ const REFERENCE_SLUGS = {
 
 const PROJECT_ORDER = [
   '6a9fdf2f153be3ee13d70207', // NOVINKA — BENDY + LINEA, rodinná zahrada
-  '6a42491409abbf575447aaeb', // ZOO Praha
   '6a450e035aef0b45b2a8728f', // Město Polná — MRKEV
   '6a71d1ff57598752eed27bfb', // Bendy Jičín
   '6a480e05664f948152611f5f', // MŠ Šiškova — MRAK
@@ -62,7 +61,7 @@ export default function ProjectGallerySection() {
   useEffect(() => {
     base44.entities.Realizace.list()
       .then((items) => {
-        const all = items || [];
+        const all = (items || []).filter((item) => !['6a42491409abbf575447aaeb', '6a60d9d9702abda4e28159d3'].includes(item.id) && item.published !== false);
         // Seřadit podle preferovaného pořadí, doplnit o další featured/published
         const ordered = PROJECT_ORDER
           .map((id) => all.find((p) => p.id === id))

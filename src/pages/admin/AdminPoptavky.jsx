@@ -58,6 +58,10 @@ function StatCard({ icon: Icon, label, value, color }) {
 export default function AdminPoptavky() {
   const [items, setItems] = useState([]);
   const [projectOrders, setProjectOrders] = useState([]);
+  const [offerAssets, setOfferAssets] = useState([]);
+  const [draftBusy, setDraftBusy] = useState('');
+  const [draftFeedback, setDraftFeedback] = useState({});
+  const [canvaBusy, setCanvaBusy] = useState('');
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -69,12 +73,13 @@ export default function AdminPoptavky() {
 
   const load = async () => {
     setLoading(true);
-    const [poptavky, inquiries, advisorLeads, orders, prods] = await Promise.all([
+    const [poptavky, inquiries, advisorLeads, orders, prods, assets] = await Promise.all([
       base44.entities.Poptavka.list('-created_date'),
       base44.entities.ContactInquiry.list('-created_date'),
       base44.entities.WebAdvisorLead.list('-created_date'),
       base44.entities.ProjectOrder.list('-created_date', 200),
       base44.entities.Product.list(),
+      base44.entities.OfferAsset.list('-created_date', 500),
     ]);
     const normalized = [
       ...poptavky.map((p) => ({
@@ -96,6 +101,7 @@ export default function AdminPoptavky() {
     ].sort((a, b) => new Date(b.created_date || 0).getTime() - new Date(a.created_date || 0).getTime());
     setItems(normalized);
     setProjectOrders(orders || []);
+    setOfferAssets(assets || []);
     setProducts(prods || []);
     setLoading(false);
   };
@@ -139,6 +145,52 @@ export default function AdminPoptavky() {
     });
     return cols;
   }, [items]);
+
+  const addCanvaLink = async (item, projectOrder) => {
+    if (!projectOrder?.id) return;
+    const raw = window.prompt('Vložte odkaz na existující editovatelný design v Canvě:');
+    if (!raw?.trim()) return;
+    let url;
+    try {
+      url = new URL(raw.trim());
+      if (url.protocol !== 'https:' || !['canva.com', 'www.canva.com'].includes(url.hostname)) throw Error('Neplatný odkaz.');
+    } catch {
+      setDraftFeedback(prev => ({ ...prev, [item.id]: 'Použijte skutečný HTTPS odkaz na design na canva.com.' }));
+      return;
+    }
+    const existing = offerAssets.some(a => a.project_order_id === projectOrder.id && a.file_url === url.toString());
+    if (existing) { setDraftFeedback(prev => ({ ...prev, [item.id]: 'Tento Canva design již k nabídce patří.' })); return; }
+    setCanvaBusy(item.id);
+    try {
+      await base44.entities.OfferAsset.create({
+        inquiry_id: item.id, inquiry_type: item.entity === 'ContactInquiry' ? 'contact' : 'poptavka',
+        project_order_id: projectOrder.id, file_url: url.toString(),
+        file_name: 'Canva · ' + (projectOrder.quote_number || projectOrder.project_name || 'Nabídka'),
+        asset_type: 'presentation', file_type: 'text/html', title: 'Canva · editovatelný podklad',
+        selected_for_offer: false, generated_by_ai: false,
+      });
+      await load();
+      setDraftFeedback(prev => ({ ...prev, [item.id]: 'Canva odkaz uložen ke konkrétní nabídce.' }));
+    } catch (e) { setDraftFeedback(prev => ({ ...prev, [item.id]: e?.message || 'Odkaz nebylo možné uložit.' })); }
+    finally { setCanvaBusy(''); }
+  };
+
+  const createOfferDraft = async (item, order) => {
+    if (!order?.id) return;
+    setDraftBusy(item.id);
+    setDraftFeedback(prev => ({ ...prev, [item.id]: '' }));
+    try {
+      const response = await base44.functions.invoke('createVerifiedOfferDraft', { project_order_id: order.id });
+      const data = response?.data || response;
+      if (!data?.ok) throw new Error(data?.error || 'Gmail draft se nepodařilo vytvořit.');
+      const note = data.ready_for_manual_review
+        ? 'Koncept vytvořen v Gmailu pro klienta s ověřenou PDF přílohou (neodesláno).'
+        : 'Uložen interní koncept pro meduna@holmtec.cz. Klientovi není adresován: ' + (data.pdf_warning || 'Chybí ověření nabídky.');
+      setDraftFeedback(prev => ({ ...prev, [item.id]: note }));
+    } catch (e) {
+      setDraftFeedback(prev => ({ ...prev, [item.id]: e?.response?.data?.error || e?.message || 'Vytvoření konceptu selhalo.' }));
+    } finally { setDraftBusy(''); }
+  };
 
   const getOfferInfo = (item) => {
     const orders = ordersByInquiry[item.id] || [];
@@ -311,6 +363,9 @@ export default function AdminPoptavky() {
                   const bucket = BUCKETS[getBucket(item.status)];
                   const StatusIcon = bucket.icon;
                   const offer = getOfferInfo(item);
+                const linkedAssets = offerAssets.filter(a => a.inquiry_id === item.id || (a.project_order_id && offer.orders.some(o => o.id === a.project_order_id)));
+                const canvaAssets = linkedAssets.filter(a => /canva\.com/i.test(a.file_url || ''));
+                const pdfAssets = linkedAssets.filter(a => ['quote_pdf','presentation_pdf'].includes(a.asset_type));
                   return (
                     <button key={`${item.entity}-${item.id}`} onClick={() => setExpanded(item.id)}
                       className="w-full flex items-center gap-3 p-3 rounded-xl border border-white/5 bg-white/3 hover:bg-white/5 hover:border-white/10 transition-all text-left">
@@ -410,6 +465,9 @@ export default function AdminPoptavky() {
                 const StatusIcon = bucket.icon;
                 const isOpen = expanded === item.id;
                 const offer = getOfferInfo(item);
+                const linkedAssets = offerAssets.filter(a => a.inquiry_id === item.id || (a.project_order_id && offer.orders.some(o => o.id === a.project_order_id)));
+                const canvaAssets = linkedAssets.filter(a => /canva\.com/i.test(a.file_url || ''));
+                const pdfAssets = linkedAssets.filter(a => ['quote_pdf','presentation_pdf'].includes(a.asset_type));
                 return (
                   <div key={`${item.entity}-${item.id}`} className="rounded-xl border border-white/8 bg-white/3 overflow-hidden">
                     <button onClick={() => setExpanded(isOpen ? null : item.id)}
@@ -478,6 +536,18 @@ export default function AdminPoptavky() {
                           </div>
                         )}
 
+                        <div className="rounded-xl border border-white/10 bg-[#111b27] p-4 space-y-3">
+                          <h3 className="text-sm font-semibold text-white">Nabídky v Canvě a soubory ({linkedAssets.length})</h3>
+                          {canvaAssets.length ? canvaAssets.map(asset => <div key={asset.id} className="flex flex-wrap items-center gap-2 text-xs"><span className="text-white/65 mr-auto">{asset.title || asset.file_name}</span><a href={asset.file_url} target="_blank" rel="noopener noreferrer" className="inline-flex gap-1 items-center rounded-lg border border-cyan/30 text-cyan px-3 py-2"><ExternalLink size={12}/> Otevřít / upravit v Canvě</a></div>) : <p className="text-xs text-white/40">Zatím není přiřazen odkaz na Canva návrh. Odkaz na editaci vyžaduje oprávnění k designu.</p>}
+                          {pdfAssets.map(asset => <a key={asset.id} href={asset.file_url} target="_blank" rel="noopener noreferrer" className="inline-flex gap-2 items-center text-xs text-white/75 hover:text-cyan mr-3"><FileText size={13}/>{asset.title || asset.file_name}</a>)}
+                          {offer.latest && <div className="flex flex-wrap gap-2">
+                            <button type="button" disabled={canvaBusy === item.id} onClick={() => addCanvaLink(item, offer.latest)} className="inline-flex items-center gap-2 rounded-lg border border-cyan/25 px-3 py-2 text-xs text-cyan disabled:opacity-40"><ExternalLink size={13}/> {canvaBusy === item.id ? 'Ukládám Canvu…' : 'Přiřadit Canva design'}</button>
+                            <button type="button" disabled={draftBusy === item.id} onClick={() => createOfferDraft(item, offer.latest)} className="inline-flex items-center gap-2 rounded-lg bg-cyan px-3 py-2 text-xs font-semibold text-slate-950 disabled:opacity-50"><Mail size={13}/>{draftBusy === item.id ? 'Ověřuji a ukládám…' : 'Vytvořit skutečný Gmail koncept'}</button>
+                            <a href="https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 rounded-lg border border-white/20 px-3 py-2 text-xs text-white/75">Otevřít Gmail koncepty ↗</a>
+                          </div>}
+                          {draftFeedback[item.id] && <p role="status" className="text-xs text-amber-200">{draftFeedback[item.id]}</p>}
+                          <p className="text-xs text-white/35">Před vytvořením konceptu se na serveru kontroluje skutečný účet Gmail, ověření ceny a dostupnost PDF. Bez splnění podmínek je návrh adresovaný pouze interně. Nic se neodesílá.</p>
+                        </div>
                         <div className="flex gap-2 flex-wrap pt-1">
                           <p className="text-xs text-white/25 font-mono mr-2 self-center">Stav:</p>
                           {STATUS_OPTIONS[item.entity].map((opt) => (

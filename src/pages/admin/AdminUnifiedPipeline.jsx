@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import {
-  ArrowUpRight, CalendarDays, ChevronRight, CircleAlert, ClipboardList,
-  ExternalLink, FileSpreadsheet, Filter, LayoutGrid, List, Mail,
-  Search, ShieldCheck, X, BriefcaseBusiness, CheckCircle2, Clock3,
+  ArrowUpRight, Bot, BriefcaseBusiness, CalendarDays, CheckCircle2,
+  ChevronRight, CircleAlert, ClipboardList, Clock3, ExternalLink,
+  FileSpreadsheet, Filter, LayoutGrid, List, Mail, Palette,
+  Search, ShieldCheck, X,
 } from 'lucide-react';
 import {
   PIPELINE_CASES, PIPELINE_SHEET_URL, PIPELINE_SNAPSHOT_DATE, PIPELINE_STAGES,
@@ -14,6 +15,13 @@ const BRAND_FILTERS = [
   { id: 'all', label: 'Obě značky' },
   { id: 'mlzidla', label: 'MLŽIDLA.cz' },
   { id: 'holmtec', label: 'HolmTec' },
+];
+const PIPELINE_SHEET_PREVIEW_URL = PIPELINE_SHEET_URL.replace('/edit#gid=', '/preview?gid=');
+const AGENTS = [
+  { title: 'Příjem poptávky', Icon: Mail, detail: 'Gmail → ověření firmy → kontrolní evidence BT', state: 'Scénář vytvořen, zatím neaktivní' },
+  { title: 'Technické posouzení', Icon: BriefcaseBusiness, detail: 'HolmTec: výkresy, ohýbání a přípravky. MLŽIDLA: parametry, instalace a řízení.', state: 'Vyžaduje ověřené vstupy' },
+  { title: 'Nabídka a dokumentace', Icon: Palette, detail: 'Schválená kalkulace → Canva A4 → PDF → koncept Gmail', state: 'Test koncového průchodu zbývá' },
+  { title: 'Synchronizace agentů', Icon: Bot, detail: 'Make API pro čtení pipeline a dashboardu', state: 'API výstup vykazuje chybu; nepoužívat pro zápisy' },
 ];
 const FORMAT_CZK = new Intl.NumberFormat('cs-CZ', { style: 'currency', currency: 'CZK', maximumFractionDigits: 0 });
 const normalize = (input) => String(input || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -268,16 +276,17 @@ export default function AdminUnifiedPipeline() {
             <div className="inline-flex shrink-0 gap-1 rounded-xl border border-slate-200 bg-white p-1" role="group" aria-label="Typ zobrazení">
               <button type="button" onClick={() => setView('kanban')} aria-pressed={view === 'kanban'} className={'inline-flex min-h-9 items-center gap-2 rounded-lg px-3 text-xs font-semibold ' + (view === 'kanban' ? 'bg-[#102d3c] text-white' : 'text-slate-600 hover:bg-slate-100')}><LayoutGrid size={15} /> Kanban</button>
               <button type="button" onClick={() => setView('table')} aria-pressed={view === 'table'} className={'inline-flex min-h-9 items-center gap-2 rounded-lg px-3 text-xs font-semibold ' + (view === 'table' ? 'bg-[#102d3c] text-white' : 'text-slate-600 hover:bg-slate-100')}><List size={15} /> Tabulka</button>
+              <button type="button" onClick={() => setView('source')} aria-pressed={view === 'source'} className={'inline-flex min-h-9 items-center gap-2 rounded-lg px-3 text-xs font-semibold ' + (view === 'source' ? 'bg-[#102d3c] text-white' : 'text-slate-600 hover:bg-slate-100')}><FileSpreadsheet size={15} /> Zdroj</button>
             </div>
           </div>
         </section>
 
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="flex items-center gap-2 text-base font-semibold"><Filter size={17} className="text-[#007e92]" /> {view === 'kanban' ? 'Kanban zakázek' : 'Přehled zakázek'}</h2>
+          <h2 className="flex items-center gap-2 text-base font-semibold"><Filter size={17} className="text-[#007e92]" /> {view === 'kanban' ? 'Kanban zakázek' : view === 'table' ? 'Přehled zakázek' : 'Google Sheets – zdrojová evidence'}</h2>
           <span className="text-xs text-slate-500">{filtered.length} z {allCases.length} případů · {counters.offer} nabídek · {counters.cooperation} u kooperantů</span>
         </div>
 
-        {view === 'kanban' ? (
+        {view === 'kanban' && (
           <div className="-mx-4 overflow-x-auto px-4 pb-4 md:-mx-7 md:px-7">
             <div className="flex min-w-max items-start gap-3 xl:grid xl:min-w-0 xl:grid-cols-5">
               {PIPELINE_STAGES.map((stage) => {
@@ -294,7 +303,9 @@ export default function AdminUnifiedPipeline() {
               })}
             </div>
           </div>
-        ) : (
+        )}
+
+        {view === 'table' && (
           <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow-sm">
             <table className="w-full min-w-[800px] border-collapse text-left text-sm">
               <thead className="bg-[#eef3f6] text-[11px] font-semibold uppercase tracking-wider text-slate-500">
@@ -317,6 +328,43 @@ export default function AdminUnifiedPipeline() {
             <p className="border-t border-slate-100 p-3 text-xs text-slate-500">* Pouze pracovní základ výrobků. Částky Base44 bez určeného režimu DPH jsou v detailu projektu; finální cena se uvádí až po ověření objednávky.</p>
           </div>
         )}
+
+        {view === 'source' && (
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 p-4">
+              <h3 className="text-sm font-semibold text-[#142f3d]">Google Sheets – zdrojová evidence</h3>
+              <a href={PIPELINE_SHEET_URL} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#007e92] hover:underline">
+                Otevřít tabulku <ExternalLink size={13} />
+              </a>
+            </div>
+            <iframe
+              title="Zdrojová pipeline v Google Sheets"
+              src={PIPELINE_SHEET_PREVIEW_URL}
+              className="h-[540px] w-full bg-slate-50"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            <p className="p-3 text-xs text-slate-500">Náhled může vyžadovat přihlášení. Přístupová práva tabulky se nemění.</p>
+          </div>
+        )}
+
+        <section aria-labelledby="agents-heading" className="space-y-3 pt-2">
+          <div className="flex items-center gap-2">
+            <Bot size={19} className="text-[#007e92]" />
+            <h2 id="agents-heading" className="text-base font-semibold">Workflow a agenti</h2>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {AGENTS.map(({ title, Icon, detail, state }) => (
+              <article key={title} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                <Icon className="text-[#007e92]" size={20} />
+                <h3 className="mt-2 text-sm font-semibold text-[#142f3d]">{title}</h3>
+                <p className="mt-1.5 text-xs leading-5 text-slate-600">{detail}</p>
+                <p className="mt-3 border-t border-slate-100 pt-3 text-xs text-amber-800">{state}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <footer className="flex items-start gap-2 rounded-xl border border-[#d8e6eb] bg-white p-4 text-xs leading-5 text-slate-500">
           <ShieldCheck size={18} className="shrink-0 text-[#007e92]" />
           <span>Přístup pouze pro správce Base44. Odkazy do Gmailu a Google Sheets respektují původní oprávnění. Žádné automatické odesílání zpráv, změny CRM nebo vytváření čísel zakázek.</span>

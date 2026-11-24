@@ -27,7 +27,7 @@ const LIVE_STATUS = {
   in_production: 'order',
   completed: 'order',
 };
-const CLOSED_STATUSES = new Set(['cancelled', 'canceled', 'rejected', 'archived', 'lost']);
+const CLOSED_STATUSES = new Set(['cancelled', 'canceled', 'rejected', 'archived', 'lost', 'completed']);
 const isTestOrder = (order) => /\b(test|ghost test|duplicita|nepoužívat)\b/i.test(
   [order.project_name, order.client_company, order.production_notes?.slice(0, 150)].join(' ')
 );
@@ -214,6 +214,8 @@ export default function AdminUnifiedPipeline() {
     offer: filtered.filter((item) => item.stage === 'offer').length,
     cooperation: filtered.filter((item) => item.stage === 'cooperation').length,
     order: filtered.filter((item) => item.stage === 'order').length,
+    confirmedOffers: filtered.filter((item) => item.offerPrice != null).reduce((sum, item) => sum + item.offerPrice, 0),
+    finalPrices: filtered.filter((item) => item.finalPrice != null).reduce((sum, item) => sum + item.finalPrice, 0),
   }), [filtered]);
 
   return (
@@ -233,12 +235,12 @@ export default function AdminUnifiedPipeline() {
           <div className="mt-7 grid grid-cols-2 gap-3 lg:grid-cols-4">
             {[
               { title: 'Aktivní případy', value: filtered.length, Icon: ClipboardList },
-              { title: 'Nabídky odeslány', value: counters.offer, Icon: CheckCircle2 },
-              { title: 'U kooperantů', value: counters.cooperation, Icon: BriefcaseBusiness },
+              { title: 'Doložené nabídky bez DPH', value: FORMAT_CZK.format(counters.confirmedOffers), Icon: CheckCircle2 },
+              { title: 'Potvrzené finální ceny', value: counters.finalPrices ? FORMAT_CZK.format(counters.finalPrices) : '—', Icon: BriefcaseBusiness },
               { title: 'Objednávky', value: counters.order, Icon: CalendarDays },
             ].map(({ title, value, Icon }) => <div key={title} className="rounded-2xl border border-white/15 bg-white/[.065] px-4 py-4 md:px-5">
               <div className="flex items-center justify-between gap-3"><span className="text-xs text-white/65">{title}</span><Icon size={18} className="text-cyan-200/75" /></div>
-              <p className="mt-2 text-3xl font-semibold tabular-nums">{value}</p>
+              <p className="mt-2 text-xl font-semibold tabular-nums md:text-2xl">{value}</p>
             </div>)}
           </div>
         </div>
@@ -272,7 +274,7 @@ export default function AdminUnifiedPipeline() {
 
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="flex items-center gap-2 text-base font-semibold"><Filter size={17} className="text-[#007e92]" /> {view === 'kanban' ? 'Kanban zakázek' : 'Přehled zakázek'}</h2>
-          <span className="text-xs text-slate-500">{filtered.length} z {allCases.length} zobrazených případů (Base44 + starší BT snímek)</span>
+          <span className="text-xs text-slate-500">{filtered.length} z {allCases.length} případů · {counters.offer} nabídek · {counters.cooperation} u kooperantů</span>
         </div>
 
         {view === 'kanban' ? (

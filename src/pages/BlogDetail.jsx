@@ -158,11 +158,11 @@ export default function BlogDetail() {
 
       {/* Hero s overlay nadpisem */}
       {hasImage && (
-        <div className="relative h-[460px] overflow-hidden sm:h-[540px] lg:h-[640px]">
-          <img src={post.image_url} alt={post.image_alt || post.title} className="w-full h-full object-cover" />
+        <div className="mlz-blog-hero relative isolate flex min-h-[460px] flex-col justify-end overflow-hidden bg-[#041c28] sm:min-h-[540px] lg:min-h-[640px]">
+          <img src={post.image_url} alt={post.image_alt || post.title} className="absolute inset-0 h-full w-full object-cover"  />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c28]/95 via-[#041c28]/40 to-[#041c28]/20" />
-          <div className="absolute inset-0 flex items-end">
-            <div className="mx-auto w-full max-w-7xl px-6 pb-10 sm:pb-14 lg:px-10 lg:pb-16">
+          <div className="relative flex w-full items-end">
+            <div className="mx-auto w-full min-w-0 max-w-7xl px-5 pb-10 pt-12 sm:px-6 sm:pb-14 sm:pt-14 lg:px-10 lg:pb-16 lg:pt-16">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -181,7 +181,7 @@ export default function BlogDetail() {
                   <span className="text-xs font-mono text-white/50">· {readingTime} min čtení</span>
                   {viewCount > 0 && <span className="inline-flex items-center gap-1.5 text-xs font-mono text-white/50"><Eye size={12} /> {viewCount.toLocaleString('cs-CZ')} přečtení</span>}
                 </div>
-                <h1 className="mt-5 font-heading text-3xl leading-[1.06] tracking-[-0.035em] text-white sm:text-4xl lg:text-[3.25rem]">
+                <h1 className="mlz-blog-hero-title mt-5 break-words font-heading text-3xl leading-[1.12] tracking-[-0.035em] text-white sm:text-4xl lg:text-[3.25rem]">
                   {post.title}
                 </h1>
                 {post.perex && (

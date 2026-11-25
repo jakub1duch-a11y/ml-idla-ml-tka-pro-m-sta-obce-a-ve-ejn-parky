@@ -238,13 +238,9 @@ export default function BlogDetail() {
           </div>
         )}
 
-        {/* Share */}
-        <BlogArticleEngagement postId={post.id} title={post.title} />
-
-        {/* Content and article sidebar */}
+        {/* Main reading content first, including on narrow screens. */}
         <div className="grid gap-10 lg:grid-cols-12 lg:items-start">
-          <BlogArticleSidebar related={related} category={post.category} postId={post.id} title={post.title} />
-          <div id="article-content" className="lg:col-span-8 lg:col-start-4">
+          <div id="article-content" className="min-w-0 lg:col-span-8 lg:col-start-4 lg:row-start-1">
         {post.content ?
         <motion.div
           initial={{ opacity: 0 }}
@@ -269,6 +265,9 @@ export default function BlogDetail() {
         </motion.div> :
         <div className="pb-4 text-slate-400 font-light italic">Obsah článku brzy.</div>
         }
+          </div>
+          <div className="hidden lg:col-span-3 lg:col-start-1 lg:row-start-1 lg:block">
+            <BlogArticleSidebar related={related} category={post.category} postId={post.id} title={post.title} />
           </div>
         </div>
 
@@ -339,6 +338,12 @@ export default function BlogDetail() {
 
         {/* Safety notice */}
         <ArticleSafetyNotice />
+
+        {/* Engagement and assistance follow the main article and media. */}
+        <BlogArticleEngagement postId={post.id} title={post.title} />
+        <div className="my-8 min-w-0 lg:hidden">
+          <BlogArticleSidebar related={related} category={post.category} postId={post.id} title={post.title} />
+        </div>
 
         {/* Newsletter */}
         <BlogNewsletterInline />

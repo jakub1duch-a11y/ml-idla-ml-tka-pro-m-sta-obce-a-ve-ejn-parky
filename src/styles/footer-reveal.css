@@ -34,6 +34,27 @@
 }
 .architecture-site .site-footer-page-cover {
   min-width: 0;
+  /* Reserve the fixed navigation height for every public route. */
+  padding-top: var(--site-header-height, 68px);
+}
+/* Existing explicit header offsets must not be counted twice. */
+.architecture-site .site-footer-page-cover :is(.product-detail-page, .reference-detail-page, .mlz-product-hero, .home-media-slider) {
+  padding-top: 0;
+}
+.architecture-site .site-footer-page-cover .ml-home26-hero-inner {
+  padding-top: clamp(24px, 5vw, 58px);
+}
+.architecture-site .site-footer-page-cover .home-hero-copy {
+  padding-top: clamp(24px, 4vw, 48px);
+}
+.architecture-site .site-footer-page-cover .ml-home26-hero {
+  min-height: max(650px, calc(100svh - var(--site-header-height, 68px)));
+}
+.architecture-site .site-footer-page-cover .mlz-product-hero {
+  height: calc(100svh - var(--site-header-height, 68px));
+}
+@media print {
+  .architecture-site .site-footer-page-cover { padding-top: 0; }
 }
 .architecture-site :is(svg[aria-label="MLŽIDLA.CZ"], .site-footer-page-cover h1, .site-footer-page-cover h2) {
   max-width: 100%;

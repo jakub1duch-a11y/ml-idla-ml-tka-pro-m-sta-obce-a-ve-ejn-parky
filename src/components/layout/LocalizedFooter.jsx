@@ -99,7 +99,7 @@ export default function LocalizedFooter({ locale }) {
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
         <div className="grid gap-12 border-b border-white/10 py-14 lg:grid-cols-[minmax(0,1fr)_minmax(360px,.78fr)] lg:gap-20 lg:py-16">
           <div className="flex flex-col items-start">
-            <Link to={ROUTE_MAP.home[locale]} className="inline-flex"><Logo size="sm" /></Link>
+            <Link to={ROUTE_MAP.home[locale]} className="inline-flex"><Logo size="lg" variant="footer" /></Link>
             <p className="mt-6 max-w-xl text-[15px] leading-7 text-white/58">{copy.text}</p>
             <Link to={ROUTE_MAP.inquiry[locale]} className="mt-8 inline-flex min-h-11 items-center gap-2 border-b border-cyan-200/70 pb-2 text-sm font-semibold text-cyan-100 transition hover:border-white hover:text-white">
               {copy.quote}<ArrowRight size={15} />

@@ -53,7 +53,6 @@ export default function Footer() {
             <Link to="/" className="inline-flex max-w-full" aria-label="MLŽIDLA.cz — úvodní stránka">
               <Logo size="lg" variant="footer" className="max-w-full" />
             </Link>
-            <p className="mt-2 text-[11px] font-normal tracking-[.08em] text-white/70">by HolmTec</p>
             <p className="mt-5 max-w-[430px] text-sm leading-7 text-white/75">
               Nerezová mlžítka pro města, veřejná prostranství, sportoviště i zahrady.
               Návrh, výroba a automatizace pro konkrétní prostor.

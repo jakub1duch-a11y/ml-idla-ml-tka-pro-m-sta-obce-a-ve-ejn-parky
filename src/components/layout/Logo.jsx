@@ -1,8 +1,8 @@
 import React from "react";
 
-const LOGO_ON_LIGHT = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/177576508956f83066d50ce992808b60_a_clean_white_background_with_a_modern_logo_on_th.png";
-const LOGO_ON_DARK = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/35a179b15a8f2eb0bec24f91c2861a15_mlzidla-logo-web-transparent.png";
-const LOGO_FOOTER = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/35a179b15a8f2eb0bec24f91c2861a15_mlzidla-logo-web-transparent.png";
+const LOGO_ON_LIGHT = "/brand/mlzidla-2026-petrol.png";
+const LOGO_ON_DARK = "/brand/mlzidla-2026-white.png";
+const LOGO_FOOTER = "/brand/mlzidla-2026-white.png";
 
 // Two transparent color variants of the same approved MLŽIDLA wordmark.
 // tone describes the background: light = navy letters, dark = white letters.

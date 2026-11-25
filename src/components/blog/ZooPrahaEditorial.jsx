@@ -110,14 +110,14 @@ export default function ZooPrahaEditorial({ post }) {
     </section>
     <section id="zoo-editorial-text" className="bg-[#f7fafb] py-16 sm:py-24" aria-label="Redakční reportáž ZOO Praha">
       <div className="mx-auto grid max-w-7xl gap-9 px-5 sm:px-8 lg:grid-cols-[270px_1fr] lg:gap-16 lg:px-10">
-        <aside className="lg:sticky lg:top-24 lg:self-start">
+        <aside className="order-2 lg:order-1 lg:sticky lg:top-24 lg:self-start">
           <p className="text-[11px] uppercase tracking-[.2em] text-teal-700">Projektový tým</p>
           <div className="mt-7 space-y-6">
             {CREDITS.map(([label, value]) => <div key={label} className="border-t border-slate-300 pt-4"><p className="text-xs uppercase tracking-wider text-slate-500">{label}</p><p className="mt-2 text-sm font-semibold leading-6 text-[#153744]">{value}</p></div>)}
           </div>
           <Link to="/mlzitka-pro-mesta-obce" className="mt-10 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-teal-800 underline underline-offset-4">Mlžítka pro veřejný prostor <ArrowUpRight size={15}/></Link>
         </aside>
-        <div className="min-w-0">
+        <div className="order-1 min-w-0 lg:order-2">
           <div className="zoo-editorial-prose prose prose-slate max-w-none text-[17px] leading-[1.85] prose-headings:font-heading prose-headings:tracking-tight prose-headings:text-[#082e41] prose-p:text-slate-650 prose-a:text-teal-800 prose-strong:text-[#0a3141] [&_h2]:mt-14 [&_h2]:mb-6 [&_h2]:text-3xl [&_h2]:font-semibold sm:[&_h2]:text-4xl [&_figure]:my-11 [&_figure]:overflow-hidden [&_figure]:rounded-[18px] [&_figure]:bg-white [&_figure]:shadow-[0_18px_60px_rgba(5,31,42,.08)] [&_img]:block [&_img]:w-full [&_img]:max-h-[670px] [&_img]:object-cover [&_figcaption]:px-5 [&_figcaption]:py-4 [&_figcaption]:text-sm [&_figcaption]:leading-6 [&_figcaption]:text-slate-500" dangerouslySetInnerHTML={{__html:sanitizeHtml(post.content || '')}} />
           <div className="mt-12 border-t border-slate-300 pt-8"><p className="text-sm font-semibold text-slate-700">Redakční návrh pro Jakuba Ducha · MLŽIDLA.cz / HolmTec</p><p className="mt-2 text-sm text-slate-500">Materiály: fotografie a video skutečné instalace, projektové podklady a informace výrobce.</p></div>
           <div className="mt-8"><BlogArticleEngagement postId={post.id} title={post.title}/></div>

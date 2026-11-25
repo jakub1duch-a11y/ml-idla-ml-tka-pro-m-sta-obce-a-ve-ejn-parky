@@ -1,8 +1,8 @@
 import React from "react";
 
 const LOGO_ON_LIGHT = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/177576508956f83066d50ce992808b60_a_clean_white_background_with_a_modern_logo_on_th.png";
-const LOGO_ON_DARK = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/20cc3f9249f2778afd26d6013957f000_file_000000002be88210bb4ed9a45d6b5bdb.png";
-const LOGO_FOOTER = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b7c3dd4fe5bee17d90b81212ebbe055e_a_clean_logo_on_a_solid_black_background_a_large.png";
+const LOGO_ON_DARK = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/35a179b15a8f2eb0bec24f91c2861a15_mlzidla-logo-web-transparent.png";
+const LOGO_FOOTER = "https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/35a179b15a8f2eb0bec24f91c2861a15_mlzidla-logo-web-transparent.png";
 
 // Two transparent color variants of the same approved MLŽIDLA wordmark.
 // tone describes the background: light = navy letters, dark = white letters.
@@ -16,7 +16,7 @@ export default function Logo({ size = "md", variant = "simple", tone = "dark", c
   const source = variant === "footer" ? LOGO_FOOTER : tone === "light" ? LOGO_ON_LIGHT : LOGO_ON_DARK;
   return (
     <span className={`inline-flex min-w-0 flex-col items-start ${className}`}>
-      <img src={source} alt={variant === "footer" ? "MLŽIDLA by holmtec" : "MLŽIDLA.cz"} className={`block w-auto max-w-full object-contain ${variant === "footer" ? "h-16 sm:h-20" : variant === "header" ? "h-auto w-[180px] max-w-[48vw] xl:w-[250px]" : heights[size] || heights.md}`} />
+      <img src={source} alt="MLŽIDLA.cz" className={`block w-auto max-w-full object-contain ${variant === "footer" ? "h-16 sm:h-20" : variant === "header" ? "h-auto w-[185px] max-w-[49vw] sm:w-[210px] xl:w-[245px] 2xl:w-[265px]" : heights[size] || heights.md}`} />
       {variant === "full" && <span className="mt-1 text-[10px] font-medium tracking-[.08em] text-white/70 sm:text-xs">Architektura vodní mlhy <span className="text-white/45">· by holmtec</span></span>}
     </span>
   );

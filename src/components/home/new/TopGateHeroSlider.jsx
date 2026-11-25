@@ -16,7 +16,7 @@ export const PRODUCT_HERO_SLIDES = [
     image: MEDIA + '9f27dc9cf_hero_steblo_gate_desktop_20261101.webp',
     tabletImage: MEDIA + 'b8e5c344d_hero_steblo_gate_tablet_20261101.webp',
     mobileImage: MEDIA + '4b88f291b_hero_steblo_gate_mobile_20261101.webp',
-    link: '/produkt/brana-bendy',
+    link: '/produkt/mlzna-brana-steblo',
   },
   {
     id: 'mrak',

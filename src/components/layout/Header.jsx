@@ -121,11 +121,11 @@ export default function Header() {
 
 
       <header className={`fixed left-0 right-0 top-0 z-50 border-b border-white/10 text-white backdrop-blur-2xl transition-all duration-150 ease-out motion-reduce:transition-none bg-[#000000]/[0.9] ${headerVisible || mobileOpen || megaOpen || usageOpen || technologyOpen || infoOpen ? 'translate-y-0' : '-translate-y-full'} ${scrolled ? 'shadow-[0_18px_45px_rgba(7,26,47,.24)]' : 'shadow-none'}`}>
-        <div className="mx-auto flex h-[var(--site-header-height)] max-w-[1560px] items-center justify-between gap-3 px-5 sm:px-6 lg:gap-4 lg:px-6 xl:px-8">
+        <div className="mx-auto flex h-[var(--site-header-height)] max-w-[1560px] items-center justify-between gap-3 px-4 xl:px-6 lg:gap-4">
 
           {/* Logo */}
           <Link to={homePath} className="flex min-w-0 shrink-0 items-center gap-2.5 opacity-100">
-            <Logo size="sm" />
+            <Logo size="sm" variant="header" />
           </Link>
 
           {/* Desktop nav — centered elegant style */}

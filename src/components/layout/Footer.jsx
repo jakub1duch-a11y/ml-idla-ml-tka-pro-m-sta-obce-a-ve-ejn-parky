@@ -51,7 +51,7 @@ export default function Footer() {
         <div className="grid gap-12 border-b border-white/15 pb-12 xl:grid-cols-[minmax(260px,.95fr)_minmax(0,1.75fr)] xl:gap-20">
           <div className="min-w-0">
             <Link to="/" className="inline-flex max-w-full" aria-label="MLŽIDLA.cz — úvodní stránka">
-              <Logo size="lg" className="max-w-full" />
+              <Logo size="lg" variant="footer" className="max-w-full" />
             </Link>
             <p className="mt-2 text-[11px] font-normal tracking-[.08em] text-white/70">by HolmTec</p>
             <p className="mt-5 max-w-[430px] text-sm leading-7 text-white/75">

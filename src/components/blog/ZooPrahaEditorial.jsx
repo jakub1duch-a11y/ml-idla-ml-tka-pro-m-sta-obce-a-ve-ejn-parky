@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ArrowUpRight, Pause, Play, Volume2, VolumeX, MapPin } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, MapPin } from 'lucide-react';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import BlogArticleEngagement from '@/components/blog/BlogArticleEngagement';
 import BlogCommentsSection from '@/components/blog/BlogCommentsSection';
@@ -15,57 +15,59 @@ const CREDITS = [
   ['Nerezové konstrukce a mlžný systém', 'HolmTec s.r.o.'],
 ];
 
-function ZooVideo({ poster }) {
-  const videoRef = useRef(null);
+function ZooVideo({ poster, photos = [] }) {
+  const clips = [
+    { src: VIDEO, title: 'Mlžné sochy v pohybu', poster },
+    { src: '/media/optimized/27d926a20_MlzitkavarealuZOOPraha-zivaukazka.webm', title: 'Živá ukázka v areálu', poster: photos[1]?.url || poster },
+    { src: '/media/optimized/2ffb4d391_mlzidla-mlzitkaproparkyamesta04.webm', title: 'Návštěvnický prostor', poster: photos[2]?.url || poster },
+    { src: '/media/optimized/9f0153e3a_ml_detailvparku_01.webm', title: 'Detail jemné mlhy', poster: photos[0]?.url || poster },
+  ];
   const hostRef = useRef(null);
+  const videoRef = useRef(null);
+  const touchStart = useRef(null);
   const visible = useInView(hostRef, { amount: 0.2 });
   const reducedMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const [loaded, setLoaded] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const [activated, setActivated] = useState(false);
-  const [manualPlay, setManualPlay] = useState(false);
-  const [tabVisible, setTabVisible] = useState(true);
   const [error, setError] = useState(false);
+  const [tabVisible, setTabVisible] = useState(true);
   const [saveData] = useState(() => Boolean(navigator.connection?.saveData));
-
-  useEffect(() => { if (visible) setActivated(true); }, [visible]);
+  const clip = clips[active];
+  const select = (index) => {
+    setActive((index + clips.length) % clips.length);
+    setError(false);
+  };
+  useEffect(() => { if (visible) setLoaded(true); }, [visible]);
   useEffect(() => {
-    const fn = () => setTabVisible(!document.hidden);
-    document.addEventListener('visibilitychange', fn); fn();
-    return () => document.removeEventListener('visibilitychange', fn);
+    const update = () => setTabVisible(!document.hidden);
+    update();
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
   }, []);
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !activated || error) return;
-    if (!visible || !tabVisible || paused || ((reducedMotion || saveData) && !manualPlay)) { video.pause(); return; }
-    video.play().catch(() => setPaused(true));
-  }, [activated, error, visible, tabVisible, paused, reducedMotion, saveData, manualPlay]);
-  const togglePlay = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) { setManualPlay(true); video.play().then(() => setPaused(false)).catch(() => setPaused(true)); }
-    else { video.pause(); setPaused(true); }
-  };
-  const toggleSound = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !videoRef.current.muted;
-    setMuted(videoRef.current.muted);
-  };
-  return <div ref={hostRef} className="relative isolate aspect-[9/14] w-full overflow-hidden rounded-[24px] bg-[#061f2b] shadow-xl sm:aspect-[3/4]">
-    {poster && <img src={poster} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />}
-    {!error && <video ref={videoRef} src={activated ? VIDEO : undefined} muted playsInline loop preload="metadata" poster={poster} onError={() => setError(true)} aria-label="Skutečné záběry mlžných soch v areálu Zoo Praha" className="absolute inset-0 h-full w-full object-cover" />}
-    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#001b28]/85 via-transparent to-transparent" />
-    <span className="absolute left-5 top-5 rounded-full border border-white/35 bg-[#061f2b]/45 px-4 py-2 text-[10px] font-semibold uppercase tracking-[.14em] text-white backdrop-blur">Film z realizace</span>
-    <div className="absolute bottom-5 left-5 right-5 flex items-center justify-between gap-3 text-white">
-      <div><p className="font-semibold">Mlžné sochy v pohybu</p><p className="mt-1 text-xs text-white/65">Skutečné záběry z návštěvnického areálu</p></div>
-      {!error && <div className="flex shrink-0 gap-2">
-        <button type="button" onClick={togglePlay} aria-label={videoRef.current?.paused ? 'Přehrát video' : 'Pozastavit video'} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/40 bg-black/45 backdrop-blur">
-          {paused || ((reducedMotion || saveData) && !manualPlay) ? <Play size={18} /> : <Pause size={18} />}
-        </button>
-        <button type="button" onClick={toggleSound} aria-label={muted ? 'Zapnout zvuk' : 'Vypnout zvuk'} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/40 bg-black/45 backdrop-blur">
-          {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
-        </button>
-      </div>}
+    if (!video || !loaded) return;
+    if (!visible || !tabVisible || paused) video.pause();
+    else if (!reducedMotion && !saveData) video.play().catch(() => {});
+  }, [active, loaded, visible, tabVisible, paused, reducedMotion, saveData]);
+  return <div ref={hostRef} className="min-w-0" aria-label="Videogalerie realizace ZOO Praha">
+    <div className="relative isolate aspect-[4/5] w-full overflow-hidden rounded-[24px] bg-[#061f2b] shadow-xl sm:aspect-[3/4]"
+      onTouchStart={(e) => {touchStart.current = e.touches[0].clientX;}}
+      onTouchEnd={(e) => {if (touchStart.current === null) return; const dx = e.changedTouches[0].clientX - touchStart.current; touchStart.current = null; if (Math.abs(dx) > 55) select(active + (dx < 0 ? 1 : -1));}}>
+      {clip.poster && <img src={clip.poster} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover"/>}
+      {!error && <video key={clip.src} ref={videoRef} src={loaded ? clip.src : undefined} poster={clip.poster} muted playsInline controls loop preload="none" onPlay={() => setPaused(false)} onPause={() => { if (visible && tabVisible && !videoRef.current?.ended) setPaused(true); }} onError={() => setError(true)} aria-label={clip.title} className="absolute inset-0 h-full w-full bg-black object-contain"/>}
+      {error && <p role="status" className="absolute inset-x-0 bottom-12 bg-black/75 p-3 text-center text-sm text-white">Video nelze načíst. Vyberte další záběr.</p>}
+      <div className="absolute inset-x-0 top-4 flex justify-between px-3">
+        <button type="button" onClick={() => select(active - 1)} aria-label="Předchozí video" className="min-h-11 min-w-11 rounded-full bg-black/70 text-white">‹</button>
+        <button type="button" onClick={() => select(active + 1)} aria-label="Další video" className="min-h-11 min-w-11 rounded-full bg-black/70 text-white">›</button>
+      </div>
+    </div>
+    <p aria-live="polite" className="mt-4 text-sm font-semibold text-slate-700">{active + 1} / {clips.length} · {clip.title}</p>
+    <div className="mt-3 grid grid-cols-4 gap-2">
+      {clips.map((item, i) => <button type="button" key={item.src} aria-label={item.title} aria-pressed={active === i} onClick={() => select(i)} className={`overflow-hidden rounded-lg border-2 ${active === i ? 'border-teal-600' : 'border-transparent'}`}>
+        <img src={item.poster} alt="" loading="lazy" className="aspect-video w-full object-cover"/>
+      </button>)}
     </div>
   </div>;
 }
@@ -104,7 +106,7 @@ export default function ZooPrahaEditorial({ post }) {
         <p className="mt-5 max-w-2xl text-base leading-7 text-slate-600">Přehrávání se spustí při zobrazení videa, bez zvuku. Pokud chcete slyšet původní záznam, zvuk můžete aktivovat tlačítkem.</p>
         <a href="#zoo-editorial-text" className="mt-6 inline-flex min-h-11 items-center gap-2 border-b border-teal-800 pb-1 font-semibold text-teal-800">Přečíst celý příběh <ArrowRight size={16}/></a>
       </div>
-      <ZooVideo poster={post.content_images?.find((item) => item.kind === 'photo')?.url || post.image_url} />
+      <ZooVideo poster={post.content_images?.find((item) => item.kind === 'photo')?.url || post.image_url} photos={(post.content_images || []).filter(item => item.kind === 'photo')} />
     </section>
     <section id="zoo-editorial-text" className="bg-[#f7fafb] py-16 sm:py-24" aria-label="Redakční reportáž ZOO Praha">
       <div className="mx-auto grid max-w-7xl gap-9 px-5 sm:px-8 lg:grid-cols-[270px_1fr] lg:gap-16 lg:px-10">

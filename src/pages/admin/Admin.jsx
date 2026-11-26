@@ -8,6 +8,7 @@ import InstallAppButton from '@/components/admin/team/InstallAppButton';
 import { base44 } from '@/api/base44Client';
 import { setSEO } from '@/lib/seo';
 import AdminDashboard from './AdminDashboard';
+import Logo from '@/components/layout/Logo';
 import AdminProducts from './AdminProducts';
 import AdminReferences from './AdminReferences';
 import AdminPoptavky from './AdminPoptavky';
@@ -177,9 +178,10 @@ export default function Admin() {
       <AdminMobileNav tabs={TABS} groups={TAB_GROUPS} activeTab={activeTab} onChange={changeTab} />
       {/* Sidebar */}
       <div className="hidden w-64 bg-[#0d1117] border-r border-white/10 md:flex flex-col shrink-0 md:sticky md:top-0 md:h-screen">
-        <div className="px-5 py-6 border-b border-white/8">
-          <p className="text-xs font-semibold tracking-widest text-cyan mb-1">MLŽIDLA.cz · HolmTec</p>
-          <p className="text-white text-sm font-medium truncate">{user.full_name || user.email}</p>
+        <div className="px-5 py-5 border-b border-white/10">
+          <button type="button" onClick={() => changeTab('dashboard')} aria-label="MLŽIDLA.cz – obchodní přehled" className="block max-w-full rounded focus-visible:outline focus-visible:outline-cyan"><Logo variant="admin" tone="dark" /></button>
+          <p className="mt-2 text-xs text-white/60">by HolmTec · Obchodní centrum</p>
+          <p className="mt-3 text-white/80 text-xs truncate" title={user.full_name || user.email}>{user.full_name || user.email}</p>
         </div>
         <nav className="flex-1 overflow-y-auto p-3">
           {TAB_GROUPS.map((group) => (

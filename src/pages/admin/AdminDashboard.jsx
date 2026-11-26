@@ -55,7 +55,7 @@ export default function AdminDashboard() {
   const runs = data.SyncRun || [];
   return <main className="mx-auto max-w-[1440px] space-y-6 p-4 sm:p-6 lg:p-8">
     <header className="flex flex-wrap items-start justify-between gap-4">
-      <div><p className="text-xs font-semibold tracking-wider text-cyan">MLŽIDLA.cz · HolmTec</p><h1 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">Obchodní přehled</h1><p className="mt-2 text-sm text-white/60">Pracovní fronta, nabídky, kontakty a výroba.</p></div>
+      <div><p className="text-xs font-semibold tracking-wider text-cyan">OBCHODNÍ AGENDA</p><h1 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">Obchodní přehled</h1><p className="mt-2 text-sm text-white/60">Pracovní fronta, nabídky, kontakty a výroba.</p></div>
       <button type="button" onClick={load} disabled={busy} className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2.5 text-sm text-white disabled:opacity-50"><RefreshCw size={16} className={busy?'animate-spin':''}/> Obnovit přehled</button>
     </header>
     <div className="flex flex-wrap items-center gap-2 text-xs text-white/55"><span>Poslední načtení Base44: {date(loadedAt)}</span><span>· automatické obnovení zobrazení každou minutu</span></div>

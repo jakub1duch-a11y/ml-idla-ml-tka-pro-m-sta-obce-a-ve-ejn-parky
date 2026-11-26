@@ -1,210 +1,80 @@
-import React, { useState, useEffect } from 'react';
-import { Loader, Users, MousePointerClick, Clock, MapPin, Package, Search, ListTodo, UserRound, AlertTriangle, Bot, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Inbox, FileText, ClipboardCheck, Package, Users, Clock, RefreshCw, ExternalLink, ChevronRight, AlertTriangle, ShieldCheck } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import OperationsOverview from '@/components/admin/OperationsOverview';
-import WorkBriefingPanel from '@/components/admin/WorkBriefingPanel';
-import GmailConversationsPanel from '@/components/admin/GmailConversationsPanel';
 
-const PRODUCT_NAME_CACHE = {};
-
-function formatDuration(seconds) {
-  const s = Math.round(seconds || 0);
-  const m = Math.floor(s / 60);
-  const r = s % 60;
-  return `${m}m ${r}s`;
-}
-
+const SOURCES = { Poptavka: 'Poptávky z webu', ContactInquiry: 'Kontaktní formuláře', WebAdvisorLead: 'Webový poradce', ProjectOrder: 'Nabídky a zakázky', OfferAgentRun: 'Schvalování', ProductionOrder: 'Výroba', CrmContact: 'CRM kontakty', AdminTask: 'Úkoly', SyncRun: 'Synchronizace' };
+const LIMIT = 500;
+const date = v => v && Number.isFinite(new Date(v).getTime()) ? new Date(v).toLocaleString('cs-CZ', { dateStyle:'short', timeStyle:'short' }) : '—';
+const sheets = 'https://docs.google.com/spreadsheets/d/1m-NObbjCYDYG6Sg3B-2g-TcLZkkqGzejDFfCKjqQyUE/edit';
+const drafts = 'https://mail.google.com/mail/u/?authuser=meduna%40holmtec.cz#drafts';
+const panel = 'rounded-xl border border-white/10 bg-[#111820]';
 export default function AdminDashboard() {
-  const navigate = useNavigate();
-  const [analytics, setAnalytics] = useState(null);
-  const [search, setSearch] = useState(null);
-  const [products, setProducts] = useState([]);
-  const [adminTasks, setAdminTasks] = useState([]);
-  const [superAgentProfiles, setSuperAgentProfiles] = useState([]);
-  const [superAgentActions, setSuperAgentActions] = useState([]);
-  const [superAgentSessions, setSuperAgentSessions] = useState([]);
-  const [superAgentQuickActions, setSuperAgentQuickActions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const [data,setData] = useState({});
+  const [failed,setFailed] = useState([]);
+  const [loadedAt,setLoadedAt] = useState(null);
+  const [busy,setBusy] = useState(true);
+  const inFlight = useRef(false);
+  const alive = useRef(true);
+  const load = useCallback(async () => {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    setBusy(true);
+    const keys = Object.keys(SOURCES);
+    try {
+      const results = await Promise.allSettled(keys.map(async key => {
+        const rows = await base44.entities[key].list('-created_date', LIMIT);
+        if (!Array.isArray(rows)) throw new Error('Invalid response');
+        return rows;
+      }));
+      if (!alive.current) return;
+      setData(Object.fromEntries(keys.map((key,i) => [key, results[i].status === 'fulfilled' ? results[i].value : null])));
+      setFailed(keys.filter((_,i) => results[i].status === 'rejected'));
+      setLoadedAt(new Date());
+    } finally { inFlight.current = false; if (alive.current) setBusy(false); }
+  },[]);
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    Promise.allSettled([
-      base44.functions.invoke('getAnalyticsData', { days: 28 }),
-      base44.functions.invoke('getSearchConsoleQueries', { days: 28 }),
-      base44.entities.Product.list(),
-      base44.entities.AdminTask.list('-updated_date', 100),
-      base44.entities.SuperAgentProfile.list('-updated_date', 20),
-      base44.entities.SuperAgentAction.list('-updated_date', 20),
-      base44.entities.SuperAgentSession.list('-last_active_at', 10),
-      base44.entities.SuperAgentQuickAction.list('sort_order', 30),
-    ])
-      .then(([a, s, p, t, sap, saa, sas, saq]) => {
-        const hasAnalytics = a.status === 'fulfilled' && a.value?.data;
-        setAnalytics(hasAnalytics ? a.value.data : null);
-        setSearch(s.status === 'fulfilled' ? s.value?.data : null);
-        setProducts(p.status === 'fulfilled' ? p.value || [] : []);
-        setAdminTasks(t.status === 'fulfilled' ? t.value || [] : []);
-        setSuperAgentProfiles(sap.status === 'fulfilled' ? sap.value || [] : []);
-        setSuperAgentActions(saa.status === 'fulfilled' ? saa.value || [] : []);
-        setSuperAgentSessions(sas.status === 'fulfilled' ? sas.value || [] : []);
-        setSuperAgentQuickActions(saq.status === 'fulfilled' ? saq.value || [] : []);
-        if (!hasAnalytics) setError('Analytics a Search Console nejsou dostupné — zbytek přehledu funguje normálně.');
-      })
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <div className="flex justify-center py-24"><Loader size={24} className="animate-spin text-cyan/40" /></div>;
-
-  const analyticsUnavailable = !analytics || !search;
-
-  const totals = analytics?.totals || { sessions: 0, users: 0, pageviews: 0 };
-  const inquiries = analytics?.inquiries || 0;
-  const conversionRate = totals.sessions > 0 ? ((inquiries / totals.sessions) * 100).toFixed(1) : '0';
-  const avgPosition = search?.rows?.length
-    ? (search.rows.reduce((sum, r) => sum + r.position, 0) / search.rows.length).toFixed(1)
-    : '—';
-
-  const productName = (path) => {
-    const slug = path?.split('/produkt/')[1];
-    if (!slug) return path;
-    if (PRODUCT_NAME_CACHE[slug]) return PRODUCT_NAME_CACHE[slug];
-    const found = products.find((p) => p.slug === slug);
-    const name = found?.name || slug;
-    PRODUCT_NAME_CACHE[slug] = name;
-    return name;
-  };
-
-  const activeTasks = adminTasks.filter((item) => !['completed','cancelled'].includes(item.status));
-  const completedTasks = adminTasks.filter((item) => item.status === 'completed');
-  const reviewTasks = adminTasks.filter((item) => item.status === 'review');
-  const overdueTasks = activeTasks.filter((item) => item.due_date && new Date(`${item.due_date}T23:59:59`) < new Date());
-  const recentTasks = [...activeTasks].sort((a,b) => String(b.updated_date || '').localeCompare(String(a.updated_date || ''))).slice(0, 6);
-  const primarySuperAgent = superAgentProfiles.find((item) => item.key === 'mlzidla_superagent' && item.active) || superAgentProfiles.find((item) => item.active) || null;
-  const activeSuperAgentActions = superAgentActions.filter((item) => ['proposed','awaiting_approval','approved','running'].includes(item.status));
-  const recentSuperAgentSessions = superAgentSessions.filter((item) => item.status === 'active').slice(0, 3);
-  const quickActions = superAgentQuickActions.filter((item) => item.active && (!primarySuperAgent || item.agent_key === primarySuperAgent.key)).slice(0, 4);
-
+    alive.current = true;
+    load();
+    const timer = setInterval(() => { if (document.visibilityState === 'visible') load(); },60000);
+    const onVisible = () => { if(document.visibilityState === 'visible') load(); };
+    document.addEventListener('visibilitychange',onVisible);
+    return () => { alive.current = false; clearInterval(timer); document.removeEventListener('visibilitychange',onVisible); };
+  },[load]);
+  const count = (keys, predicate) => keys.some(k => !Array.isArray(data[k])) ? '—' : (keys.some(k => data[k].length >= LIMIT) ? '≥' : '') + keys.reduce((sum,k) => sum + data[k].filter(predicate).length,0);
   const cards = [
-    { icon: Users, label: 'Návštěvy (28 dní)', value: totals.sessions.toLocaleString(), color: 'text-cyan' },
-    { icon: MousePointerClick, label: 'Konverze', value: `${inquiries} (${conversionRate} %)`, color: 'text-emerald-400' },
-    { icon: Clock, label: 'Doba na uživatele', value: formatDuration(analytics?.avgSessionDuration), color: 'text-violet-400' },
-    { icon: Search, label: 'Průměrná pozice', value: avgPosition, color: 'text-amber-400' },
+    ['Nové poptávky',Inbox,'poptavky',['Poptavka','ContactInquiry','WebAdvisorLead'],r=>['nova','new'].includes(r.status)],
+    ['Rozpracované nabídky',FileText,'offers',['ProjectOrder'],r=>['draft','draft_ready_for_review','pending_approval'].includes(r.status)],
+    ['Ke schválení',ClipboardCheck,'approvals',['OfferAgentRun'],r=>r.run_status==='pending_approval'],
+    ['Odeslané / otevřené nabídky',FileText,'offers',['ProjectOrder'],r=>['sent','viewed','extension_requested'].includes(r.status)],
+    ['Aktivní výrobní zakázky',Package,'orders',['ProductionOrder'],r=>!['completed','cancelled'].includes(r.status)],
+    ['Kontakty k dalšímu kroku',Users,'crm',['CrmContact'],r=>r.action_required===true || ['needs_action','follow_up'].includes(r.status)],
+    ['Úkoly po termínu',Clock,'tasks',['AdminTask'],r=>!['completed','cancelled'].includes(r.status)&&r.due_date&&new Date(r.due_date+'T23:59:59')<new Date()],
   ];
-
-  return (
-    <div className="p-4 md:p-6 space-y-8 max-w-[1600px] mx-auto">
-      <OperationsOverview />
-      <h2 className="text-white text-lg font-medium">Přehled</h2>
-
-      {analyticsUnavailable && (
-        <div className="rounded-xl border border-amber-400/20 bg-amber-400/10 px-4 py-3 text-xs text-amber-300">
-          {error || 'Analytics a Search Console nejsou dostupné — zbytek přehledu funguje normálně.'}
-        </div>
-      )}
-
-      <WorkBriefingPanel />
-      <GmailConversationsPanel />
-
-      <section className="rounded-2xl border border-cyan/20 bg-gradient-to-br from-cyan/10 via-white/[.025] to-violet-400/[.04] p-5 sm:p-6">
-        <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
-          <div className="max-w-3xl">
-            <div className="flex items-center gap-2 text-cyan"><Bot size={16}/><p className="font-mono text-[10px] uppercase tracking-[.2em]">MLŽIDLA.cz SuperAgent</p></div>
-            <h3 className="mt-2 text-xl font-medium text-white">{primarySuperAgent?.name || 'Centrální AI operátor'}</h3>
-            <p className="mt-1 text-xs leading-relaxed text-white/40">{primarySuperAgent?.description || 'Jeden vstupní bod pro poptávky, nabídky, vizualizace, marketing, úkoly a interní workflow.'}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 font-mono text-[10px] text-emerald-300"><ShieldCheck size={11}/>{primarySuperAgent?.active ? 'AGENT AKTIVNÍ' : 'KONFIGURACE KONTROLA'}</span>
-              <span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 font-mono text-[10px] text-violet-300">{activeSuperAgentActions.length} akcí čeká / běží</span>
-              <span className="rounded-full border border-white/10 bg-white/[.03] px-3 py-1.5 font-mono text-[10px] text-white/45">{recentSuperAgentSessions.length} aktivní relace</span>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-2 xl:justify-end">
-            <button onClick={() => navigate('/obchodni-nabidky')} className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2.5 text-sm font-semibold text-slate-950 transition hover:bg-cyan/90"><Sparkles size={14}/> Otevřít SuperAgent <ArrowRight size={14}/></button>
-            <button onClick={() => navigate('/admin?tab=poptavky')} className="rounded-xl border border-white/10 bg-white/[.03] px-4 py-2.5 text-sm text-white/65 hover:bg-white/[.06]">Poptávky</button>
-            <button onClick={() => navigate('/admin?tab=tasks')} className="rounded-xl border border-white/10 bg-white/[.03] px-4 py-2.5 text-sm text-white/65 hover:bg-white/[.06]">Úkoly</button>
-          </div>
-        </div>
-        {quickActions.length > 0 && <div className="mt-5 grid gap-2 md:grid-cols-2 xl:grid-cols-4">{quickActions.map((action) => <button key={action.id} onClick={() => navigate(action.target_entity === 'AdminTask' ? '/admin?tab=tasks' : '/obchodni-nabidky')} className="rounded-xl border border-white/8 bg-black/10 p-3 text-left transition hover:border-cyan/20 hover:bg-cyan/[.04]"><p className="text-sm font-medium text-white/70">{action.label}</p><p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-white/30">{action.description || action.intent}</p></button>)}</div>}
-      </section>
-
-      <section className="rounded-2xl border border-white/8 bg-white/3 p-5">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><p className="font-mono text-[10px] uppercase tracking-[.18em] text-violet-300">Týmový workflow</p><h3 className="mt-1 text-lg font-medium text-white">Jakub Duch × Radek Meduna</h3><p className="mt-1 text-xs text-white/35">Aktivní úkoly, předávání, kontrola a stav dokončení v interním administračním systému.</p></div><div className="flex flex-wrap gap-2"><span className="rounded-full border border-amber-400/20 bg-amber-400/10 px-3 py-1.5 font-mono text-[10px] text-amber-300">{activeTasks.length} aktivních</span><span className="rounded-full border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 font-mono text-[10px] text-violet-300">{reviewTasks.length} ke kontrole</span><span className="rounded-full border border-emerald-400/20 bg-emerald-400/10 px-3 py-1.5 font-mono text-[10px] text-emerald-300">{completedTasks.length} hotovo</span></div></div>
-        <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_280px]">
-          <div className="overflow-hidden rounded-xl border border-white/8 bg-black/10"><div className="flex items-center gap-2 border-b border-white/8 px-4 py-3"><ListTodo size={13} className="text-violet-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Aktuální pracovní fronta</p></div><div className="divide-y divide-white/5">{recentTasks.length ? recentTasks.map(task => <div key={task.id} className="flex items-start justify-between gap-4 px-4 py-3"><div className="min-w-0"><p className="text-sm font-medium text-white/70">{task.title}</p><p className="mt-1 flex flex-wrap items-center gap-2 font-mono text-[10px] text-white/25"><span className="inline-flex items-center gap-1"><UserRound size={10}/>{task.assignee_name || task.assignee_email}</span><span>{task.area}</span>{task.due_date ? <span>{task.due_date}</span> : null}</p></div><span className={`shrink-0 rounded-full border px-2.5 py-1 font-mono text-[10px] ${task.status === 'review' ? 'border-violet-400/20 bg-violet-400/10 text-violet-300' : task.status === 'in_progress' ? 'border-amber-400/20 bg-amber-400/10 text-amber-300' : 'border-sky-400/20 bg-sky-400/10 text-sky-300'}`}>{task.status === 'review' ? 'KONTROLA' : task.status === 'in_progress' ? 'ROZPRACOVÁNO' : 'PLÁN'}</span></div>) : <p className="px-4 py-5 text-sm text-white/25">Bez aktivních úkolů.</p>}</div></div>
-          <div className="rounded-xl border border-white/8 bg-black/10 p-4"><div className="flex items-center gap-2"><AlertTriangle size={13} className="text-red-300"/><p className="font-mono text-[10px] uppercase tracking-widest text-white/35">Kontrola termínů</p></div><p className="mt-4 text-3xl font-light text-white">{overdueTasks.length}</p><p className="mt-1 text-xs text-white/30">úkolů po termínu</p><p className="mt-4 text-xs leading-relaxed text-white/30">Detailní editace, předání druhému administrátorovi a komunikace jsou v sekci <strong className="text-white/55">Úkoly & tým</strong>.</p></div>
-        </div>
-      </section>
-
-      {/* Stat cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {cards.map((c) => {
-          const Icon = c.icon;
-          return (
-            <div key={c.label} className="p-4 rounded-xl bg-white/3 border border-white/8">
-              <div className="flex items-center gap-2 mb-2">
-                <Icon size={14} className={c.color} />
-                <p className="text-xs font-mono text-white/35 tracking-widest uppercase">{c.label}</p>
-              </div>
-              <p className={`text-2xl font-light ${c.color}`}>{c.value}</p>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Sessions chart */}
-      {analytics?.daily?.length > 0 && (
-        <div className="p-4 rounded-xl bg-white/3 border border-white/8">
-          <p className="text-xs font-mono text-white/30 tracking-widest uppercase mb-4">Návštěvy v čase</p>
-          <ResponsiveContainer width="100%" height={220}>
-            <AreaChart data={analytics.daily} margin={{ top: 0, right: 0, left: -20, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-              <XAxis dataKey="date" tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
-              <YAxis tick={{ fill: 'rgba(255,255,255,0.3)', fontSize: 10 }} />
-              <Tooltip contentStyle={{ background: '#0d1117', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff' }} />
-              <Area type="monotone" dataKey="sessions" stroke="#22d3ee" fill="#22d3ee" fillOpacity={0.15} />
-            </AreaChart>
-          </ResponsiveContainer>
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Cities */}
-        <div className="rounded-xl border border-white/8 overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-3 bg-white/5">
-            <MapPin size={13} className="text-cyan" />
-            <p className="text-xs font-mono text-white/30 tracking-widest uppercase">Návštěvy dle měst</p>
-          </div>
-          <div className="divide-y divide-white/5">
-            {(analytics?.cities || []).length === 0 && <p className="text-white/30 text-sm px-4 py-4">Žádná data.</p>}
-            {(analytics?.cities || []).map((c) => (
-              <div key={c.city} className="flex items-center justify-between px-4 py-2.5">
-                <span className="text-sm text-white/70">{c.city}</span>
-                <span className="text-sm text-cyan font-mono">{c.sessions}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Top products */}
-        <div className="rounded-xl border border-white/8 overflow-hidden">
-          <div className="flex items-center gap-2 px-4 py-3 bg-white/5">
-            <Package size={13} className="text-cyan" />
-            <p className="text-xs font-mono text-white/30 tracking-widest uppercase">Nejnavštěvovanější produkty</p>
-          </div>
-          <div className="divide-y divide-white/5">
-            {(analytics?.productClicks || []).length === 0 && <p className="text-white/30 text-sm px-4 py-4">Žádná data.</p>}
-            {(analytics?.productClicks || []).map((p) => (
-              <div key={p.path} className="flex items-center justify-between px-4 py-2.5">
-                <span className="text-sm text-white/70 truncate">{productName(p.path)}</span>
-                <span className="text-sm text-cyan font-mono">{p.views}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const inquiries = [...(data.Poptavka||[]).map(r=>({...r,displayName:r.firma||r.jmeno,product:r.produkt})),...(data.ContactInquiry||[]).map(r=>({...r,displayName:r.name,product:r.service_type})),...(data.WebAdvisorLead||[]).map(r=>({...r,displayName:r.name||r.company,product:r.summary}))].sort((a,b)=>String(b.created_date).localeCompare(String(a.created_date))).slice(0,8);
+  const runs = data.SyncRun || [];
+  return <main className="mx-auto max-w-[1440px] space-y-6 p-4 sm:p-6 lg:p-8">
+    <header className="flex flex-wrap items-start justify-between gap-4">
+      <div><p className="text-xs font-semibold tracking-wider text-cyan">MLŽIDLA.cz · HolmTec</p><h1 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-3xl">Obchodní přehled</h1><p className="mt-2 text-sm text-white/60">Pracovní fronta, nabídky, kontakty a výroba.</p></div>
+      <button type="button" onClick={load} disabled={busy} className="flex items-center gap-2 rounded-lg border border-white/15 px-4 py-2.5 text-sm text-white disabled:opacity-50"><RefreshCw size={16} className={busy?'animate-spin':''}/> Obnovit přehled</button>
+    </header>
+    <div className="flex flex-wrap items-center gap-2 text-xs text-white/55"><span>Poslední načtení Base44: {date(loadedAt)}</span><span>· automatické obnovení zobrazení každou minutu</span></div>
+    {failed.length>0 && <div role="alert" className="flex gap-2 rounded-lg border border-amber-400/30 bg-amber-400/10 p-3 text-sm text-amber-200"><AlertTriangle size={18} className="shrink-0"/> Nedostupné zdroje: {failed.map(k=>SOURCES[k]).join(', ')}. Neověřené hodnoty se zobrazují jako pomlčka.</div>}
+    <section aria-label="Obchodní ukazatele" className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      {cards.map(([label,Icon,tab,keys,fn])=><Link key={label} to={'/admin?tab='+tab} className={panel+' min-w-0 p-4 hover:border-cyan/50 focus-visible:outline focus-visible:outline-cyan'}><Icon size={18} className="mb-3 text-cyan"/><p className="min-h-10 text-sm text-white/70">{label}</p><p className="mt-1 text-3xl font-semibold tabular-nums text-white">{count(keys,fn)}</p></Link>)}
+      <a href={drafts} target="_blank" rel="noopener noreferrer" className={panel+' p-4 hover:border-cyan/50'}><FileText size={18} className="mb-3 text-cyan"/><p className="min-h-10 text-sm text-white/70">Koncepty Gmail</p><p className="mt-2 flex items-center gap-1 text-sm font-medium text-cyan">Otevřít <ExternalLink size={13}/></p></a>
+    </section>
+    <p className="text-xs text-white/45">Počty vycházejí z nejvýše 500 nejnovějších záznamů každého zdroje. Nejde o ověřený stav externích systémů.</p>
+    <section className={panel+' overflow-hidden'}>
+      <header className="flex items-center justify-between gap-3 border-b border-white/10 p-4"><h2 className="font-semibold text-white">Poslední poptávky v Base44</h2><Link to="/admin?tab=poptavky" className="text-sm text-cyan">Všechny <ChevronRight size={14} className="inline"/></Link></header>
+      {inquiries.length ? <div className="divide-y divide-white/10">{inquiries.map(r=><div key={r.id} className="flex flex-wrap items-center justify-between gap-3 p-4"><div className="min-w-0"><p className="break-words font-medium text-white">{r.displayName||'Bez názvu'}</p><p className="mt-1 break-words text-sm text-white/55">{String(r.product||'Produkt neuveden').slice(0,100)}</p></div><div className="text-xs text-white/60">{date(r.created_date)} · {r.status||'Stav neuveden'}</div></div>)}</div>:<p className="p-4 text-sm text-white/60">{busy?'Načítání…':failed.some(k=>['Poptavka','ContactInquiry','WebAdvisorLead'].includes(k))?'Zdroj není dostupný.':'V načtených datech nejsou poptávky.'}</p>}
+    </section>
+    <section className={panel+' p-4 sm:p-5'}>
+      <div className="flex flex-wrap items-center justify-between gap-3"><h2 className="font-semibold text-white">Evidence a synchronizace</h2><Link to="/admin?tab=sales-hub" className="text-sm text-cyan">Správa synchronizace</Link></div>
+      <p className="mt-2 text-sm text-white/60">Poslední evidované běhy, nikoli potvrzení aktivního plánovače.</p>
+      <div className="mt-4 divide-y divide-white/10">{['gmail','google_sheets','google_drive','combined'].map(source=>{const r=runs.find(x=>x.source===source);return <div key={source} className="flex flex-wrap justify-between gap-2 py-3 text-sm"><span className="text-white/80">{{gmail:'Gmail',google_sheets:'Google Sheets',google_drive:'Google Drive',combined:'Společná synchronizace'}[source]}</span><span className={r?.status==='failed'?'text-amber-200':'text-white/60'}>{r?({completed:'Dokončeno',failed:'Chyba',running:'Probíhá'}[r.status]||r.status)+' · '+date(r.finished_at||r.started_at):'Bez ověřeného běhu'}</span></div>})}</div>
+      <a href={sheets} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-2 text-sm text-cyan"><ExternalLink size={15}/> Otevřít zdrojovou obchodní tabulku</a>
+      <p className="mt-4 flex items-center gap-2 text-xs text-white/60"><ShieldCheck size={16} className="text-cyan"/> Zákaznické zprávy se automaticky neodesílají.</p>
+    </section>
+  </main>;
 }

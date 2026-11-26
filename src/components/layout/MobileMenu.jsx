@@ -58,7 +58,7 @@ export default function MobileMenu({ open, onClose, productLinks = [], locale = 
           <Dialog.Title className="sr-only">{locale === 'cs' ? 'Hlavní navigace MLŽIDLA' : 'MLŽIDLA navigation'}</Dialog.Title>
           <Dialog.Description className="sr-only">{locale === 'cs' ? 'Katalog, řešení podle prostoru, reference a kontakt.' : 'Products, projects, technology and contact.'}</Dialog.Description>
           <div className="flex h-[68px] shrink-0 items-center justify-between bg-[#082C3F] px-5 text-white">
-            <Link to={ROUTE_MAP.home[locale]} onClick={onClose} aria-label="MLŽIDLA — home"><Logo size="sm" /></Link>
+            <Link to={ROUTE_MAP.home[locale]} onClick={onClose} aria-label="MLŽIDLA — home"><Logo size="sm" variant="header" /></Link>
             <div className="flex items-center gap-2"><LanguageSwitcher mobile onNavigate={onClose} />
               <Dialog.Close aria-label={locale === 'cs' ? 'Zavřít menu' : 'Close menu'} className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-cyan-200"><X size={22} /></Dialog.Close>
             </div>

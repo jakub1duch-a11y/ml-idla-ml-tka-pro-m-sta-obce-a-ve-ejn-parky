@@ -16,7 +16,7 @@ export default function Logo({ size = "md", variant = "simple", tone = "dark", c
   const source = variant === "footer" ? LOGO_FOOTER : tone === "light" ? LOGO_ON_LIGHT : LOGO_ON_DARK;
   return (
     <span className={`inline-flex min-w-0 flex-col items-start ${className}`}>
-      <img src={source} alt="MLŽIDLA.cz" className={`block w-auto max-w-full object-contain ${variant === "footer" ? "h-auto w-[175px] max-w-[65vw] sm:w-[195px]" : variant === "header" ? "h-auto w-[132px] max-w-[39vw] sm:w-[155px] xl:w-[175px]" : heights[size] || heights.md}`} />
+      <img src={source} alt="MLŽIDLA.cz" className={`block w-auto max-w-full object-contain ${variant === "footer" ? "h-[34px] max-w-[65vw]" : variant === "header" ? "h-7 max-w-[42vw] sm:h-8 xl:h-[38px]" : heights[size] || heights.md}`} />
       {variant === "full" && <span className="mt-1 text-[10px] font-medium tracking-[.08em] text-white/70 sm:text-xs">Architektura vodní mlhy <span className="text-white/45">· by holmtec</span></span>}
     </span>
   );

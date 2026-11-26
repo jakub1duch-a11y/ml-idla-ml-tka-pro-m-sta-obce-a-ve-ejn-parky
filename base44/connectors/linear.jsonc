@@ -1,0 +1,7 @@
+{
+  "type": "linear",
+  "scopes": [
+    "read",
+    "write"
+  ]
+}

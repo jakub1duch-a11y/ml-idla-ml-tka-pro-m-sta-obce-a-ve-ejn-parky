@@ -1,0 +1,14 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { planContactSync } from '../base44/shared/contactSyncPlan.mjs';
+const baseline={id:'case-1',name:'A',organization:'Firma',role:'technik',next_step:'čekat'};
+const plan=(a={},b={},old=baseline)=>planContactSync({id:'case-1',baseline:old,base44:{...baseline,...a},sheet:{...baseline,...b}});
+test('edit in Sheets',()=>assert.deepEqual(plan({}, {name:'B'}).toBase44,{name:'B'}));
+test('edit in Base44',()=>assert.deepEqual(plan({role:'obchodník'}).toSheet,{role:'obchodník'}));
+test('independent edits in both',()=>{const p=plan({name:'B'},{role:'obchodník'});assert.deepEqual(p.toBase44,{role:'obchodník'});assert.deepEqual(p.toSheet,{name:'B'});assert.equal(p.conflicts.length,0);});
+test('concurrent edit never overwrites',()=>{const p=plan({name:'B'},{name:'C'});assert.deepEqual(p.toBase44,{});assert.deepEqual(p.toSheet,{});assert.equal(p.conflicts[0].reason,'concurrent_edit');});
+test('missing common snapshot blocks writes',()=>assert.equal(plan({}, {}, null).conflicts[0].reason,'missing_or_mismatched_identity'));
+test('mismatched identity blocks writes',()=>assert.equal(plan({id:'other'},{name:'B'}).conflicts[0].reason,'missing_or_mismatched_identity'));
+test('blank overwrite requires review',()=>assert.equal(plan({}, {name:''}).conflicts[0].reason,'explicit_clear_requires_review'));
+test('protected fields never sync',()=>{const p=plan({bt:'123',price:50,status:'sent'},{bt:'456',price:10,status:'approved'});assert.deepEqual(p.toBase44,{});assert.deepEqual(p.toSheet,{});});
+test('converged fields no-op',()=>{const p=plan({name:'B'},{name:'B'});assert.deepEqual(p.toBase44,{});assert.deepEqual(p.toSheet,{});assert.equal(p.conflicts.length,0);});

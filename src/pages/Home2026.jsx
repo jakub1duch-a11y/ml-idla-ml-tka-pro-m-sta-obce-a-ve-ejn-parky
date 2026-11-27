@@ -6,6 +6,7 @@ import { ArrowDown, ArrowRight, Building2, Factory, School, Trees, Wifi, Waves, 
 import { MotionConfig } from 'framer-motion';
 import { setSEO } from '@/lib/seo';
 import '@/styles/home-2026-redesign.css';
+import HomeProductMotionStage from '@/components/home/new/HomeProductMotionStage';
 
 const ProductPhotoGallery = lazy(() => import('@/components/home/new/ProductPhotoGallery'));
 const ReferencesStrip = lazy(() => import('@/components/home/new/ReferencesStrip'));
@@ -121,6 +122,7 @@ export default function Home2026() {
     <HomeIntro />
     <Suspense fallback={null}><MistSceneSelector /></Suspense>
     <HomeCollections />
+    <HomeProductMotionStage />
     <HomeSpaces />
     <Suspense fallback={<div className="ml-home26-loading" aria-hidden="true" />}><ProductPhotoGallery /></Suspense>
     <HomeSmart />

@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sun, Sparkles, SlidersHorizontal, ShieldCheck, Wrench, Factory } from 'lucide-react';
 
@@ -93,11 +95,38 @@ export function HomeTechnology() {
 }
 
 export function HomeHolmTec() {
+  const motionRef = useRef(null);
+  useEffect(() => {
+    const node = motionRef.current;
+    if (!node || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      gsap.fromTo('[data-production-tube]', { strokeDashoffset: 1 }, {
+        strokeDashoffset: 0, ease: 'none',
+        scrollTrigger: { trigger: node, start: 'top 85%', end: 'bottom 40%', scrub: 0.5 }
+      });
+      gsap.from('[data-production-step]', {
+        y: 20, opacity: 0, stagger: 0.12, duration: 0.65, ease: 'power2.out',
+        scrollTrigger: { trigger: node, start: 'top 82%', once: true }
+      });
+    }, node);
+    return () => ctx.revert();
+  }, []);
   return (
     <section className="bg-white py-20 text-[#0D2F4F] sm:py-24" aria-labelledby="home-holmtec-title">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
         <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <div className="grid grid-cols-2 gap-3 rounded-[24px] bg-[#F4F8FB] p-4 sm:gap-5 sm:p-6">
+          <div ref={motionRef} className="grid grid-cols-2 gap-3 rounded-[24px] bg-[#F4F8FB] p-4 sm:gap-5 sm:p-6">
+            <figure className="col-span-2 m-0 overflow-hidden rounded-xl bg-[#0D2F4F] p-5 text-white">
+              <p className="text-xs font-semibold uppercase tracking-[.2em] text-white/80">Od trubky k tvaru</p>
+              <svg viewBox="0 0 480 210" className="my-3 w-full" role="img" aria-label="Schematická animace tvarování nerezové trubky, nikoli výrobní výkres">
+                <defs><linearGradient id="production-steel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#dbeaf0"/><stop offset=".45" stopColor="#fff"/><stop offset="1" stopColor="#7d9ba9"/></linearGradient></defs>
+                <path d="M22 175 H130 Q165 175 165 140 V70 Q165 25 210 25 H320 Q365 25 365 70 V175 H457" fill="none" stroke="white" strokeOpacity=".14" strokeWidth="16" strokeLinecap="round"/>
+                <path data-production-tube d="M22 175 H130 Q165 175 165 140 V70 Q165 25 210 25 H320 Q365 25 365 70 V175 H457" fill="none" stroke="url(#production-steel)" strokeWidth="13" strokeLinecap="round" pathLength="1" strokeDasharray="1" strokeDashoffset="0"/>
+              </svg>
+              <div className="grid grid-cols-3 gap-2 border-t border-white/20 pt-4 text-xs leading-normal">{["Nerezová trubka", "Ohýbání a tvarování", "Finální prvek"].map((step,i)=><div key={step} data-production-step><span className="block text-[#79e4f4]">0{i+1}</span>{step}</div>)}</div>
+              <figcaption className="mt-4 text-xs text-white/70">Schematické znázornění, nikoli výrobní výkres.</figcaption>
+            </figure>
             <div className="flex min-h-[185px] flex-col justify-between rounded-xl bg-white p-5"><Factory className="text-[#0B83BC]" size={30} /><div><strong className="block font-heading text-lg">Česká výroba</strong><span className="mt-2 block text-sm text-[#587285]">Trutnov · HolmTec</span></div></div>
             <div className="flex min-h-[185px] flex-col justify-between rounded-xl bg-white p-5"><Wrench className="text-[#0B83BC]" size={30} /><div><strong className="block font-heading text-lg">Vlastní zpracování</strong><span className="mt-2 block text-sm text-[#587285]">Ohýbání a výroba nerezových prvků</span></div></div>
           </div>

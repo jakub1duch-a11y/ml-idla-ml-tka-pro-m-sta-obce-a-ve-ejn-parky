@@ -139,5 +139,33 @@
     "design": "Canva brand kit and Figma approved design exports; Framer optional prototype",
     "credentialPolicy": "server secrets only; never in GitHub, client code or design files",
     "publishPolicy": "verified, explicitly approved revision only; no automatic customer communications"
-  }
+  },
+  "mediaSources": [
+    {
+      "name": "Pexels",
+      "docs": "https://www.pexels.com/api/documentation/",
+      "license": "https://www.pexels.com/license/",
+      "mode": "API key required; new issuance currently paused"
+    },
+    {
+      "name": "Pixabay",
+      "docs": "https://pixabay.com/api/docs/",
+      "license": "https://pixabay.com/service/license-summary/",
+      "mode": "API key required"
+    },
+    {
+      "name": "Coverr",
+      "docs": "https://coverr.co/developers/",
+      "mcp": "https://mcp.coverr.co/mcp",
+      "license": "https://coverr.co/license",
+      "mode": "account/API authorization required"
+    },
+    {
+      "name": "Mixkit",
+      "docs": "https://mixkit.co/free-stock-video/",
+      "license": "https://mixkit.co/license/",
+      "mode": "manual selection; commercially permitted Free License only"
+    }
+  ],
+  "mediaPolicy": "Use only selected commercially licensed assets, never mirror stock libraries. Real product photos are primary. Do not embed API keys."
 }

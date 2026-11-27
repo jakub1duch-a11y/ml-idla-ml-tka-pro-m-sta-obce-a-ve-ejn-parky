@@ -53,6 +53,30 @@
     {
       "tool": "WebMCP",
       "role": "future scoped public read-only discovery; not enabled"
+    },
+    {
+      "tool": "Remotion",
+      "role": "versioned product video compositions from approved assets"
+    },
+    {
+      "tool": "Google Drive",
+      "role": "private approved source documents; never copied into public repository"
+    },
+    {
+      "tool": "Data Analytics",
+      "role": "aggregate anonymized web metrics and conversion validation"
+    },
+    {
+      "tool": "Writing Style",
+      "role": "consistent natural Czech copy; do not export private correspondence"
+    },
+    {
+      "tool": "Instantly.ai",
+      "role": "separate B2B outreach, no automatic sending"
+    },
+    {
+      "tool": "Base44",
+      "role": "site and application runtime; deployment requires verified build and sync"
     }
   ]
 }

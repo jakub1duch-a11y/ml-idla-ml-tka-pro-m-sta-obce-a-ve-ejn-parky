@@ -79,7 +79,8 @@ export default function Mlhoviste() {
     });
   }, []);
   return (
-    <div className="mist-field-page bg-white pt-24">
+    // Keep long sections visible independently of scroll intersection on mobile.
+    <div data-no-scroll-motion className="mist-field-page min-w-0 bg-white pt-16 sm:pt-24">
       <section className="relative isolate overflow-hidden bg-slate-950 text-white"><div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_20%,rgba(34,211,238,0.15),transparent_45%),linear-gradient(120deg,#020617,#0f2531_60%,#0c3340)]" /><div aria-hidden="true" className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.07)_1px,transparent_1px)] [background-size:52px_52px]" /><div className="relative mx-auto max-w-7xl px-5 pb-16 pt-8 sm:px-8 lg:pb-24 lg:pt-16">
         <nav
           aria-label="Drobečková navigace"
@@ -91,17 +92,17 @@ export default function Mlhoviste() {
           <span aria-hidden="true">/</span>
           <span aria-current="page">Mlžiště a mlhoviště</span>
         </nav>
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="grid min-w-0 gap-7 sm:gap-10 lg:grid-cols-2 lg:items-center">
           <div>
             <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-200">
               MLŽIDLA · architektura osvěžení
             </p>
-            <h1 className="mt-5 max-w-2xl text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="mt-5 max-w-2xl break-words text-3xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
               Mlhoviště a mlžiště
               <br />
               pro města, parky a zahrady.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-slate-200">
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-200 sm:text-lg">
               Promyšlené mlžné zóny pro náměstí, parky a areály. Nerezová
               mlžítka, přímé napojení na vodovod a volitelné chytré řízení SUPLA
               propojujeme v řešení pro konkrétní místo.
@@ -121,7 +122,7 @@ export default function Mlhoviste() {
               </a>
             </div>
           </div>
-          <figure className="group overflow-hidden rounded-3xl border border-white/20 bg-white/10 shadow-[0_30px_100px_rgba(0,0,0,.35)]">
+          <figure className="group min-w-0 overflow-hidden rounded-3xl border border-white/20 bg-white/10 shadow-[0_30px_100px_rgba(0,0,0,.35)]">
             <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/b41c4231d_BENDY-FIELD-park-realizace.webp"
 
             alt={CATALOG_CATEGORIES[3].imageAlt}
@@ -258,7 +259,7 @@ export default function Mlhoviste() {
           <p className="font-mono text-xs uppercase tracking-[.18em] text-cyan-800">Technické podklady</p>
           <h2 id="mlhoviste-priprava" className="mt-4">Co potřebujeme pro návrh mlhoviště?</h2>
           <p className="mt-4 max-w-2xl leading-7 text-slate-600">Pro první konzultaci stačí základní údaje. Technické parametry a rozsah instalace ověříme podle konkrétního místa.</p>
-          <div className="mt-8 overflow-x-auto rounded-2xl border border-slate-200">
+          <div className="mt-8 max-w-full overflow-x-auto rounded-2xl border border-slate-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-700" role="region" aria-labelledby="mlhoviste-priprava" tabIndex={0}>
             <table className="w-full min-w-[560px] text-left text-sm">
               <caption className="sr-only">Podklady pro návrh městského mlhoviště</caption>
               <thead className="bg-slate-950 text-white"><tr><th scope="col" className="px-5 py-4">Oblast</th><th scope="col" className="px-5 py-4">Co nám pomůže upřesnit řešení</th></tr></thead>

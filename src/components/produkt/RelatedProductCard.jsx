@@ -8,7 +8,7 @@ export default function RelatedProductCard({ product, index }) {
   return (
     <Link to={`/produkt/${product.slug}`} className="group block h-full overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:border-secondary hover:shadow-xl">
       <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
-        <ProductHoverImage product={product} alt={product.name + ' – produktový náhled'} className="h-full w-full" />
+        <ProductHoverImage product={product} alt={product.name + ' – produktový náhled'} className="h-full w-full" cleanPreview />
         {isNozzle && <span className="absolute left-4 top-4 rounded-full bg-accent px-3 py-1 text-[10px] font-extrabold text-accent-foreground">STANDARD M2</span>}
       </div>
       <div className="p-5">

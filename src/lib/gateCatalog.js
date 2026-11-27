@@ -1,3 +1,4 @@
+import { getStudioMedia } from '@/lib/studioMedia';
 import { isPublicCatalogProduct } from '@/lib/publicCatalogProducts';
 
 const normalize = (value) => String(value || '').normalize('NFD').replace(/[\\u0300-\\u036f]/g, '').toLowerCase();
@@ -53,7 +54,7 @@ export function buildGateCatalog(records = []) {
       name: product.name,
       group,
       caption: configured?.caption || (group === 'gate' ? 'Mlžná brána' : 'Vstupní portál'),
-      image: product.image_url,
+      image: getStudioMedia(product) || product.image_url,
       text: configured?.text || product.short_description || 'Nerezové mlžení s konfigurací podle konkrétního prostoru.',
       detailUrl: `/produkt/${encodeURIComponent(product.slug)}`,
       quoteUrl: `/poptavka?produkt=${encodeURIComponent(product.name)}`,

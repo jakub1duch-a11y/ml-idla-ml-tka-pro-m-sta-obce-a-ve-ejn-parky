@@ -19,3 +19,5 @@
 @media(min-width:768px){.catalog-video-hero{min-height:720px;display:flex;align-items:center}.catalog-video-hero-media{position:absolute;inset:0;aspect-ratio:auto}.catalog-video-hero-shade{background:linear-gradient(90deg,#041b24ed 0%,#041b24c4 36%,#041b241f 75%),linear-gradient(0deg,#071a25 0%,transparent 24%)}.catalog-video-hero-copy{width:100%;padding:100px 40px 90px}.catalog-video-hero-copy h1{font-size:clamp(54px,5.8vw,84px)}.catalog-video-hero-description{font-size:17px}.catalog-video-toggle{right:32px;bottom:32px}}
 @media(min-width:1280px){.catalog-video-hero-copy{padding-left:72px}.catalog-video-hero-media img,.catalog-video-hero-media video{object-position:65% center}}
 @media(prefers-reduced-motion:reduce){.catalog-video-hero *{transition:none!important}}
+
+.catalog-video-hero-description{text-align:justify}

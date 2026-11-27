@@ -1,6 +1,6 @@
 import React from "react";
 
-const LOGO_ON_LIGHT = "/brand/mlzidla-2026-petrol.png";
+const LOGO_ON_LIGHT = "/brand/mlzidla-drop-dark-master.png";
 const LOGO_ON_DARK = "/brand/mlzidla-2026-white.png";
 const LOGO_FOOTER = "/brand/mlzidla-2026-white.png";
 
@@ -8,7 +8,7 @@ const LOGO_FOOTER = "/brand/mlzidla-2026-white.png";
 // tone describes the background: light = navy letters, dark = white letters.
 export function MistZMark({ size = "md", className = "" }) {
   const sizes = { xs: "h-7", sm: "h-9", md: "h-11", lg: "h-14" };
-  return <img src="https://media.base44.com/images/public/6a3ee88c10959cd3588c4d68/058086f9dba9852bce6cfd30ed13a6c4_mlzidla-favicon-256.png" alt="" aria-hidden="true" className={`w-auto object-contain ${sizes[size] || sizes.md} ${className}`} />;
+  return <img src="/brand/mlzidla-drop-symbol-master.png" alt="" aria-hidden="true" className={`w-auto object-contain ${sizes[size] || sizes.md} ${className}`} />;
 }
 
 export default function Logo({ size = "md", variant = "simple", tone = "dark", className = "" }) {

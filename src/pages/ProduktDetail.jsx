@@ -16,6 +16,7 @@ import LizatkoEditorialSections from '@/components/produkt/LizatkoEditorialSecti
 import PdBenefits from '@/components/produkt/new/PdBenefits';
 import PdSpecs from '@/components/produkt/new/PdSpecs';
 import PdInstallationPrep from '@/components/produkt/new/PdInstallationPrep';
+import PdPlacementGuide from '@/components/produkt/new/PdPlacementGuide';
 import PdSuplaControl from '@/components/produkt/new/PdSuplaControl';
 import PdFaq from '@/components/produkt/new/PdFaq';
 import PdReferences from '@/components/produkt/new/PdReferences';
@@ -83,6 +84,7 @@ export default function ProduktDetail() {
       {['mlzitko-lizatko', 'lolli'].includes(product.slug) && <LizatkoEditorialSections product={product} />}
       <ProductMotionSection key={product.slug} product={product} />
       <div id="vyhody" className="scroll-mt-24"><PdBenefits product={product} /></div>
+      <PdPlacementGuide product={product} />
       <div id="instalace" className="scroll-mt-24"><PdInstallationPrep product={product} /></div>
       <PdSuplaControl product={product} />
       <PdFaq product={product} />

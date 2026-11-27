@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "purpose": "Public-safe reusable design and technical reference index; no customer records, credentials or internal prices.",
   "sources": [
     {
@@ -77,6 +77,55 @@
     {
       "tool": "Base44",
       "role": "site and application runtime; deployment requires verified build and sync"
+    },
+    {
+      "tool": "Architecture Designer",
+      "role": "spatial concept design; validate geometry against actual engineering documents"
+    },
+    {
+      "tool": "Supabase",
+      "role": "optional secured backend knowledge index with RLS; no anonymous customer access"
+    },
+    {
+      "tool": "Superpowers",
+      "role": "development planning and verification checklist"
+    },
+    {
+      "tool": "Supermetrics",
+      "role": "aggregated marketing measurement, no personal records in public repo"
     }
-  ]
+  ],
+  "brand": {
+    "primaryMark": "/brand/mlzidla-drop-dark-master.png",
+    "symbol": "/brand/mlzidla-drop-symbol-master.png",
+    "darkSurface": "Existing white variant retained until matching drop white master is verified",
+    "palette": {
+      "petrol": "#002838",
+      "turquoise": "#00A0A8",
+      "white": "#FFFFFF"
+    },
+    "typography": {
+      "headings": "Montserrat",
+      "body": "Inter",
+      "status": "existing site fonts retained; logo is artwork"
+    },
+    "rules": [
+      "Preserve original logo geometry and clear space",
+      "Use uploaded mockups as visual references only; never copy unverified contact details or old marks",
+      "Use approved real product photographs; do not alter product geometry",
+      "No customer data, private prices, API keys or private Drive references in public repo"
+    ]
+  },
+  "workflow": {
+    "stages": [
+      "Source verification",
+      "Brand review",
+      "Design and motion",
+      "Implementation in feature branch",
+      "Build and accessible preview",
+      "Approved production release",
+      "Aggregate measurement"
+    ],
+    "releaseGate": "No merge without successful build, preview and verified production target."
+  }
 }

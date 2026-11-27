@@ -93,6 +93,10 @@
     {
       "tool": "Supermetrics",
       "role": "aggregated marketing measurement, no personal records in public repo"
+    },
+    {
+      "tool": "Framer",
+      "role": "design prototypes and approved public presentation, not a replacement of Base44 production"
     }
   ],
   "brand": {
@@ -127,5 +131,13 @@
       "Aggregate measurement"
     ],
     "releaseGate": "No merge without successful build, preview and verified production target."
+  },
+  "apiContract": {
+    "version": "1",
+    "sourceOfTruth": "approved Base44 content and private technical sources",
+    "supabase": "server-side integration; inspect existing schema before migration",
+    "design": "Canva brand kit and Figma approved design exports; Framer optional prototype",
+    "credentialPolicy": "server secrets only; never in GitHub, client code or design files",
+    "publishPolicy": "verified, explicitly approved revision only; no automatic customer communications"
   }
 }

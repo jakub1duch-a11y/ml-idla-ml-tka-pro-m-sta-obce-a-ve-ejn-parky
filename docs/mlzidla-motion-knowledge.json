@@ -1,0 +1,58 @@
+{
+  "version": "1.0",
+  "purpose": "Public-safe reusable design and technical reference index; no customer records, credentials or internal prices.",
+  "sources": [
+    {
+      "name": "GSAP ScrollTrigger",
+      "url": "https://gsap.com/docs/v3/Plugins/ScrollTrigger/"
+    },
+    {
+      "name": "GSAP responsive motion",
+      "url": "https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/"
+    },
+    {
+      "name": "GSAP accessibility",
+      "url": "https://gsap.com/resources/a11y/"
+    }
+  ],
+  "motion": {
+    "desktop": "scroll-linked progressive enhancement",
+    "mobile": "normal document flow",
+    "reducedMotion": "no decorative animation",
+    "cleanup": "revert scoped GSAP context on unmount"
+  },
+  "integrations": [
+    {
+      "tool": "Canva",
+      "role": "brand assets and approved templates"
+    },
+    {
+      "tool": "Figma",
+      "role": "UI design"
+    },
+    {
+      "tool": "Runway",
+      "role": "approved visual assets only"
+    },
+    {
+      "tool": "ElevenLabs",
+      "role": "optional narration with transcript"
+    },
+    {
+      "tool": "Exa",
+      "role": "source discovery"
+    },
+    {
+      "tool": "Attio",
+      "role": "CRM, server-side only"
+    },
+    {
+      "tool": "Make",
+      "role": "authorized automation, server-side only"
+    },
+    {
+      "tool": "WebMCP",
+      "role": "future scoped public read-only discovery; not enabled"
+    }
+  ]
+}

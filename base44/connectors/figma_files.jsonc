@@ -1,0 +1,8 @@
+{
+  "type": "figma_files",
+  "scopes": [
+    "file_content:read",
+    "current_user:read",
+    "file_metadata:read"
+  ]
+}

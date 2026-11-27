@@ -1,5 +1,6 @@
 ---
-description: "Develop a Base44 app remotely from your own coding agent (Claude Code, claude.ai, or any MCP client) by connecting it to the Base44 sandbox. Cloud agents connect over MCP; local agents can connect over MCP or drive the same sandbox with the `base44 sandbox` CLI subcommands (the CLI uses shorter names — e.g. read_file is `sandbox read`, list_directory is `sandbox ls`, run_command is `sandbox run`). Covers connecting/ authenticating, the available sandbox tools (run_command, read_file, write_file, edit_file, grep, list_directory, create_checkpoint, get_app_preview_url, get_app_status, list_user_apps, and the connector tools list_connectors / initiate_connector_connection), the edit→preview→verify loop, how changes persist, builder/external-agent concurrency, the in-editor \"Send to Coding Agent\" button + onboarding README URLs, and tips like reading the Vite dev-server logs. Triggers on \"develop my Base44 app remotely\", \"connect Claude Code to Base44\", \"bring my own agent\", \"edit a Base44 app over MCP\", \"Base44 sandbox MCP\", or \"Send to Coding Agent\"."
+name: base44-remote-dev
+description: "Develop and troubleshoot Base44 apps remotely using AI coding agents connected to the Base44 cloud sandbox via MCP or the base44 sandbox CLI. Use for remote app authentication, sandbox tools, file and resource editing, code validation, creating checkpoints, preview URLs, and debugging deployment state. Covers both cloud agents and local agents working without a local checkout."
 ---
 <!--
   Vendored from base44-dev/apper PR #11608

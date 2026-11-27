@@ -1,4 +1,5 @@
 ---
+name: otel-collector
 description: "Expert guidance for configuring and deploying the OpenTelemetry Collector. Use when setting up a Collector pipeline, configuring receivers, exporters, or processors, deploying a Collector to Kubernetes or Docker, or forwarding telemetry to Dash0. Triggers on requests involving collector, pipeline, OTLP receiver, exporter, or Dash0 collector setup."
 license: "Apache-2.0"
 metadata: {"author":"dash0","version":"1.0.0","workflow_type":"advisory","supports-traces":"true","supports-metrics":"true","supports-logs":"true"}

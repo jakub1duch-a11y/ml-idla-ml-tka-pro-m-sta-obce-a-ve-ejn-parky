@@ -6,7 +6,7 @@ import ProductHoverImage from '@/components/ui/ProductHoverImage';
 export default function GateSlideCard({ product, index }) {
   return (
     <div className="group relative shrink-0 w-[85vw] sm:w-[520px] lg:w-[620px] aspect-[4/5] sm:aspect-video rounded-3xl overflow-hidden snap-start bg-slate-900">
-      <ProductHoverImage product={product} className="absolute inset-0 h-full w-full" overlay />
+      <ProductHoverImage product={product} className="absolute inset-0 h-full w-full" cleanPreview />
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/10" />
 
       <span className="absolute top-5 right-5 font-mono text-white/20 text-3xl font-black">

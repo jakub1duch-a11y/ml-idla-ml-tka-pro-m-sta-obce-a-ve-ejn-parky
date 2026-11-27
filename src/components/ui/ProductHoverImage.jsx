@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { Images, Play } from 'lucide-react';
+import { Images, Play, ImageOff } from 'lucide-react';
 import { motion, useReducedMotion } from 'framer-motion';
 import AutoPlayVideoPreview from '@/components/ui/AutoPlayVideoPreview';
 import { getStudioMedia } from '@/lib/studioMedia';
@@ -54,6 +54,8 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       const type = studioMedia ? 'studio' : 'product';
       list.push({ type, url: primary, label: VIEW_LABELS[type] });
     }
+
+    if (cleanPreview) return list;
 
     // 2. Real photos from gallery (distinct from primary, non-video, non-broken)
     const realPhotos = gallery.filter(
@@ -120,7 +122,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
 
 
 
-  if (views.length === 0) return <div className={`bg-muted ${className}`} />;
+  if (views.length === 0) return <div className={`flex items-center justify-center gap-2 bg-slate-100 text-slate-600 ${className}`} role="img" aria-label={`${resolvedAlt} – náhled není k dispozici`}><ImageOff size={20} aria-hidden="true" /><span className="text-xs">Náhled není k dispozici</span></div>;
 
   const current = views[activeView] || views[0];
   const hasMultiple = views.length > 1;
@@ -145,9 +147,9 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
       )}
       {/* Render all views stacked, toggle opacity for crossfade */}
       {views.map((view, idx) => {
-        const isActive = idx === activeView;
-        const styleClass = fullBleed && (view.type === 'studio' || view.type === 'product')
-          ? 'object-cover object-center'
+        const isActive = idx === (cleanPreview ? 0 : activeView);
+        const styleClass = cleanPreview || view.type === 'studio' || view.type === 'product'
+          ? 'object-contain object-center p-[8%]'
           : (VIEW_STYLES[view.type] || 'object-cover');
 
         if (view.type === 'video') {
@@ -173,11 +175,11 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
             key={`view-${idx}`}
             src={view.url}
             alt={isActive ? resolvedAlt : ''}
-            loading={idx === 0 ? 'eager' : 'lazy'}
+            loading={cleanPreview ? 'lazy' : idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
             sizes="(min-width: 1280px) 31vw, (min-width: 768px) 48vw, 100vw"
-            className={`absolute inset-0 h-full w-full transition-all duration-500 ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
-            style={fullBleed ? { objectPosition: previewPosition } : undefined}
+            className={`absolute inset-0 h-full w-full transition-opacity duration-500 motion-reduce:transition-none ${styleClass} ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.01]'}`}
+            style={!cleanPreview && !hasStudioStage && fullBleed ? { objectPosition: previewPosition } : undefined}
             onError={(event) => {
               const original = getOriginalMediaUrl(view.url);
               if (original && original !== view.url && event.currentTarget.src !== original) {
@@ -188,7 +190,7 @@ export default function ProductHoverImage({ product, alt = '', className = '', o
         );
       })}
 
-      {hasStudioStage && (
+      {hasStudioStage && !cleanPreview && !reduced && (
         <>
           <img
             aria-hidden="true"

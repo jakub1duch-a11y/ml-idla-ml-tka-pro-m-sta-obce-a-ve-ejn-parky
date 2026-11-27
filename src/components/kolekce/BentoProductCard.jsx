@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Gauge, Droplets, ShieldCheck } from 'lucide-react';
-import { GATE_MEDIA } from '@/lib/gateMedia';
 import ProductHoverImage from '@/components/ui/ProductHoverImage';
 import ProductViewMenu from '@/components/produkt/ProductViewMenu';
 import { getLine, getFamily } from '@/lib/productFamilies';
@@ -30,9 +29,7 @@ export default function BentoProductCard({ product, size = 'std', onProductClick
   return (
     <article className={`bento-card group ${VARIANT_CLASS[size] || VARIANT_CLASS.std}`}>
       <Link to={`/produkt/${product.slug}`} onClick={open} className="bento-media relative block" aria-label={product.name}>
-        {GATE_MEDIA[product.slug]
-          ? <img src={GATE_MEDIA[product.slug]} alt={product.name} loading="lazy" decoding="async" />
-          : <ProductHoverImage product={product} className="h-full w-full" fullBleed cleanPreview />}
+        <ProductHoverImage product={product} className="h-full w-full" cleanPreview />
       </Link>
       <div className="bento-menu" onClick={(e) => e.preventDefault()}><ProductViewMenu product={product} /></div>
       <div className="bento-body">
@@ -46,7 +43,7 @@ export default function BentoProductCard({ product, size = 'std', onProductClick
         )}
         <div className="bento-foot">
           <Link to={`/produkt/${product.slug}`} onClick={open} className="bento-cta">Detail produktu <ArrowRight size={14} /></Link>
-          <Link to={`/poptavka?produkt=${product.slug}`} onClick={open} className="bento-quote" aria-label={`Získat návrh a cenu pro ${product.name}`}><ArrowUpRight size={16} /></Link>
+          <Link to={`/poptavka?produkt=${product.slug}`} onClick={open} className="bento-quote" aria-label={`Získat návrh a cenu pro ${product.name}`}>Poptat <ArrowUpRight size={16} /></Link>
         </div>
       </div>
     </article>

@@ -90,3 +90,4 @@
   .bento-card, .bento-card .bento-media img { transition: none; }
   .bento-card:hover { transform: none; }
 }
+.bento-card:hover .bento-media img{transform:none}.bento-card .bento-media img{padding:8%;object-fit:contain}.bento-card .bento-media img[aria-hidden=true]{padding:0}

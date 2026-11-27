@@ -104,6 +104,7 @@ export default function Header() {
     return () => desktop.removeEventListener('change', closeOnDesktop);
   }, []);
 
+  const cancelMenuClose = () => clearTimeout(timeoutRef.current);
   const openMega = () => {clearTimeout(timeoutRef.current);setMegaOpen(true);setUsageOpen(false);setTechnologyOpen(false);setInfoOpen(false);};
   const openUsage = () => {clearTimeout(timeoutRef.current);setUsageOpen(true);setMegaOpen(false);setTechnologyOpen(false);setInfoOpen(false);};
   const closeUsage = () => {timeoutRef.current = setTimeout(() => setUsageOpen(false), 150);};
@@ -131,7 +132,7 @@ export default function Header() {
           {/* Desktop nav — centered elegant style */}
           {locale === 'cs' ? <nav className="hidden xl:flex min-w-0 items-center gap-0 flex-1 justify-center mx-auto whitespace-nowrap">
             {/* Produkty megamenu */}
-            <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}>
+            <div className="relative" onMouseEnter={() => { if (megaOpen) cancelMenuClose(); }} onMouseLeave={closeMega}>
               <button
                 type="button"
                 onClick={() => { if (megaOpen) setMegaOpen(false); else openMega(); }}
@@ -143,14 +144,14 @@ export default function Header() {
                 <ChevronDown size={14} className={`transition-transform duration-200 ${megaOpen ? 'rotate-180' : ''}`} />
               </button>
             </div>
-            <div className="relative" onMouseEnter={openUsage} onMouseLeave={closeUsage}>
+            <div className="relative" onMouseEnter={() => { if (usageOpen) cancelMenuClose(); }} onMouseLeave={closeUsage}>
               <button type="button" onClick={() => { if (usageOpen) setUsageOpen(false); else openUsage(); }} aria-expanded={usageOpen} aria-controls="desktop-usage-menu" className="flex min-h-11 items-center gap-1 rounded-full px-3.5 text-[13px] font-medium text-white/85 hover:bg-white/10 hover:text-white">Použití <ChevronDown size={14} aria-hidden="true" /></button>
               {usageOpen && <UsageMenu links={USAGE_LINKS} onNavigate={() => setUsageOpen(false)} />}
             </div>
-            <div className="relative" onMouseEnter={openTechnology} onMouseLeave={closeTechnology}>
+            <div className="relative" onMouseEnter={() => { if (technologyOpen) cancelMenuClose(); }} onMouseLeave={closeTechnology}>
               <button
                 type="button"
-                onClick={() => setTechnologyOpen((value) => !value)}
+                onClick={() => { if (technologyOpen) setTechnologyOpen(false); else openTechnology(); }}
                 aria-expanded={technologyOpen}
                 className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${technologyOpen ? 'bg-white/15 text-white' : 'text-white/85 hover:text-white hover:bg-white/10'}`}>
                 Jak fungují <ChevronDown size={14} className={`transition-transform duration-200 ${technologyOpen ? 'rotate-180' : ''}`} />
@@ -180,8 +181,8 @@ export default function Header() {
             <Link to="/smart-ovladani" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Automatizace</Link>
             <Link to="/reference" className="px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all text-white/85 hover:text-white hover:bg-white/10">Reference</Link>
             <Link to="/blog" className="px-3.5 py-2.5 rounded-full text-[13px] font-semibold transition-all hover:text-white hover:bg-cyan-300/15 text-[hsl(var(--input))]">Blog a novinky</Link>
-            <div className="relative" onMouseEnter={openInfo} onMouseLeave={closeInfo}>
-              <button type="button" onClick={() => setInfoOpen((value) => !value)} aria-expanded={infoOpen} className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
+            <div className="relative" onMouseEnter={() => { if (infoOpen) cancelMenuClose(); }} onMouseLeave={closeInfo}>
+              <button type="button" onClick={() => { if (infoOpen) setInfoOpen(false); else openInfo(); }} aria-expanded={infoOpen} className={`flex items-center gap-1 px-3.5 py-2.5 rounded-full text-[13px] font-medium transition-all ${
               infoOpen ? 'bg-white/15 text-white' : "text-white/85 hover:text-white hover:bg-white/10"}`
               }>
                 Informace a podpora <ChevronDown size={14} className={`transition-transform duration-200 ${infoOpen ? 'rotate-180' : ''}`} />
@@ -255,7 +256,7 @@ export default function Header() {
           </div>
         </div>
 
-        {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={openMega} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
+        {locale === 'cs' && <MegaCatalogMenu open={megaOpen} onEnter={cancelMenuClose} onLeave={closeMega} onNavigate={() => setMegaOpen(false)} collections={PRODUCT_LINKS} uses={USAGE_LINKS} customLink={CUSTOM_LINK} />}
       </header>
 
       <MobileMenu
